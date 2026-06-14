@@ -19,7 +19,9 @@ import approvalRoutes from './routes/approvals.js'
 import reportRoutes from './routes/reports.js'
 import statisticsRoutes from './routes/statistics.js'
 import recommendRoutes from './routes/recommend.js'
-import { store } from './data/store.js'
+import uploadRoutes from './routes/upload.js'
+import { persistentStore as store } from './data/persistentStore.js'
+import { taskEngine } from './services/index.js'
 
 // for esm mode
 const __filename = fileURLToPath(import.meta.url)
@@ -31,14 +33,30 @@ dotenv.config()
 const app: express.Application = express()
 
 app.use(cors())
-app.use(express.json({ limit: '10mb' }))
-app.use(express.urlencoded({ extended: true, limit: '10mb' }))
+app.use(express.json({ limit: '50mb' }))
+app.use(express.urlencoded({ extended: true, limit: '50mb' }))
 
 /**
  * Data initialization middleware
  */
+app.use(async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    await store.init()
+    next()
+  } catch (error) {
+    next(error)
+  }
+})
+
+/**
+ * Initialize TaskEngine after store is ready
+ */
+let taskEngineInitialized = false
 app.use((req: Request, res: Response, next: NextFunction): void => {
-  store.init()
+  if (!taskEngineInitialized && store.initialized) {
+    taskEngine.init()
+    taskEngineInitialized = true
+  }
   next()
 })
 
@@ -53,6 +71,7 @@ app.use('/api/approvals', approvalRoutes)
 app.use('/api/reports', reportRoutes)
 app.use('/api/statistics', statisticsRoutes)
 app.use('/api/recommend', recommendRoutes)
+app.use('/api/upload', uploadRoutes)
 
 /**
  * health

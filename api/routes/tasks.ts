@@ -1,5 +1,6 @@
 import { Router, type Request, type Response } from 'express'
-import { store } from '../data/store.js'
+import { persistentStore as store } from '../data/persistentStore.js'
+import { taskEngine } from '../services/index.js'
 import type { SimulationTask } from '../types/index.js'
 
 const router = Router()
@@ -71,16 +72,16 @@ router.get('/:id', (req: Request, res: Response): void => {
 router.post('/', (req: Request, res: Response): void => {
   try {
     store.init()
-    const { name, region, parameters } = req.body
+    const { name, region, parameters, createdBy, userId, userName } = req.body
 
     const newTask = store.addTask({
       name: name || '新建模拟任务',
       region: region || '默认区域',
       status: 'pending',
       progress: 0,
-      createdBy: '当前用户',
-      userId: 'user_001',
-      userName: '当前用户',
+      createdBy: createdBy || '当前用户',
+      userId: userId || 'user_001',
+      userName: userName || '当前用户',
       parameters: parameters || {
         profileFile: 'default.dat',
         surfaceType: '植被',
@@ -91,6 +92,8 @@ router.post('/', (req: Request, res: Response): void => {
       },
       approvalStatus: 'none',
     } as SimulationTask)
+
+    taskEngine.startTask(newTask.id)
 
     res.status(201).json({ success: true, data: newTask })
   } catch (error) {
@@ -132,11 +135,74 @@ router.put('/:id/restart', (req: Request, res: Response): void => {
       })
       return
     }
+    taskEngine.startTask(task.id)
     res.json({ success: true, data: task })
   } catch (error) {
     res.status(500).json({
       success: false,
       error: '重启任务失败',
+    })
+  }
+})
+
+router.get('/:id/status', (req: Request, res: Response): void => {
+  try {
+    store.init()
+    const status = taskEngine.getTaskStatus(req.params.id)
+    if (!status) {
+      res.status(404).json({
+        success: false,
+        error: '任务不存在',
+      })
+      return
+    }
+    res.json({ success: true, data: status })
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: '获取任务状态失败',
+    })
+  }
+})
+
+router.put('/:id/pause', (req: Request, res: Response): void => {
+  try {
+    store.init()
+    const success = taskEngine.pauseTask(req.params.id)
+    if (!success) {
+      res.status(404).json({
+        success: false,
+        error: '任务不存在或无法暂停',
+      })
+      return
+    }
+    const task = store.getTaskById(req.params.id)
+    res.json({ success: true, data: task })
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: '暂停任务失败',
+    })
+  }
+})
+
+router.put('/:id/resume', (req: Request, res: Response): void => {
+  try {
+    store.init()
+    const success = taskEngine.resumeTask(req.params.id)
+    if (!success) {
+      res.status(404).json({
+        success: false,
+        error: '任务不存在或无法恢复',
+      })
+      return
+    }
+    const task = store.getTaskById(req.params.id)
+    res.json({ success: true, data: task })
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: '恢复任务失败',
     })
   }
 })

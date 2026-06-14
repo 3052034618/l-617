@@ -101,18 +101,20 @@ export function generateMockTasks(): SimulationTask[] {
       : Math.floor(randomInRange(20, 50));
 
     const approvalStatus: SimulationTask['approvalStatus'] = isCompleted
-      ? (i % 3 === 0 ? 'approved' : i % 3 === 1 ? 'pending_first' : 'pending_second')
+      ? (i % 4 === 0 ? 'published' : i % 4 === 1 ? 'pending_first' : i % 4 === 2 ? 'pending_second' : 'rejected')
       : 'none';
 
     const alertLevel = i % 5 === 0 ? ('level2' as const) : i % 7 === 0 ? ('level1' as const) : null;
 
+    const createdAt = formatDate(Math.floor(i / 2));
+    const publishedAt = approvalStatus === 'published' ? formatDate(Math.floor(i / 4)) : undefined;
     const task: SimulationTask = {
       id: generateId('task'),
       name: taskNames[i % taskNames.length],
       region: regions[i % regions.length],
       status,
       progress,
-      createdAt: formatDate(Math.floor(i / 2)),
+      createdAt,
       updatedAt: formatDate(Math.floor(i / 4)),
       createdBy: creators[i % creators.length],
       parameters: {
@@ -128,6 +130,7 @@ export function generateMockTasks(): SimulationTask[] {
       alertLevel,
       computeDuration: isCompleted ? Math.floor(randomInRange(120, 1800)) : undefined,
       resourceUsage: isCompleted ? Number(randomInRange(0.5, 8.0).toFixed(1)) : undefined,
+      publishedAt,
     };
     tasks.push(task);
   }
@@ -197,20 +200,27 @@ export function generateMockAlerts(): Alert[] {
 
 export function generateMockApprovals(): ApprovalRecord[] {
   const approvals: ApprovalRecord[] = [];
-  for (let i = 0; i < 6; i++) {
-    const level = (i % 2 + 1) as 1 | 2;
-    const status = i % 4 === 0 ? 'rejected' : 'approved';
+  for (let i = 0; i < 8; i++) {
+    const level = i < 4 ? 1 : 2;
+    const status = i % 4 === 0 ? 'pending' : i % 4 === 3 ? 'rejected' : 'approved';
+    const createdAt = formatDate(i + 1);
+    const approvedAt = status !== 'pending' ? formatDate(i) : undefined;
     approvals.push({
       id: generateId('appr'),
       taskId: generateId('task'),
       taskName: taskNames[i % taskNames.length],
       level,
-      approver: level === 1 ? '数据处理员王工' : '项目负责人李总',
+      approver: status !== 'pending' ? (level === 1 ? '数据处理员王工' : '项目负责人李总') : '',
       status,
       comment: status === 'approved'
         ? (level === 1 ? '模型构建合理，参数设置正确，提交上级审批' : '反演结果符合预期，精度达标，同意发布')
-        : '反射率曲线存在异常波动，建议重新核查输入数据',
-      createdAt: formatDate(i),
+        : status === 'rejected'
+          ? '反射率曲线存在异常波动，建议重新核查输入数据'
+          : '',
+      createdAt,
+      applicant: creators[i % creators.length],
+      submittedAt: createdAt,
+      approvedAt,
     });
   }
   return approvals.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());

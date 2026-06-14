@@ -18,6 +18,7 @@ export type ApprovalStatus =
   | 'pending_second'
   | 'approved'
   | 'rejected'
+  | 'published'
 
 export type UserRole = 'scientist' | 'processor' | 'manager' | 'chief'
 
@@ -67,6 +68,10 @@ export interface SimulationTask {
   alertLevel?: AlertLevel | null
   computeDuration?: number
   resourceUsage?: number
+  publishedAt?: string
+  approvalChain?: ApprovalRecord[]
+  adjustmentLogs: AdjustmentLog[]
+  failureReason?: string
 }
 
 export interface AdjustmentLog {
@@ -106,6 +111,10 @@ export interface ApprovalRecord {
   status: 'approved' | 'rejected' | 'pending'
   comment: string
   createdAt: string
+  applicant?: string
+  applicantId?: string
+  submittedAt?: string
+  approvedAt?: string
 }
 
 export interface MonitorData {
@@ -160,4 +169,26 @@ export interface Report {
   generatedAt: string
   generatedBy: string
   status: 'generating' | 'generated' | 'failed'
+}
+
+export type UploadedFileType = 'profile' | 'surface'
+
+export type FileValidationStatus = 'pending' | 'valid' | 'invalid'
+
+export interface UploadedFile {
+  id: string
+  filename: string
+  originalName: string
+  type: UploadedFileType
+  size: number
+  uploadTime: string
+  validationStatus: FileValidationStatus
+  validationMessage?: string
+  filePath: string
+}
+
+export interface FileValidationResult {
+  valid: boolean
+  message: string
+  details?: Record<string, unknown>
 }

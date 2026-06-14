@@ -10,6 +10,9 @@ import type {
   MonitorData,
   SpectrumData,
   TaskStatus,
+  AdjustmentLog,
+  UploadedFile,
+  UploadedFileType,
 } from '../types/index.js'
 import {
   generateId,
@@ -26,6 +29,7 @@ class DataStore {
   alerts: Alert[] = []
   approvals: ApprovalRecord[] = []
   reports: Report[] = []
+  adjustmentLogs: AdjustmentLog[] = []
   recommendBands: Recommendation[] = []
   recommendParameters: Recommendation[] = []
   recommendHistory: Recommendation[] = []
@@ -43,8 +47,9 @@ class DataStore {
   accuracyTrend: TrendData[] = []
   resourceTrend: TrendData[] = []
   regionStats: RegionStatus[] = []
+  uploadedFiles: UploadedFile[] = []
 
-  private initialized = false
+  initialized = false
 
   init(): void {
     if (this.initialized) return
@@ -130,11 +135,13 @@ class DataStore {
                     : Math.floor(randomInRange(20, 50))
 
       const approvalStatus: SimulationTask['approvalStatus'] = isCompleted
-        ? i % 3 === 0
-          ? 'approved'
-          : i % 3 === 1
+        ? i % 4 === 0
+          ? 'published'
+          : i % 4 === 1
             ? 'pending_first'
-            : 'pending_second'
+            : i % 4 === 2
+              ? 'pending_second'
+              : 'rejected'
         : 'none'
 
       const alertLevel =
@@ -164,6 +171,8 @@ class DataStore {
         alertLevel,
         computeDuration: isCompleted ? Math.floor(randomInRange(120, 1800)) : undefined,
         resourceUsage: isCompleted ? Number(randomInRange(0.5, 8.0).toFixed(1)) : undefined,
+        publishedAt: approvalStatus === 'published' ? formatDate(updatedAt) : undefined,
+        adjustmentLogs: [],
       }
 
       if (isCompleted || status === 'failed' || status === 'rollback') {
@@ -304,25 +313,31 @@ class DataStore {
 
     const now = new Date()
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 8; i++) {
       const task = this.tasks[i]
       const createdAt = new Date(now)
       createdAt.setDate(createdAt.getDate() - (i + 2))
+
+      const level: 1 | 2 = i < 4 ? 1 : 2
+      const status = statuses[i % statuses.length]
 
       this.approvals.push({
         id: generateId('appr'),
         taskId: task.id,
         taskName: task.name,
-        level: (i % 2 === 0 ? 1 : 2) as 1 | 2,
-        approver: i % 2 === 0 ? '数据处理员王工' : '项目负责人李总',
-        status: statuses[i],
+        level,
+        approver: status !== 'pending' ? (level === 1 ? '数据处理员王工' : '项目负责人李总') : '',
+        status,
         comment:
-          statuses[i] === 'approved'
+          status === 'approved'
             ? '数据完整，同意执行'
-            : statuses[i] === 'rejected'
+            : status === 'rejected'
               ? '参数设置不合理，请重新提交'
               : '',
         createdAt: formatDate(createdAt),
+        applicant: task.createdBy,
+        submittedAt: formatDate(createdAt),
+        approvedAt: status !== 'pending' ? formatDate(new Date(createdAt.getTime() + 3600000)) : undefined,
       })
     }
   }
@@ -388,7 +403,7 @@ class DataStore {
     }
   }
 
-  private initStatistics(): void {
+  public initStatistics(): void {
     const runningStatuses: TaskStatus[] = ['modeling', 'computing', 'synthesizing']
     const completedTasks = this.tasks.filter((t) => t.status === 'completed').length
     const totalTasks = this.tasks.length
@@ -458,6 +473,8 @@ class DataStore {
       createdAt: now,
       updatedAt: now,
       createdBy: task.createdBy || '当前用户',
+      userId: task.userId,
+      userName: task.userName,
       parameters: task.parameters || {
         profileFile: 'default.dat',
         surfaceType: '植被',
@@ -467,9 +484,11 @@ class DataStore {
         observationAngle: 0,
       },
       approvalStatus: 'none',
+      adjustmentLogs: [],
     }
     this.tasks.unshift(newTask)
     this.initStatistics()
+    this.saveToStorage()
     return newTask
   }
 
@@ -481,12 +500,24 @@ class DataStore {
     const index = this.tasks.findIndex((t) => t.id === id)
     if (index === -1) return undefined
 
+    const task = this.tasks[index]
+    const now = formatDate()
+
+    const enhancedUpdates: Partial<SimulationTask> = { ...updates }
+
+    if (updates.approvalStatus && updates.approvalStatus !== task.approvalStatus) {
+      if (updates.approvalStatus === 'published') {
+        enhancedUpdates.publishedAt = now
+      }
+    }
+
     this.tasks[index] = {
-      ...this.tasks[index],
-      ...updates,
-      updatedAt: formatDate(),
+      ...task,
+      ...enhancedUpdates,
+      updatedAt: now,
     }
     this.initStatistics()
+    this.saveToStorage()
     return this.tasks[index]
   }
 
@@ -495,6 +526,7 @@ class DataStore {
     if (index === -1) return false
     this.tasks.splice(index, 1)
     this.initStatistics()
+    this.saveToStorage()
     return true
   }
 
@@ -506,7 +538,13 @@ class DataStore {
     task.progress = 0
     task.updatedAt = formatDate()
     task.results = undefined
+    task.approvalStatus = 'none'
+    task.alertLevel = null
+    task.failureReason = undefined
+    task.computeDuration = undefined
+    task.resourceUsage = undefined
     this.initStatistics()
+    this.saveToStorage()
     return task
   }
 
@@ -608,61 +646,134 @@ class DataStore {
     taskName: string
     applicant?: string
     applicantId?: string
+    level?: 1 | 2
   }): ApprovalRecord {
+    const now = formatDate()
     const newApproval: ApprovalRecord = {
       id: generateId('appr'),
       taskId: approval.taskId,
       taskName: approval.taskName,
-      level: 1,
-      approver: '数据处理员王工',
+      level: approval.level || 1,
+      approver: '',
       status: 'pending',
       comment: '',
-      createdAt: formatDate(),
+      createdAt: now,
+      applicant: approval.applicant,
+      applicantId: approval.applicantId,
+      submittedAt: now,
     }
     this.approvals.unshift(newApproval)
     return newApproval
   }
 
   approveFirstLevel(
-    id: string,
+    taskId: string,
     approver: string,
     remark?: string,
-  ): ApprovalRecord | undefined {
-    const approval = this.approvals.find((a) => a.id === id)
-    if (!approval || approval.status !== 'pending') return undefined
+  ): { currentApproval: ApprovalRecord; nextApproval: ApprovalRecord } | undefined {
+    const task = this.getTaskById(taskId)
+    if (!task || task.approvalStatus !== 'pending_first') return undefined
 
+    const approval = this.approvals.find(
+      (a) => a.taskId === taskId && a.level === 1 && a.status === 'pending',
+    )
+    if (!approval) return undefined
+
+    const now = formatDate()
     approval.status = 'approved'
     approval.approver = approver
     if (remark) approval.comment = remark
-    return approval
+    approval.approvedAt = now
+
+    this.updateTask(taskId, { approvalStatus: 'approved_first' })
+
+    const nextApproval: ApprovalRecord = {
+      id: generateId('appr'),
+      taskId,
+      taskName: task.name,
+      level: 2,
+      approver: '',
+      status: 'pending',
+      comment: '',
+      createdAt: now,
+      applicant: task.createdBy,
+      submittedAt: now,
+    }
+    this.approvals.unshift(nextApproval)
+
+    this.updateTask(taskId, { approvalStatus: 'pending_second' })
+
+    return { currentApproval: approval, nextApproval }
   }
 
   approveSecondLevel(
-    id: string,
+    taskId: string,
     approver: string,
     remark?: string,
   ): ApprovalRecord | undefined {
-    const approval = this.approvals.find((a) => a.id === id)
-    if (!approval || approval.status !== 'pending') return undefined
+    const task = this.getTaskById(taskId)
+    if (!task || task.approvalStatus !== 'pending_second') return undefined
 
+    const approval = this.approvals.find(
+      (a) => a.taskId === taskId && a.level === 2 && a.status === 'pending',
+    )
+    if (!approval) return undefined
+
+    const now = formatDate()
     approval.status = 'approved'
     approval.approver = approver
     if (remark) approval.comment = remark
+    approval.approvedAt = now
+
+    this.updateTask(taskId, {
+      approvalStatus: 'published',
+      publishedAt: now,
+    })
+
     return approval
   }
 
+  getApprovalChain(taskId: string): ApprovalRecord[] {
+    return this.approvals
+      .filter((a) => a.taskId === taskId)
+      .sort((a, b) => {
+        const levelOrder = a.level - b.level
+        if (levelOrder !== 0) return levelOrder
+        return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+      })
+  }
+
   rejectApproval(
-    id: string,
+    taskId: string,
+    level: 1 | 2,
     approver: string,
     remark?: string,
   ): ApprovalRecord | undefined {
-    const approval = this.approvals.find((a) => a.id === id)
+    const task = this.getTaskById(taskId)
+    if (!task) return undefined
+
+    const expectedStatus = level === 1 ? 'pending_first' : 'pending_second'
+    if (task.approvalStatus !== expectedStatus) return undefined
+
+    const approval = this.approvals.find(
+      (a) => a.taskId === taskId && a.level === level && a.status === 'pending',
+    )
     if (!approval) return undefined
 
+    const now = formatDate()
     approval.status = 'rejected'
     approval.approver = approver
     if (remark) approval.comment = remark
+    approval.approvedAt = now
+
+    this.updateTask(taskId, { approvalStatus: 'rejected' })
+
     return approval
+  }
+
+  getPendingApprovalsByRole(role: 'processor' | 'manager'): ApprovalRecord[] {
+    const level: 1 | 2 = role === 'processor' ? 1 : 2
+    return this.approvals.filter((a) => a.level === level && a.status === 'pending')
   }
 
   getStatistics(): StatisticsOverview {
@@ -729,6 +840,64 @@ class DataStore {
 
     return report
   }
+
+  addUploadedFile(file: Omit<UploadedFile, 'id'>): UploadedFile {
+    const newFile: UploadedFile = {
+      ...file,
+      id: generateId('file'),
+    }
+    this.uploadedFiles.unshift(newFile)
+    this.saveToStorage()
+    return newFile
+  }
+
+  getUploadedFiles(type?: UploadedFileType): UploadedFile[] {
+    if (type) {
+      return this.uploadedFiles.filter((f) => f.type === type)
+    }
+    return [...this.uploadedFiles]
+  }
+
+  getUploadedFileById(id: string): UploadedFile | undefined {
+    return this.uploadedFiles.find((f) => f.id === id)
+  }
+
+  getUploadedFileByFilename(filename: string): UploadedFile | undefined {
+    return this.uploadedFiles.find((f) => f.filename === filename)
+  }
+
+  deleteUploadedFile(id: string): boolean {
+    const index = this.uploadedFiles.findIndex((f) => f.id === id)
+    if (index === -1) return false
+    this.uploadedFiles.splice(index, 1)
+    this.saveToStorage()
+    return true
+  }
+
+  addAdjustmentLog(log: Omit<AdjustmentLog, 'id' | 'createdAt'>): AdjustmentLog {
+    const newLog: AdjustmentLog = {
+      ...log,
+      id: generateId('adj'),
+      createdAt: formatDate(),
+    }
+    this.adjustmentLogs.unshift(newLog)
+
+    const task = this.getTaskById(log.taskId)
+    if (task) {
+      task.adjustmentLogs = [...task.adjustmentLogs, newLog]
+      task.updatedAt = formatDate()
+    }
+
+    return newLog
+  }
+
+  getTaskAdjustmentLogs(taskId: string): AdjustmentLog[] {
+    return this.adjustmentLogs.filter((log) => log.taskId === taskId)
+  }
+
+  protected saveToStorage(): void {}
+
+  loadFromStorage(): void {}
 }
 
 export const store = new DataStore()

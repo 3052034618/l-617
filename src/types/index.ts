@@ -17,6 +17,7 @@ export type ApprovalStatus =
   | 'approved_first'
   | 'pending_second'
   | 'approved'
+  | 'published'
   | 'rejected';
 
 export type UserRole = 'scientist' | 'processor' | 'manager' | 'chief';
@@ -59,12 +60,16 @@ export interface SimulationTask {
   createdAt: string;
   updatedAt: string;
   createdBy: string;
+  userId?: string;
+  userName?: string;
   parameters: TaskParameters;
   results?: SimulationResults;
   approvalStatus: ApprovalStatus;
   alertLevel?: AlertLevel | null;
   computeDuration?: number;
   resourceUsage?: number;
+  publishedAt?: string;
+  approvalChain?: ApprovalRecord[];
 }
 
 export interface Alert {
@@ -104,6 +109,9 @@ export interface ApprovalRecord {
   status: 'approved' | 'rejected' | 'pending';
   comment: string;
   createdAt: string;
+  applicant?: string;
+  submittedAt?: string;
+  approvedAt?: string;
 }
 
 export interface MonitorData {

@@ -1,5 +1,5 @@
 import { Router, type Request, type Response } from 'express'
-import { store } from '../data/store.js'
+import { persistentStore as store } from '../data/persistentStore.js'
 
 const router = Router()
 
