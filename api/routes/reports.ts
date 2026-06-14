@@ -115,13 +115,69 @@ router.get('/:taskId/pdf', (req: Request, res: Response): void => {
 
 router.post('/export', (req: Request, res: Response): void => {
   try {
-    const { format, taskIds } = req.body
+    store.init()
+    const {
+      sensorType,
+      observationGeometry,
+      timeWindow,
+      format,
+      taskIds,
+    } = req.body
+
+    const reports = store.getReports()
+    const tasks = store.tasks
+
+    let filteredTasks = [...tasks]
+
+    if (taskIds && taskIds.length > 0) {
+      filteredTasks = filteredTasks.filter((t) => taskIds.includes(t.id))
+    }
+
+    if (timeWindow?.start) {
+      filteredTasks = filteredTasks.filter(
+        (t) => new Date(t.createdAt) >= new Date(timeWindow.start),
+      )
+    }
+    if (timeWindow?.end) {
+      filteredTasks = filteredTasks.filter(
+        (t) => new Date(t.createdAt) <= new Date(timeWindow.end),
+      )
+    }
+
+    const count = filteredTasks.length || reports.length
+    const exportFormat = format || 'xlsx'
+    const baseSize = count * 1024 * 50
+
+    let sizeDescription = `共 ${count} 条记录`
+    const descriptions: string[] = []
+
+    if (sensorType) {
+      descriptions.push(`传感器类型: ${sensorType}`)
+    }
+    if (observationGeometry) {
+      descriptions.push(`观测几何: ${observationGeometry}`)
+    }
+    if (timeWindow?.start || timeWindow?.end) {
+      const start = timeWindow.start || '不限'
+      const end = timeWindow.end || '不限'
+      descriptions.push(`时间范围: ${start} ~ ${end}`)
+    }
+    if (descriptions.length > 0) {
+      sizeDescription += ` (${descriptions.join(', ')})`
+    }
+
+    const filename = `report_export_${Date.now()}.${exportFormat}`
+    const downloadUrl = `/api/reports/export/${Date.now()}`
+
     res.json({
       success: true,
       data: {
-        downloadUrl: `/api/reports/export/${Date.now()}`,
-        format: format || 'xlsx',
-        count: taskIds?.length || store.getReports().length,
+        downloadUrl,
+        filename,
+        size: baseSize,
+        count,
+        description: sizeDescription,
+        format: exportFormat,
       },
     })
   } catch (error) {

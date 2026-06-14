@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import {
   Upload,
   FileText,
@@ -21,16 +21,22 @@ import {
   Sparkles,
   AlertCircle,
   CheckCircle2,
+  AlertTriangle,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import useAppStore from '@/store/useAppStore';
-import type { TaskParameters, SimulationTask } from '@/types';
+import { uploadApi, taskApi } from '@/api';
+import type { TaskParameters } from '@/types';
+import type { UploadedFile as ApiUploadedFile } from '@/api/uploadApi';
 import { cn } from '@/lib/utils';
 
 interface UploadedFile {
   id: string;
   name: string;
   size: number;
+  fileId?: string;
+  validationStatus?: 'pending' | 'valid' | 'invalid';
+  validationMessage?: string;
+  uploading?: boolean;
 }
 
 interface FormData {
@@ -73,7 +79,6 @@ const colorMap: Record<string, [string, string]> = {
 
 export default function TaskCreate() {
   const navigate = useNavigate();
-  const addTask = useAppStore((s) => s.addTask);
 
   const [currentStep, setCurrentStep] = useState(1);
   const [profileFiles, setProfileFiles] = useState<UploadedFile[]>([]);
@@ -83,22 +88,114 @@ export default function TaskCreate() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isDragging, setIsDragging] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [regionPaused, setRegionPaused] = useState<{ paused: boolean; reason?: string } | null>(null);
+  const [checkingRegion, setCheckingRegion] = useState(false);
 
   const fmtSize = (b: number) => (b < 1024 ? b + ' B' : b < 1048576 ? (b / 1024).toFixed(1) + ' KB' : (b / 1048576).toFixed(1) + ' MB');
   const handleDragOver = (e: React.DragEvent) => { e.preventDefault(); setIsDragging(true); };
   const handleDragLeave = (e: React.DragEvent) => { e.preventDefault(); setIsDragging(false); };
 
+  const uploadProfileFile = async (file: File) => {
+    const tempId = Math.random().toString(36).slice(2);
+    const newFile: UploadedFile = {
+      id: tempId,
+      name: file.name,
+      size: file.size,
+      uploading: true,
+      validationStatus: 'pending',
+    };
+    setProfileFiles((p) => [...p, newFile]);
+
+    const res = await uploadApi.uploadProfile(file);
+    if (res.success && res.data) {
+      setProfileFiles((p) =>
+        p.map((f) =>
+          f.id === tempId
+            ? {
+                ...f,
+                uploading: false,
+                fileId: res.data!.file.id,
+                validationStatus: res.data!.validation.valid ? 'valid' : 'invalid',
+                validationMessage: res.data!.validation.message,
+              }
+            : f
+        )
+      );
+    } else {
+      setProfileFiles((p) =>
+        p.map((f) =>
+          f.id === tempId
+            ? {
+                ...f,
+                uploading: false,
+                validationStatus: 'invalid',
+                validationMessage: res.error || '上传失败',
+              }
+            : f
+        )
+      );
+    }
+  };
+
+  const uploadSurfaceFile = async (file: File) => {
+    const tempId = Math.random().toString(36).slice(2);
+    const newFile: UploadedFile = {
+      id: tempId,
+      name: file.name,
+      size: file.size,
+      uploading: true,
+      validationStatus: 'pending',
+    };
+    setSurfaceFile(newFile);
+
+    const res = await uploadApi.uploadSurface(file);
+    if (res.success && res.data) {
+      setSurfaceFile({
+        ...newFile,
+        uploading: false,
+        fileId: res.data.file.id,
+        validationStatus: res.data.validation.valid ? 'valid' : 'invalid',
+        validationMessage: res.data.validation.message,
+      });
+    } else {
+      setSurfaceFile({
+        ...newFile,
+        uploading: false,
+        validationStatus: 'invalid',
+        validationMessage: res.error || '上传失败',
+      });
+    }
+  };
+
   const handleProfileDrop = (e: React.DragEvent) => {
-    e.preventDefault(); setIsDragging(false);
-    const files = Array.from(e.dataTransfer.files).map((f) => ({ id: Math.random().toString(36).slice(2), name: f.name, size: f.size }));
-    setProfileFiles((p) => [...p, ...files]);
+    e.preventDefault();
+    setIsDragging(false);
+    const files = Array.from(e.dataTransfer.files);
+    files.forEach((f) => uploadProfileFile(f));
   };
 
   const handleSurfaceDrop = (e: React.DragEvent) => {
-    e.preventDefault(); setIsDragging(false);
+    e.preventDefault();
+    setIsDragging(false);
     const f = e.dataTransfer.files[0];
-    if (f) setSurfaceFile({ id: Math.random().toString(36).slice(2), name: f.name, size: f.size });
+    if (f) uploadSurfaceFile(f);
   };
+
+  useEffect(() => {
+    if (!formData.region) {
+      setRegionPaused(null);
+      return;
+    }
+    const checkRegion = async () => {
+      setCheckingRegion(true);
+      const res = await taskApi.checkRegionPaused(formData.region);
+      if (res.success && res.data) {
+        setRegionPaused({ paused: res.data.paused, reason: res.data.reason });
+      }
+      setCheckingRegion(false);
+    };
+    checkRegion();
+  }, [formData.region]);
 
   const updateForm = <K extends keyof FormData>(field: K, value: FormData[K]) => {
     setFormData((p) => ({ ...p, [field]: value }));
@@ -110,8 +207,25 @@ export default function TaskCreate() {
 
   const validateStep1 = () => {
     const e: Record<string, string> = {};
-    if (profileFiles.length === 0) e.profileFiles = '请至少上传一个廓线参数文件';
-    if (!surfaceFile) e.surfaceFile = '请上传下垫面类型数据';
+    if (profileFiles.length === 0) {
+      e.profileFiles = '请至少上传一个廓线参数文件';
+    } else {
+      const invalidFiles = profileFiles.filter((f) => f.validationStatus === 'invalid');
+      if (invalidFiles.length > 0) {
+        e.profileFiles = '存在校验不通过的廓线文件，请检查';
+      }
+      const uploadingFiles = profileFiles.filter((f) => f.uploading);
+      if (uploadingFiles.length > 0) {
+        e.profileFiles = '文件正在上传中，请稍候';
+      }
+    }
+    if (!surfaceFile) {
+      e.surfaceFile = '请上传下垫面类型数据';
+    } else if (surfaceFile.validationStatus === 'invalid') {
+      e.surfaceFile = surfaceFile.validationMessage || '下垫面文件校验不通过';
+    } else if (surfaceFile.uploading) {
+      e.surfaceFile = '文件正在上传中，请稍候';
+    }
     setErrors(e);
     return Object.keys(e).length === 0;
   };
@@ -120,6 +234,7 @@ export default function TaskCreate() {
     const e: Record<string, string> = {};
     if (!formData.taskName.trim()) e.taskName = '请输入任务名称';
     if (!formData.region) e.region = '请选择区域';
+    if (regionPaused?.paused) e.region = '该区域当前暂停受理任务，请选择其他区域';
     if (formData.wavelengthMin >= formData.wavelengthMax) e.wavelength = '最小波长必须小于最大波长';
     if (formData.wavelengthMin < 0.2 || formData.wavelengthMin > 25) e.wavelengthMin = '波长范围 0.2 - 25 μm';
     if (formData.wavelengthMax < 0.2 || formData.wavelengthMax > 25) e.wavelengthMax = '波长范围 0.2 - 25 μm';
@@ -150,22 +265,30 @@ export default function TaskCreate() {
 
   const handleSubmit = async () => {
     setIsSubmitting(true);
-    await new Promise((r) => setTimeout(r, 1000));
-    const taskId = `task-${Date.now()}`;
-    const parameters: TaskParameters = {
-      profileFile: profileFiles[0]?.name || '', surfaceType: surfaceFile?.name || '',
-      aerosolModel: formData.aerosolModel,
-      wavelengthRange: [formData.wavelengthMin, formData.wavelengthMax],
-      spectralResolution: formData.spectralResolution, observationAngle: formData.observationAngle,
-    };
-    const newTask: SimulationTask = {
-      id: taskId, name: formData.taskName, region: formData.region, status: 'pending',
-      progress: 0, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(),
-      createdBy: '当前用户', parameters, approvalStatus: 'none',
-    };
-    addTask(newTask);
-    setIsSubmitting(false);
-    navigate(`/tasks/${taskId}`);
+    try {
+      const parameters: Partial<TaskParameters> = {
+        profileFile: profileFiles[0]?.name || '',
+        surfaceType: surfaceFile?.name || '',
+        aerosolModel: formData.aerosolModel,
+        wavelengthRange: [formData.wavelengthMin, formData.wavelengthMax],
+        spectralResolution: formData.spectralResolution,
+        observationAngle: formData.observationAngle,
+      };
+      const res = await taskApi.create({
+        name: formData.taskName,
+        region: formData.region,
+        parameters,
+        profileFileId: profileFiles[0]?.fileId,
+        surfaceFileId: surfaceFile?.fileId,
+      });
+      if (res.success && res.data) {
+        navigate(`/tasks/${res.data.id}`);
+      } else {
+        alert(res.error || '创建任务失败');
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const ErrMsg = ({ msg }: { msg?: string }) => msg ? <p className="text-red-400 text-xs mt-1 flex items-center gap-1"><AlertCircle className="w-3 h-3" />{msg}</p> : null;
@@ -231,6 +354,22 @@ export default function TaskCreate() {
                 <div className="flex-1 min-w-0">
                   <div className="text-sm text-white truncate">{f.name}</div>
                   <div className="text-xs text-slate-500">{fmtSize(f.size)}</div>
+                  {f.uploading ? (
+                    <div className="text-xs text-cyan-400 mt-1 flex items-center gap-1">
+                      <div className="w-3 h-3 border-2 border-cyan-400/30 border-t-cyan-400 rounded-full animate-spin" />
+                      上传中...
+                    </div>
+                  ) : f.validationStatus === 'valid' ? (
+                    <div className="text-xs text-green-400 mt-1 flex items-center gap-1">
+                      <CheckCircle2 className="w-3 h-3" />
+                      {f.validationMessage || '校验通过'}
+                    </div>
+                  ) : f.validationStatus === 'invalid' ? (
+                    <div className="text-xs text-red-400 mt-1 flex items-center gap-1">
+                      <AlertCircle className="w-3 h-3" />
+                      {f.validationMessage || '校验不通过'}
+                    </div>
+                  ) : null}
                 </div>
                 <button onClick={() => setProfileFiles((p) => p.filter((x) => x.id !== f.id))}
                   className="p-1.5 rounded-lg text-slate-400 hover:text-red-400 hover:bg-red-500/10 opacity-0 group-hover:opacity-100 transition-all">
@@ -259,6 +398,22 @@ export default function TaskCreate() {
             <div className="flex-1">
               <div className="text-sm text-white font-medium">{surfaceFile.name}</div>
               <div className="text-xs text-slate-500">{fmtSize(surfaceFile.size)}</div>
+              {surfaceFile.uploading ? (
+                <div className="text-xs text-cyan-400 mt-1 flex items-center gap-1">
+                  <div className="w-3 h-3 border-2 border-cyan-400/30 border-t-cyan-400 rounded-full animate-spin" />
+                  上传中...
+                </div>
+              ) : surfaceFile.validationStatus === 'valid' ? (
+                <div className="text-xs text-green-400 mt-1 flex items-center gap-1">
+                  <CheckCircle2 className="w-3 h-3" />
+                  {surfaceFile.validationMessage || '校验通过'}
+                </div>
+              ) : surfaceFile.validationStatus === 'invalid' ? (
+                <div className="text-xs text-red-400 mt-1 flex items-center gap-1">
+                  <AlertCircle className="w-3 h-3" />
+                  {surfaceFile.validationMessage || '校验不通过'}
+                </div>
+              ) : null}
             </div>
             <button onClick={() => setSurfaceFile(null)} className="p-2 rounded-lg text-slate-400 hover:text-red-400 hover:bg-red-500/10 transition-colors">
               <X className="w-4 h-4" />
@@ -287,6 +442,23 @@ export default function TaskCreate() {
             {REGIONS.map((r) => <option key={r} value={r}>{r}</option>)}
           </select>
           <ErrMsg msg={errors.region} />
+          {checkingRegion && formData.region && (
+            <p className="text-xs text-slate-400 mt-1 flex items-center gap-1">
+              <div className="w-3 h-3 border-2 border-cyan-400/30 border-t-cyan-400 rounded-full animate-spin" />
+              检查区域状态...
+            </p>
+          )}
+          {regionPaused?.paused && !checkingRegion && (
+            <div className="mt-2 p-3 rounded-lg bg-yellow-500/10 border border-yellow-500/30">
+              <div className="flex items-start gap-2">
+                <AlertTriangle className="w-4 h-4 text-yellow-400 flex-shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-sm font-medium text-yellow-400">该区域当前暂停受理</p>
+                  <p className="text-xs text-slate-400 mt-1">{regionPaused.reason || '请选择其他区域进行模拟'}</p>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
         <div>

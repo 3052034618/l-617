@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useCallback } from 'react';
 import {
   CheckCircle,
   XCircle,
@@ -16,7 +16,7 @@ import {
   Globe,
   AlertTriangle,
 } from 'lucide-react';
-import useAppStore from '@/store/useAppStore';
+import { approvalApi, taskApi } from '@/api';
 import type { SimulationTask, ApprovalStatus, ApprovalRecord } from '@/types';
 import { cn } from '@/lib/utils';
 
@@ -440,22 +440,68 @@ function HistoryItem({ record }: { record: ApprovalRecord }) {
 }
 
 export default function Approval() {
-  const { tasks, approvals, approveTask, rejectTask, userRole, setUserRole, fetchApprovalChain, initializeMockData } = useAppStore();
   const [activeTab, setActiveTab] = useState<TabType>('pending');
+  const [userRole, setUserRole] = useState<UserRoleType>('processor');
   const [selectedTask, setSelectedTask] = useState<SimulationTask | null>(null);
   const [selectedTaskChain, setSelectedTaskChain] = useState<ApprovalRecord[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [pendingRecords, setPendingRecords] = useState<ApprovalRecord[]>([]);
+  const [approvalHistory, setApprovalHistory] = useState<ApprovalRecord[]>([]);
+  const [allTasks, setAllTasks] = useState<SimulationTask[]>([]);
+  const [pendingTasks, setPendingTasks] = useState<SimulationTask[]>([]);
+  const [approvedTasks, setApprovedTasks] = useState<SimulationTask[]>([]);
+
+  const fetchPendingApprovals = useCallback(async () => {
+    const role = userRole === 'processor' ? 'processor' : userRole === 'manager' ? 'manager' : 'chief';
+    const res = await approvalApi.getPending(role);
+    if (res.success && res.data) {
+      setPendingRecords(res.data);
+      const taskIds = res.data.map((r) => r.taskId);
+      const tasksWithDetails: SimulationTask[] = [];
+      for (const record of res.data) {
+        const taskRes = await taskApi.getById(record.taskId);
+        if (taskRes.success && taskRes.data) {
+          tasksWithDetails.push(taskRes.data);
+        }
+      }
+      setPendingTasks(tasksWithDetails);
+    }
+  }, [userRole]);
+
+  const fetchApprovalHistory = useCallback(async () => {
+    const res = await approvalApi.getHistory();
+    if (res.success && res.data) {
+      setApprovalHistory(res.data);
+    }
+  }, []);
+
+  const fetchAllTasks = useCallback(async () => {
+    const res = await taskApi.getList({ pageSize: 100 });
+    if (res.success && res.data) {
+      const tasks = res.data.list.filter((t) => t.approvalStatus !== 'none');
+      setAllTasks(tasks);
+      setApprovedTasks(tasks.filter((t) =>
+        ['approved_first', 'approved', 'published', 'rejected'].includes(t.approvalStatus)
+      ));
+    }
+  }, []);
 
   useEffect(() => {
-    initializeMockData();
-  }, [initializeMockData]);
+    fetchPendingApprovals();
+    fetchApprovalHistory();
+    fetchAllTasks();
+  }, [fetchPendingApprovals, fetchApprovalHistory, fetchAllTasks]);
 
   const handleViewDetail = async (task: SimulationTask) => {
     setSelectedTask(task);
     setIsLoading(true);
     try {
-      const chain = await fetchApprovalChain(task.id);
-      setSelectedTaskChain(chain || task.approvalChain || []);
+      const res = await approvalApi.getChain(task.id);
+      if (res.success && res.data) {
+        setSelectedTaskChain(res.data.records || []);
+      } else {
+        setSelectedTaskChain(task.approvalChain || []);
+      }
     } catch (error) {
       setSelectedTaskChain(task.approvalChain || []);
     } finally {
@@ -463,22 +509,31 @@ export default function Approval() {
     }
   };
 
-  const pendingTasks = useMemo(() => {
-    let filtered = tasks.filter((t) => t.approvalStatus === 'pending_first' || t.approvalStatus === 'pending_second');
-    if (userRole === 'processor') {
-      filtered = filtered.filter((t) => t.approvalStatus === 'pending_first');
-    } else if (userRole === 'manager') {
-      filtered = filtered.filter((t) => t.approvalStatus === 'pending_second');
+  const handleApprove = async (taskId: string, level: 1 | 2, comment: string) => {
+    const approver = userRole === 'processor' ? '数据处理员' : userRole === 'manager' ? '项目负责人' : '主管';
+    const res = await approvalApi.approve(taskId, { level, approver, comment });
+    if (res.success) {
+      fetchPendingApprovals();
+      fetchApprovalHistory();
+      fetchAllTasks();
+      if (selectedTask?.id === taskId) {
+        handleViewDetail(res.data!.task);
+      }
     }
-    return filtered;
-  }, [tasks, userRole]);
+  };
 
-  const approvedTasks = useMemo(
-    () => tasks.filter((t) => ['approved_first', 'approved', 'published', 'rejected'].includes(t.approvalStatus)),
-    [tasks]
-  );
-
-  const allTasks = useMemo(() => tasks.filter((t) => t.approvalStatus !== 'none'), [tasks]);
+  const handleReject = async (taskId: string, level: 1 | 2, comment: string) => {
+    const approver = userRole === 'processor' ? '数据处理员' : userRole === 'manager' ? '项目负责人' : '主管';
+    const res = await approvalApi.reject(taskId, { level, approver, comment });
+    if (res.success) {
+      fetchPendingApprovals();
+      fetchApprovalHistory();
+      fetchAllTasks();
+      if (selectedTask?.id === taskId) {
+        handleViewDetail(res.data!.task);
+      }
+    }
+  };
 
   const displayTasks = activeTab === 'pending' ? pendingTasks : activeTab === 'approved' ? approvedTasks : allTasks;
 
@@ -488,7 +543,7 @@ export default function Approval() {
     all: allTasks.length,
   };
 
-  const publishedCount = useMemo(() => tasks.filter((t) => t.approvalStatus === 'published').length, [tasks]);
+  const publishedCount = useMemo(() => allTasks.filter((t) => t.approvalStatus === 'published').length, [allTasks]);
 
   return (
     <div className="space-y-6">
@@ -539,7 +594,7 @@ export default function Approval() {
           <div className="text-xs text-slate-400">已发布</div>
         </div>
         <div className="glass rounded-xl p-4">
-          <div className="text-3xl font-bold text-red-400 mb-1">{tasks.filter(t => t.approvalStatus === 'rejected').length}</div>
+          <div className="text-3xl font-bold text-red-400 mb-1">{allTasks.filter(t => t.approvalStatus === 'rejected').length}</div>
           <div className="text-xs text-slate-400">已驳回</div>
         </div>
       </div>
@@ -576,8 +631,8 @@ export default function Approval() {
               <div key={task.id} style={{ animationDelay: `${0.05 + index * 0.05}s` }}>
                 <ApprovalCard
                   task={task}
-                  onApprove={approveTask}
-                  onReject={rejectTask}
+                  onApprove={handleApprove}
+                  onReject={handleReject}
                   onViewDetail={handleViewDetail}
                   userRole={userRole}
                 />
@@ -613,8 +668,8 @@ export default function Approval() {
               审批历史
             </h3>
             <div className="space-y-3 max-h-[500px] overflow-y-auto pr-1">
-              {approvals.length > 0 ? (
-                approvals.map((record) => <HistoryItem key={record.id} record={record} />)
+              {approvalHistory.length > 0 ? (
+                approvalHistory.map((record) => <HistoryItem key={record.id} record={record} />)
               ) : (
                 <div className="text-center py-8 text-slate-500 text-sm">暂无审批记录</div>
               )}

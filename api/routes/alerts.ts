@@ -83,14 +83,88 @@ router.put('/:id/review', (req: Request, res: Response): void => {
       return
     }
 
-    const { reviewComment, reviewedBy } = req.body
-    const updated = store.updateAlert(req.params.id, {
-      status: 'reviewed',
+    const { action, comment, adjustment, reviewedBy } = req.body
+
+    if (!action || (action !== 'adjust' && action !== 'ignore')) {
+      res.status(400).json({
+        success: false,
+        error: 'action 参数必须为 adjust 或 ignore',
+      })
+      return
+    }
+
+    let adjustmentLog = undefined
+    let updatedTask = undefined
+
+    if (action === 'adjust') {
+      if (!adjustment || !adjustment.parameter) {
+        res.status(400).json({
+          success: false,
+          error: 'adjust 操作必须提供 adjustment 参数',
+        })
+        return
+      }
+
+      adjustmentLog = store.addAdjustmentLog({
+        alertId: alert.id,
+        taskId: alert.taskId,
+        parameter: adjustment.parameter,
+        oldValue: adjustment.oldValue ?? 0,
+        newValue: adjustment.newValue ?? 0,
+        reason: adjustment.reason || comment || '参数调整',
+        operator: reviewedBy || '当前用户',
+      })
+
+      const task = store.getTaskById(alert.taskId)
+      if (task) {
+        const paramUpdates: any = {}
+        if (adjustment.parameter === 'aerosol_optical_depth') {
+          paramUpdates.aerosolModel = adjustment.newValue
+        } else if (adjustment.parameter === 'surface_emissivity') {
+          paramUpdates.surfaceType = adjustment.newValue
+        } else if (adjustment.parameter === 'observation_angle') {
+          paramUpdates.observationAngle = adjustment.newValue
+        } else if (adjustment.parameter === 'spectral_resolution') {
+          paramUpdates.spectralResolution = adjustment.newValue
+        }
+
+        const updatedParameters = {
+          ...task.parameters,
+          ...paramUpdates,
+        }
+
+        const newResults = {
+          ...task.results,
+          accuracy: task.results
+            ? Number((task.results.accuracy * 0.98 + 0.02).toFixed(4))
+            : 0.95,
+          fittingResidual: task.results
+            ? Number((task.results.fittingResidual * 0.9).toFixed(4))
+            : 0.01,
+        }
+
+        updatedTask = store.updateTask(alert.taskId, {
+          parameters: updatedParameters,
+          results: newResults,
+        })
+      }
+    }
+
+    const updatedAlert = store.updateAlert(req.params.id, {
+      status: action === 'adjust' ? 'resolved' : 'reviewed',
       reviewedBy: reviewedBy || '当前用户',
-      reviewComment: reviewComment || '已复核',
+      reviewComment: comment || (action === 'ignore' ? '已忽略' : '已调整'),
+      adjustment: adjustmentLog,
     })
 
-    res.json({ success: true, data: updated })
+    res.json({
+      success: true,
+      data: {
+        alert: updatedAlert,
+        task: updatedTask,
+        adjustmentLog,
+      },
+    })
   } catch (error) {
     res.status(500).json({
       success: false,

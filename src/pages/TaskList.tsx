@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import {
   Search,
   Plus,
@@ -18,7 +18,7 @@ import {
   ListTodo,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import useAppStore from '@/store/useAppStore';
+import { taskApi } from '@/api';
 import type { TaskStatus, SimulationTask } from '@/types';
 import { cn } from '@/lib/utils';
 
@@ -55,11 +55,32 @@ const PAGE_SIZE = 8;
 
 export default function TaskList() {
   const navigate = useNavigate();
-  const { tasks } = useAppStore();
+  const [tasks, setTasks] = useState<SimulationTask[]>([]);
   const [statusFilter, setStatusFilter] = useState<TaskStatus | 'all'>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [showFilterDropdown, setShowFilterDropdown] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const intervalRef = useRef<number | null>(null);
+
+  const fetchTasks = async () => {
+    setLoading(true);
+    const res = await taskApi.getList({ page: 1, pageSize: 100 });
+    if (res.success && res.data) {
+      setTasks(res.data.list);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchTasks();
+    intervalRef.current = window.setInterval(fetchTasks, 3000);
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, []);
 
   const filteredTasks = useMemo(() => {
     return tasks.filter((task) => {
@@ -81,6 +102,21 @@ export default function TaskList() {
 
   const totalPages = Math.ceil(filteredTasks.length / PAGE_SIZE);
   const paginatedTasks = filteredTasks.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
+
+  const handleDelete = async (taskId: string) => {
+    if (!confirm('确定要删除这个任务吗？')) return;
+    const res = await taskApi.remove(taskId);
+    if (res.success) {
+      setTasks((prev) => prev.filter((t) => t.id !== taskId));
+    }
+  };
+
+  const handleRestart = async (taskId: string) => {
+    const res = await taskApi.restart(taskId);
+    if (res.success && res.data) {
+      setTasks((prev) => prev.map((t) => (t.id === taskId ? res.data! : t)));
+    }
+  };
 
   const formatDate = (iso: string) =>
     new Date(iso).toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
@@ -266,14 +302,14 @@ export default function TaskList() {
                           <Eye className="w-4 h-4" />
                         </button>
                         <button
-                          onClick={() => console.log('Restart:', task.id)}
+                          onClick={() => handleRestart(task.id)}
                           className="p-2 rounded-lg text-slate-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"
                           title="重启"
                         >
                           <RotateCcw className="w-4 h-4" />
                         </button>
                         <button
-                          onClick={() => console.log('Delete:', task.id)}
+                          onClick={() => handleDelete(task.id)}
                           className="p-2 rounded-lg text-slate-400 hover:text-red-400 hover:bg-red-500/10 transition-colors"
                           title="删除"
                         >

@@ -49,6 +49,27 @@ router.get('/', (req: Request, res: Response): void => {
   }
 })
 
+router.get('/check-region', (req: Request, res: Response): void => {
+  try {
+    store.init()
+    const { region } = req.query
+    if (!region) {
+      res.status(400).json({
+        success: false,
+        error: '缺少 region 参数',
+      })
+      return
+    }
+    const result = store.checkRegionPaused(region as string)
+    res.json({ success: true, data: result })
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: '检查区域暂停状态失败',
+    })
+  }
+})
+
 router.get('/:id', (req: Request, res: Response): void => {
   try {
     store.init()
@@ -72,7 +93,16 @@ router.get('/:id', (req: Request, res: Response): void => {
 router.post('/', (req: Request, res: Response): void => {
   try {
     store.init()
-    const { name, region, parameters, createdBy, userId, userName } = req.body
+    const {
+      name,
+      region,
+      parameters,
+      createdBy,
+      userId,
+      userName,
+      profileFileId,
+      surfaceFileId,
+    } = req.body
 
     const newTask = store.addTask({
       name: name || '新建模拟任务',
@@ -91,7 +121,9 @@ router.post('/', (req: Request, res: Response): void => {
         observationAngle: 0,
       },
       approvalStatus: 'none',
-    } as SimulationTask)
+      profileFileId,
+      surfaceFileId,
+    } as SimulationTask & { profileFileId?: string; surfaceFileId?: string })
 
     taskEngine.startTask(newTask.id)
 

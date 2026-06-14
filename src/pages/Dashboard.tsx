@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import {
   LayoutDashboard,
   TrendingUp,
@@ -18,8 +18,8 @@ import {
   MapPin,
   BarChart3,
 } from 'lucide-react';
-import useAppStore from '@/store/useAppStore';
-import type { AlertLevel, RegionStatus } from '@/types';
+import { statisticsApi, alertApi } from '@/api';
+import type { AlertLevel, RegionStatus, StatisticsOverview, Alert, TrendData } from '@/types';
 import { cn } from '@/lib/utils';
 
 const levelColors: Record<AlertLevel, string> = {
@@ -43,25 +43,44 @@ const quickActions = [
   { icon: CheckSquare, label: '审批中心', color: 'from-indigo-500 to-violet-400' },
 ];
 
-const trendData = [
-  { day: '周一', value: 85 },
-  { day: '周二', value: 92 },
-  { day: '周三', value: 78 },
-  { day: '周四', value: 88 },
-  { day: '周五', value: 95 },
-  { day: '周六', value: 72 },
-  { day: '周日', value: 90 },
-];
-
 export default function Dashboard() {
-  const { statistics, alerts, regions, initializeMockData } = useAppStore();
+  const [statistics, setStatistics] = useState<StatisticsOverview | null>(null);
+  const [alerts, setAlerts] = useState<Alert[]>([]);
+  const [regions, setRegions] = useState<RegionStatus[]>([]);
+  const [trendData, setTrendData] = useState<TrendData[]>([]);
   const [currentTime, setCurrentTime] = useState(new Date());
 
+  const fetchStatistics = useCallback(async () => {
+    const [overviewRes, alertsRes, completionRes, regionsRes] = await Promise.all([
+      statisticsApi.getOverview(),
+      alertApi.getList({ status: 'pending', pageSize: 5 }),
+      statisticsApi.getCompletionRate(7),
+      statisticsApi.getRegions(),
+    ]);
+
+    if (overviewRes.success && overviewRes.data) {
+      setStatistics(overviewRes.data);
+    }
+    if (alertsRes.success && alertsRes.data) {
+      setAlerts(alertsRes.data.list);
+    }
+    if (completionRes.success && completionRes.data) {
+      setTrendData(completionRes.data);
+    }
+    if (regionsRes.success && regionsRes.data) {
+      setRegions(regionsRes.data);
+    }
+  }, []);
+
   useEffect(() => {
-    initializeMockData();
-    const timer = setInterval(() => setCurrentTime(new Date()), 1000);
-    return () => clearInterval(timer);
-  }, [initializeMockData]);
+    fetchStatistics();
+    const timeTimer = setInterval(() => setCurrentTime(new Date()), 1000);
+    const dataTimer = setInterval(fetchStatistics, 10000);
+    return () => {
+      clearInterval(timeTimer);
+      clearInterval(dataTimer);
+    };
+  }, [fetchStatistics]);
 
   const formatDate = (date: Date) => {
     const year = date.getFullYear();
@@ -90,6 +109,10 @@ export default function Dashboard() {
 
   const pendingApprovals = statistics?.pendingTasks ?? 0;
   const recentAlerts = alerts.slice(0, 5);
+
+  const avgCompletion = trendData.length > 0
+    ? (trendData.reduce((sum, item) => sum + item.value, 0) / trendData.length).toFixed(1)
+    : '0';
 
   return (
     <div className="space-y-6">
@@ -279,12 +302,12 @@ export default function Dashboard() {
             </h2>
             <div className="flex items-center gap-2">
               <span className="text-xs text-slate-400">平均</span>
-              <span className="text-sm font-semibold text-cyan-400">85.7%</span>
+              <span className="text-sm font-semibold text-cyan-400">{avgCompletion}%</span>
             </div>
           </div>
           <div className="h-48 flex items-end justify-between gap-2 px-2">
             {trendData.map((item, index) => (
-              <div key={item.day} className="flex-1 flex flex-col items-center gap-2">
+              <div key={item.date} className="flex-1 flex flex-col items-center gap-2">
                 <div className="w-full relative group">
                   <div
                     className="w-full bg-gradient-to-t from-blue-600 to-cyan-400 rounded-t-md transition-all duration-500 hover:from-cyan-400 hover:to-blue-400"
@@ -297,7 +320,7 @@ export default function Dashboard() {
                     {item.value}%
                   </div>
                 </div>
-                <span className="text-xs text-slate-500">{item.day}</span>
+                <span className="text-xs text-slate-500">{item.date}</span>
               </div>
             ))}
           </div>

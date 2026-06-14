@@ -1,0 +1,5937 @@
+{
+  "tasks": [
+    {
+      "id": "task_mqe81r0hfaixuc",
+      "name": "华北平原夏季气溶胶辐射传输模拟",
+      "region": "华北平原",
+      "status": "completed",
+      "progress": 100,
+      "createdAt": "2026-06-14T20:13:15.901Z",
+      "updatedAt": "2026-06-16T13:13:15.901Z",
+      "createdBy": "张科学家",
+      "parameters": {
+        "profileFile": "profile_1.dat",
+        "surfaceType": "植被",
+        "aerosolModel": "大陆型",
+        "wavelengthRange": [
+          0.4,
+          2.5
+        ],
+        "spectralResolution": 0.01,
+        "observationAngle": 0
+      },
+      "approvalStatus": "published",
+      "alertLevel": "level2",
+      "computeDuration": 980,
+      "resourceUsage": 3.2,
+      "publishedAt": "2026-06-16T13:13:15.901Z",
+      "adjustmentLogs": [],
+      "results": {
+        "transmittance": [
+          {
+            "wavelength": 0.4,
+            "value": 0.5231
+          },
+          {
+            "wavelength": 0.421,
+            "value": 0.55
+          },
+          {
+            "wavelength": 0.442,
+            "value": 0.5626
+          },
+          {
+            "wavelength": 0.463,
+            "value": 0.633
+          },
+          {
+            "wavelength": 0.484,
+            "value": 0.6462
+          },
+          {
+            "wavelength": 0.505,
+            "value": 0.6802
+          },
+          {
+            "wavelength": 0.526,
+            "value": 0.6916
+          },
+          {
+            "wavelength": 0.547,
+            "value": 0.7303
+          },
+          {
+            "wavelength": 0.568,
+            "value": 0.7524
+          },
+          {
+            "wavelength": 0.589,
+            "value": 0.772
+          },
+          {
+            "wavelength": 0.61,
+            "value": 0.7836
+          },
+          {
+            "wavelength": 0.631,
+            "value": 0.7711
+          },
+          {
+            "wavelength": 0.652,
+            "value": 0.7799
+          },
+          {
+            "wavelength": 0.673,
+            "value": 0.8109
+          },
+          {
+            "wavelength": 0.694,
+            "value": 0.7767
+          },
+          {
+            "wavelength": 0.715,
+            "value": 0.8024
+          },
+          {
+            "wavelength": 0.736,
+            "value": 0.769
+          },
+          {
+            "wavelength": 0.757,
+            "value": 0.7741
+          },
+          {
+            "wavelength": 0.778,
+            "value": 0.7401
+          },
+          {
+            "wavelength": 0.799,
+            "value": 0.6927
+          },
+          {
+            "wavelength": 0.82,
+            "value": 0.6519
+          },
+          {
+            "wavelength": 0.841,
+            "value": 0.6344
+          },
+          {
+            "wavelength": 0.862,
+            "value": 0.5957
+          },
+          {
+            "wavelength": 0.883,
+            "value": 0.5902
+          },
+          {
+            "wavelength": 0.904,
+            "value": 0.5344
+          },
+          {
+            "wavelength": 0.925,
+            "value": 0.5237
+          },
+          {
+            "wavelength": 0.946,
+            "value": 0.4385
+          },
+          {
+            "wavelength": 0.967,
+            "value": 0.4427
+          },
+          {
+            "wavelength": 0.988,
+            "value": 0.3971
+          },
+          {
+            "wavelength": 1.009,
+            "value": 0.3316
+          },
+          {
+            "wavelength": 1.03,
+            "value": 0.3166
+          },
+          {
+            "wavelength": 1.051,
+            "value": 0.3145
+          },
+          {
+            "wavelength": 1.072,
+            "value": 0.2885
+          },
+          {
+            "wavelength": 1.093,
+            "value": 0.244
+          },
+          {
+            "wavelength": 1.114,
+            "value": 0.2327
+          },
+          {
+            "wavelength": 1.135,
+            "value": 0.202
+          },
+          {
+            "wavelength": 1.156,
+            "value": 0.2038
+          },
+          {
+            "wavelength": 1.177,
+            "value": 0.1861
+          },
+          {
+            "wavelength": 1.198,
+            "value": 0.2199
+          },
+          {
+            "wavelength": 1.219,
+            "value": 0.2293
+          },
+          {
+            "wavelength": 1.24,
+            "value": 0.224
+          },
+          {
+            "wavelength": 1.261,
+            "value": 0.2478
+          },
+          {
+            "wavelength": 1.282,
+            "value": 0.2376
+          },
+          {
+            "wavelength": 1.303,
+            "value": 0.2899
+          },
+          {
+            "wavelength": 1.324,
+            "value": 0.3043
+          },
+          {
+            "wavelength": 1.345,
+            "value": 0.3112
+          },
+          {
+            "wavelength": 1.366,
+            "value": 0.3357
+          },
+          {
+            "wavelength": 1.387,
+            "value": 0.3787
+          },
+          {
+            "wavelength": 1.408,
+            "value": 0.4181
+          },
+          {
+            "wavelength": 1.429,
+            "value": 0.4648
+          },
+          {
+            "wavelength": 1.45,
+            "value": 0.486
+          },
+          {
+            "wavelength": 1.471,
+            "value": 0.5504
+          },
+          {
+            "wavelength": 1.492,
+            "value": 0.5498
+          },
+          {
+            "wavelength": 1.513,
+            "value": 0.6225
+          },
+          {
+            "wavelength": 1.534,
+            "value": 0.6329
+          },
+          {
+            "wavelength": 1.555,
+            "value": 0.6939
+          },
+          {
+            "wavelength": 1.576,
+            "value": 0.6825
+          },
+          {
+            "wavelength": 1.597,
+            "value": 0.7277
+          },
+          {
+            "wavelength": 1.618,
+            "value": 0.7606
+          },
+          {
+            "wavelength": 1.639,
+            "value": 0.7802
+          },
+          {
+            "wavelength": 1.66,
+            "value": 0.7818
+          },
+          {
+            "wavelength": 1.681,
+            "value": 0.7764
+          },
+          {
+            "wavelength": 1.702,
+            "value": 0.8231
+          },
+          {
+            "wavelength": 1.723,
+            "value": 0.8024
+          },
+          {
+            "wavelength": 1.744,
+            "value": 0.8197
+          },
+          {
+            "wavelength": 1.765,
+            "value": 0.8068
+          },
+          {
+            "wavelength": 1.786,
+            "value": 0.7629
+          },
+          {
+            "wavelength": 1.807,
+            "value": 0.7445
+          },
+          {
+            "wavelength": 1.828,
+            "value": 0.7338
+          },
+          {
+            "wavelength": 1.849,
+            "value": 0.7012
+          },
+          {
+            "wavelength": 1.87,
+            "value": 0.6598
+          },
+          {
+            "wavelength": 1.891,
+            "value": 0.636
+          },
+          {
+            "wavelength": 1.912,
+            "value": 0.5919
+          },
+          {
+            "wavelength": 1.933,
+            "value": 0.5784
+          },
+          {
+            "wavelength": 1.954,
+            "value": 0.5415
+          },
+          {
+            "wavelength": 1.975,
+            "value": 0.4883
+          },
+          {
+            "wavelength": 1.996,
+            "value": 0.4755
+          },
+          {
+            "wavelength": 2.017,
+            "value": 0.4349
+          },
+          {
+            "wavelength": 2.038,
+            "value": 0.3792
+          },
+          {
+            "wavelength": 2.059,
+            "value": 0.3771
+          },
+          {
+            "wavelength": 2.08,
+            "value": 0.3395
+          },
+          {
+            "wavelength": 2.101,
+            "value": 0.2929
+          },
+          {
+            "wavelength": 2.122,
+            "value": 0.2583
+          },
+          {
+            "wavelength": 2.143,
+            "value": 0.2576
+          },
+          {
+            "wavelength": 2.164,
+            "value": 0.209
+          },
+          {
+            "wavelength": 2.185,
+            "value": 0.2059
+          },
+          {
+            "wavelength": 2.206,
+            "value": 0.2122
+          },
+          {
+            "wavelength": 2.227,
+            "value": 0.1818
+          },
+          {
+            "wavelength": 2.248,
+            "value": 0.1947
+          },
+          {
+            "wavelength": 2.269,
+            "value": 0.22
+          },
+          {
+            "wavelength": 2.29,
+            "value": 0.223
+          },
+          {
+            "wavelength": 2.311,
+            "value": 0.2388
+          },
+          {
+            "wavelength": 2.332,
+            "value": 0.2281
+          },
+          {
+            "wavelength": 2.353,
+            "value": 0.2879
+          },
+          {
+            "wavelength": 2.374,
+            "value": 0.2738
+          },
+          {
+            "wavelength": 2.395,
+            "value": 0.3077
+          },
+          {
+            "wavelength": 2.416,
+            "value": 0.3416
+          },
+          {
+            "wavelength": 2.437,
+            "value": 0.4012
+          },
+          {
+            "wavelength": 2.458,
+            "value": 0.4298
+          },
+          {
+            "wavelength": 2.479,
+            "value": 0.476
+          }
+        ],
+        "reflectance": [
+          {
+            "wavelength": 0.4,
+            "value": 0.197
+          },
+          {
+            "wavelength": 0.421,
+            "value": 0.2128
+          },
+          {
+            "wavelength": 0.442,
+            "value": 0.2331
+          },
+          {
+            "wavelength": 0.463,
+            "value": 0.2389
+          },
+          {
+            "wavelength": 0.484,
+            "value": 0.254
+          },
+          {
+            "wavelength": 0.505,
+            "value": 0.2658
+          },
+          {
+            "wavelength": 0.526,
+            "value": 0.2864
+          },
+          {
+            "wavelength": 0.547,
+            "value": 0.2962
+          },
+          {
+            "wavelength": 0.568,
+            "value": 0.3027
+          },
+          {
+            "wavelength": 0.589,
+            "value": 0.311
+          },
+          {
+            "wavelength": 0.61,
+            "value": 0.3215
+          },
+          {
+            "wavelength": 0.631,
+            "value": 0.3172
+          },
+          {
+            "wavelength": 0.652,
+            "value": 0.3249
+          },
+          {
+            "wavelength": 0.673,
+            "value": 0.3116
+          },
+          {
+            "wavelength": 0.694,
+            "value": 0.3278
+          },
+          {
+            "wavelength": 0.715,
+            "value": 0.3055
+          },
+          {
+            "wavelength": 0.736,
+            "value": 0.2988
+          },
+          {
+            "wavelength": 0.757,
+            "value": 0.3096
+          },
+          {
+            "wavelength": 0.778,
+            "value": 0.2999
+          },
+          {
+            "wavelength": 0.799,
+            "value": 0.2852
+          },
+          {
+            "wavelength": 0.82,
+            "value": 0.2775
+          },
+          {
+            "wavelength": 0.841,
+            "value": 0.2574
+          },
+          {
+            "wavelength": 0.862,
+            "value": 0.2434
+          },
+          {
+            "wavelength": 0.883,
+            "value": 0.2214
+          },
+          {
+            "wavelength": 0.904,
+            "value": 0.2116
+          },
+          {
+            "wavelength": 0.925,
+            "value": 0.1906
+          },
+          {
+            "wavelength": 0.946,
+            "value": 0.1758
+          },
+          {
+            "wavelength": 0.967,
+            "value": 0.1763
+          },
+          {
+            "wavelength": 0.988,
+            "value": 0.1468
+          },
+          {
+            "wavelength": 1.009,
+            "value": 0.1407
+          },
+          {
+            "wavelength": 1.03,
+            "value": 0.1305
+          },
+          {
+            "wavelength": 1.051,
+            "value": 0.1263
+          },
+          {
+            "wavelength": 1.072,
+            "value": 0.1125
+          },
+          {
+            "wavelength": 1.093,
+            "value": 0.0991
+          },
+          {
+            "wavelength": 1.114,
+            "value": 0.0934
+          },
+          {
+            "wavelength": 1.135,
+            "value": 0.0913
+          },
+          {
+            "wavelength": 1.156,
+            "value": 0.0819
+          },
+          {
+            "wavelength": 1.177,
+            "value": 0.082
+          },
+          {
+            "wavelength": 1.198,
+            "value": 0.0886
+          },
+          {
+            "wavelength": 1.219,
+            "value": 0.0851
+          },
+          {
+            "wavelength": 1.24,
+            "value": 0.0907
+          },
+          {
+            "wavelength": 1.261,
+            "value": 0.0822
+          },
+          {
+            "wavelength": 1.282,
+            "value": 0.0991
+          },
+          {
+            "wavelength": 1.303,
+            "value": 0.0983
+          },
+          {
+            "wavelength": 1.324,
+            "value": 0.1253
+          },
+          {
+            "wavelength": 1.345,
+            "value": 0.1199
+          },
+          {
+            "wavelength": 1.366,
+            "value": 0.14
+          },
+          {
+            "wavelength": 1.387,
+            "value": 0.1646
+          },
+          {
+            "wavelength": 1.408,
+            "value": 0.1668
+          },
+          {
+            "wavelength": 1.429,
+            "value": 0.1763
+          },
+          {
+            "wavelength": 1.45,
+            "value": 0.201
+          },
+          {
+            "wavelength": 1.471,
+            "value": 0.2245
+          },
+          {
+            "wavelength": 1.492,
+            "value": 0.2297
+          },
+          {
+            "wavelength": 1.513,
+            "value": 0.2468
+          },
+          {
+            "wavelength": 1.534,
+            "value": 0.249
+          },
+          {
+            "wavelength": 1.555,
+            "value": 0.2736
+          },
+          {
+            "wavelength": 1.576,
+            "value": 0.291
+          },
+          {
+            "wavelength": 1.597,
+            "value": 0.3005
+          },
+          {
+            "wavelength": 1.618,
+            "value": 0.2961
+          },
+          {
+            "wavelength": 1.639,
+            "value": 0.3184
+          },
+          {
+            "wavelength": 1.66,
+            "value": 0.3162
+          },
+          {
+            "wavelength": 1.681,
+            "value": 0.3232
+          },
+          {
+            "wavelength": 1.702,
+            "value": 0.325
+          },
+          {
+            "wavelength": 1.723,
+            "value": 0.3124
+          },
+          {
+            "wavelength": 1.744,
+            "value": 0.3109
+          },
+          {
+            "wavelength": 1.765,
+            "value": 0.3194
+          },
+          {
+            "wavelength": 1.786,
+            "value": 0.3024
+          },
+          {
+            "wavelength": 1.807,
+            "value": 0.3012
+          },
+          {
+            "wavelength": 1.828,
+            "value": 0.2845
+          },
+          {
+            "wavelength": 1.849,
+            "value": 0.2891
+          },
+          {
+            "wavelength": 1.87,
+            "value": 0.2654
+          },
+          {
+            "wavelength": 1.891,
+            "value": 0.2557
+          },
+          {
+            "wavelength": 1.912,
+            "value": 0.24
+          },
+          {
+            "wavelength": 1.933,
+            "value": 0.2376
+          },
+          {
+            "wavelength": 1.954,
+            "value": 0.2158
+          },
+          {
+            "wavelength": 1.975,
+            "value": 0.2014
+          },
+          {
+            "wavelength": 1.996,
+            "value": 0.1834
+          },
+          {
+            "wavelength": 2.017,
+            "value": 0.1789
+          },
+          {
+            "wavelength": 2.038,
+            "value": 0.1604
+          },
+          {
+            "wavelength": 2.059,
+            "value": 0.1344
+          },
+          {
+            "wavelength": 2.08,
+            "value": 0.1197
+          },
+          {
+            "wavelength": 2.101,
+            "value": 0.1219
+          },
+          {
+            "wavelength": 2.122,
+            "value": 0.114
+          },
+          {
+            "wavelength": 2.143,
+            "value": 0.1028
+          },
+          {
+            "wavelength": 2.164,
+            "value": 0.0845
+          },
+          {
+            "wavelength": 2.185,
+            "value": 0.0934
+          },
+          {
+            "wavelength": 2.206,
+            "value": 0.0722
+          },
+          {
+            "wavelength": 2.227,
+            "value": 0.073
+          },
+          {
+            "wavelength": 2.248,
+            "value": 0.0789
+          },
+          {
+            "wavelength": 2.269,
+            "value": 0.0858
+          },
+          {
+            "wavelength": 2.29,
+            "value": 0.0815
+          },
+          {
+            "wavelength": 2.311,
+            "value": 0.0917
+          },
+          {
+            "wavelength": 2.332,
+            "value": 0.0978
+          },
+          {
+            "wavelength": 2.353,
+            "value": 0.1042
+          },
+          {
+            "wavelength": 2.374,
+            "value": 0.1096
+          },
+          {
+            "wavelength": 2.395,
+            "value": 0.1279
+          },
+          {
+            "wavelength": 2.416,
+            "value": 0.1509
+          },
+          {
+            "wavelength": 2.437,
+            "value": 0.1476
+          },
+          {
+            "wavelength": 2.458,
+            "value": 0.1707
+          },
+          {
+            "wavelength": 2.479,
+            "value": 0.1949
+          }
+        ],
+        "brightnessTemperature": [
+          {
+            "channel": "VIS_01",
+            "wavelength": 0.55,
+            "value": 0.7981013920942216
+          },
+          {
+            "channel": "VIS_02",
+            "wavelength": 0.66,
+            "value": 0.5855886201356397
+          },
+          {
+            "channel": "NIR_01",
+            "wavelength": 0.86,
+            "value": 0.5657098595079204
+          },
+          {
+            "channel": "NIR_02",
+            "wavelength": 1.24,
+            "value": 0.13250703961151533
+          },
+          {
+            "channel": "SWIR_01",
+            "wavelength": 1.64,
+            "value": 0.19396929794702997
+          },
+          {
+            "channel": "SWIR_02",
+            "wavelength": 2.25,
+            "value": 0.3318954818938865
+          },
+          {
+            "channel": "TIR_01",
+            "wavelength": 10.8,
+            "value": 251.4383815794439
+          },
+          {
+            "channel": "TIR_02",
+            "wavelength": 12,
+            "value": 301.2468547008279
+          }
+        ],
+        "radiationBalance": -0.00155,
+        "fittingResidual": 0.0087,
+        "accuracy": 0.9557
+      }
+    },
+    {
+      "id": "task_mqe81r0iduyiij",
+      "name": "长江三角洲地表反射率反演",
+      "region": "长江三角洲",
+      "status": "computing",
+      "progress": 45,
+      "createdAt": "2026-06-14T20:13:15.901Z",
+      "updatedAt": "2026-06-16T02:13:15.901Z",
+      "createdBy": "李研究员",
+      "parameters": {
+        "profileFile": "profile_2.dat",
+        "surfaceType": "水体",
+        "aerosolModel": "海洋型",
+        "wavelengthRange": [
+          0.4,
+          2.5
+        ],
+        "spectralResolution": 0.01,
+        "observationAngle": 14
+      },
+      "approvalStatus": "none",
+      "alertLevel": null,
+      "adjustmentLogs": []
+    },
+    {
+      "id": "task_mqe81r0il7pdxi",
+      "name": "珠江三角洲热红外亮温模拟",
+      "region": "珠江三角洲",
+      "status": "modeling",
+      "progress": 17,
+      "createdAt": "2026-06-13T20:13:15.901Z",
+      "updatedAt": "2026-06-15T13:13:15.901Z",
+      "createdBy": "王工程师",
+      "parameters": {
+        "profileFile": "profile_3.dat",
+        "surfaceType": "沙漠",
+        "aerosolModel": "城市型",
+        "wavelengthRange": [
+          0.4,
+          2.5
+        ],
+        "spectralResolution": 0.01,
+        "observationAngle": 54
+      },
+      "approvalStatus": "none",
+      "alertLevel": null,
+      "adjustmentLogs": []
+    },
+    {
+      "id": "task_mqe81r0imhfldm",
+      "name": "四川盆地大雾天气辐射模拟",
+      "region": "四川盆地",
+      "status": "completed",
+      "progress": 100,
+      "createdAt": "2026-06-13T20:13:15.901Z",
+      "updatedAt": "2026-06-14T18:13:15.901Z",
+      "createdBy": "陈教授",
+      "parameters": {
+        "profileFile": "profile_4.dat",
+        "surfaceType": "城市",
+        "aerosolModel": "沙尘型",
+        "wavelengthRange": [
+          0.4,
+          2.5
+        ],
+        "spectralResolution": 0.01,
+        "observationAngle": 55
+      },
+      "approvalStatus": "rejected",
+      "alertLevel": null,
+      "computeDuration": 1240,
+      "resourceUsage": 7,
+      "adjustmentLogs": [],
+      "results": {
+        "transmittance": [
+          {
+            "wavelength": 0.4,
+            "value": 0.4766
+          },
+          {
+            "wavelength": 0.421,
+            "value": 0.5278
+          },
+          {
+            "wavelength": 0.442,
+            "value": 0.575
+          },
+          {
+            "wavelength": 0.463,
+            "value": 0.6141
+          },
+          {
+            "wavelength": 0.484,
+            "value": 0.6458
+          },
+          {
+            "wavelength": 0.505,
+            "value": 0.6863
+          },
+          {
+            "wavelength": 0.526,
+            "value": 0.7058
+          },
+          {
+            "wavelength": 0.547,
+            "value": 0.7288
+          },
+          {
+            "wavelength": 0.568,
+            "value": 0.764
+          },
+          {
+            "wavelength": 0.589,
+            "value": 0.7859
+          },
+          {
+            "wavelength": 0.61,
+            "value": 0.7978
+          },
+          {
+            "wavelength": 0.631,
+            "value": 0.7753
+          },
+          {
+            "wavelength": 0.652,
+            "value": 0.8228
+          },
+          {
+            "wavelength": 0.673,
+            "value": 0.8101
+          },
+          {
+            "wavelength": 0.694,
+            "value": 0.784
+          },
+          {
+            "wavelength": 0.715,
+            "value": 0.8097
+          },
+          {
+            "wavelength": 0.736,
+            "value": 0.7522
+          },
+          {
+            "wavelength": 0.757,
+            "value": 0.7606
+          },
+          {
+            "wavelength": 0.778,
+            "value": 0.7208
+          },
+          {
+            "wavelength": 0.799,
+            "value": 0.6858
+          },
+          {
+            "wavelength": 0.82,
+            "value": 0.6898
+          },
+          {
+            "wavelength": 0.841,
+            "value": 0.6518
+          },
+          {
+            "wavelength": 0.862,
+            "value": 0.5994
+          },
+          {
+            "wavelength": 0.883,
+            "value": 0.5842
+          },
+          {
+            "wavelength": 0.904,
+            "value": 0.5187
+          },
+          {
+            "wavelength": 0.925,
+            "value": 0.4995
+          },
+          {
+            "wavelength": 0.946,
+            "value": 0.4647
+          },
+          {
+            "wavelength": 0.967,
+            "value": 0.4314
+          },
+          {
+            "wavelength": 0.988,
+            "value": 0.367
+          },
+          {
+            "wavelength": 1.009,
+            "value": 0.3555
+          },
+          {
+            "wavelength": 1.03,
+            "value": 0.322
+          },
+          {
+            "wavelength": 1.051,
+            "value": 0.3114
+          },
+          {
+            "wavelength": 1.072,
+            "value": 0.2558
+          },
+          {
+            "wavelength": 1.093,
+            "value": 0.2285
+          },
+          {
+            "wavelength": 1.114,
+            "value": 0.2174
+          },
+          {
+            "wavelength": 1.135,
+            "value": 0.2207
+          },
+          {
+            "wavelength": 1.156,
+            "value": 0.2168
+          },
+          {
+            "wavelength": 1.177,
+            "value": 0.2248
+          },
+          {
+            "wavelength": 1.198,
+            "value": 0.1775
+          },
+          {
+            "wavelength": 1.219,
+            "value": 0.2032
+          },
+          {
+            "wavelength": 1.24,
+            "value": 0.2102
+          },
+          {
+            "wavelength": 1.261,
+            "value": 0.2213
+          },
+          {
+            "wavelength": 1.282,
+            "value": 0.2255
+          },
+          {
+            "wavelength": 1.303,
+            "value": 0.2652
+          },
+          {
+            "wavelength": 1.324,
+            "value": 0.3178
+          },
+          {
+            "wavelength": 1.345,
+            "value": 0.3178
+          },
+          {
+            "wavelength": 1.366,
+            "value": 0.3659
+          },
+          {
+            "wavelength": 1.387,
+            "value": 0.3714
+          },
+          {
+            "wavelength": 1.408,
+            "value": 0.4102
+          },
+          {
+            "wavelength": 1.429,
+            "value": 0.4765
+          },
+          {
+            "wavelength": 1.45,
+            "value": 0.5046
+          },
+          {
+            "wavelength": 1.471,
+            "value": 0.5281
+          },
+          {
+            "wavelength": 1.492,
+            "value": 0.5527
+          },
+          {
+            "wavelength": 1.513,
+            "value": 0.6237
+          },
+          {
+            "wavelength": 1.534,
+            "value": 0.6249
+          },
+          {
+            "wavelength": 1.555,
+            "value": 0.6589
+          },
+          {
+            "wavelength": 1.576,
+            "value": 0.6952
+          },
+          {
+            "wavelength": 1.597,
+            "value": 0.7399
+          },
+          {
+            "wavelength": 1.618,
+            "value": 0.7602
+          },
+          {
+            "wavelength": 1.639,
+            "value": 0.7828
+          },
+          {
+            "wavelength": 1.66,
+            "value": 0.7914
+          },
+          {
+            "wavelength": 1.681,
+            "value": 0.7705
+          },
+          {
+            "wavelength": 1.702,
+            "value": 0.7895
+          },
+          {
+            "wavelength": 1.723,
+            "value": 0.8154
+          },
+          {
+            "wavelength": 1.744,
+            "value": 0.7772
+          },
+          {
+            "wavelength": 1.765,
+            "value": 0.7673
+          },
+          {
+            "wavelength": 1.786,
+            "value": 0.7916
+          },
+          {
+            "wavelength": 1.807,
+            "value": 0.7467
+          },
+          {
+            "wavelength": 1.828,
+            "value": 0.7084
+          },
+          {
+            "wavelength": 1.849,
+            "value": 0.6851
+          },
+          {
+            "wavelength": 1.87,
+            "value": 0.6563
+          },
+          {
+            "wavelength": 1.891,
+            "value": 0.6506
+          },
+          {
+            "wavelength": 1.912,
+            "value": 0.6183
+          },
+          {
+            "wavelength": 1.933,
+            "value": 0.5625
+          },
+          {
+            "wavelength": 1.954,
+            "value": 0.53
+          },
+          {
+            "wavelength": 1.975,
+            "value": 0.498
+          },
+          {
+            "wavelength": 1.996,
+            "value": 0.4473
+          },
+          {
+            "wavelength": 2.017,
+            "value": 0.4127
+          },
+          {
+            "wavelength": 2.038,
+            "value": 0.3779
+          },
+          {
+            "wavelength": 2.059,
+            "value": 0.3448
+          },
+          {
+            "wavelength": 2.08,
+            "value": 0.3311
+          },
+          {
+            "wavelength": 2.101,
+            "value": 0.3055
+          },
+          {
+            "wavelength": 2.122,
+            "value": 0.2829
+          },
+          {
+            "wavelength": 2.143,
+            "value": 0.2399
+          },
+          {
+            "wavelength": 2.164,
+            "value": 0.2322
+          },
+          {
+            "wavelength": 2.185,
+            "value": 0.1988
+          },
+          {
+            "wavelength": 2.206,
+            "value": 0.1882
+          },
+          {
+            "wavelength": 2.227,
+            "value": 0.2132
+          },
+          {
+            "wavelength": 2.248,
+            "value": 0.2176
+          },
+          {
+            "wavelength": 2.269,
+            "value": 0.2036
+          },
+          {
+            "wavelength": 2.29,
+            "value": 0.2298
+          },
+          {
+            "wavelength": 2.311,
+            "value": 0.2361
+          },
+          {
+            "wavelength": 2.332,
+            "value": 0.2566
+          },
+          {
+            "wavelength": 2.353,
+            "value": 0.2796
+          },
+          {
+            "wavelength": 2.374,
+            "value": 0.2834
+          },
+          {
+            "wavelength": 2.395,
+            "value": 0.3139
+          },
+          {
+            "wavelength": 2.416,
+            "value": 0.3693
+          },
+          {
+            "wavelength": 2.437,
+            "value": 0.3872
+          },
+          {
+            "wavelength": 2.458,
+            "value": 0.4251
+          },
+          {
+            "wavelength": 2.479,
+            "value": 0.444
+          }
+        ],
+        "reflectance": [
+          {
+            "wavelength": 0.4,
+            "value": 0.1988
+          },
+          {
+            "wavelength": 0.421,
+            "value": 0.2165
+          },
+          {
+            "wavelength": 0.442,
+            "value": 0.2228
+          },
+          {
+            "wavelength": 0.463,
+            "value": 0.2414
+          },
+          {
+            "wavelength": 0.484,
+            "value": 0.2587
+          },
+          {
+            "wavelength": 0.505,
+            "value": 0.2647
+          },
+          {
+            "wavelength": 0.526,
+            "value": 0.2884
+          },
+          {
+            "wavelength": 0.547,
+            "value": 0.2881
+          },
+          {
+            "wavelength": 0.568,
+            "value": 0.3094
+          },
+          {
+            "wavelength": 0.589,
+            "value": 0.3002
+          },
+          {
+            "wavelength": 0.61,
+            "value": 0.306
+          },
+          {
+            "wavelength": 0.631,
+            "value": 0.3248
+          },
+          {
+            "wavelength": 0.652,
+            "value": 0.3231
+          },
+          {
+            "wavelength": 0.673,
+            "value": 0.3177
+          },
+          {
+            "wavelength": 0.694,
+            "value": 0.317
+          },
+          {
+            "wavelength": 0.715,
+            "value": 0.3128
+          },
+          {
+            "wavelength": 0.736,
+            "value": 0.307
+          },
+          {
+            "wavelength": 0.757,
+            "value": 0.2922
+          },
+          {
+            "wavelength": 0.778,
+            "value": 0.2897
+          },
+          {
+            "wavelength": 0.799,
+            "value": 0.2882
+          },
+          {
+            "wavelength": 0.82,
+            "value": 0.2736
+          },
+          {
+            "wavelength": 0.841,
+            "value": 0.259
+          },
+          {
+            "wavelength": 0.862,
+            "value": 0.2448
+          },
+          {
+            "wavelength": 0.883,
+            "value": 0.2331
+          },
+          {
+            "wavelength": 0.904,
+            "value": 0.2178
+          },
+          {
+            "wavelength": 0.925,
+            "value": 0.2015
+          },
+          {
+            "wavelength": 0.946,
+            "value": 0.1941
+          },
+          {
+            "wavelength": 0.967,
+            "value": 0.1615
+          },
+          {
+            "wavelength": 0.988,
+            "value": 0.161
+          },
+          {
+            "wavelength": 1.009,
+            "value": 0.1328
+          },
+          {
+            "wavelength": 1.03,
+            "value": 0.1234
+          },
+          {
+            "wavelength": 1.051,
+            "value": 0.1172
+          },
+          {
+            "wavelength": 1.072,
+            "value": 0.1086
+          },
+          {
+            "wavelength": 1.093,
+            "value": 0.0962
+          },
+          {
+            "wavelength": 1.114,
+            "value": 0.0889
+          },
+          {
+            "wavelength": 1.135,
+            "value": 0.0776
+          },
+          {
+            "wavelength": 1.156,
+            "value": 0.0806
+          },
+          {
+            "wavelength": 1.177,
+            "value": 0.0859
+          },
+          {
+            "wavelength": 1.198,
+            "value": 0.086
+          },
+          {
+            "wavelength": 1.219,
+            "value": 0.0858
+          },
+          {
+            "wavelength": 1.24,
+            "value": 0.0913
+          },
+          {
+            "wavelength": 1.261,
+            "value": 0.0872
+          },
+          {
+            "wavelength": 1.282,
+            "value": 0.0923
+          },
+          {
+            "wavelength": 1.303,
+            "value": 0.0979
+          },
+          {
+            "wavelength": 1.324,
+            "value": 0.1092
+          },
+          {
+            "wavelength": 1.345,
+            "value": 0.1305
+          },
+          {
+            "wavelength": 1.366,
+            "value": 0.1439
+          },
+          {
+            "wavelength": 1.387,
+            "value": 0.1497
+          },
+          {
+            "wavelength": 1.408,
+            "value": 0.1748
+          },
+          {
+            "wavelength": 1.429,
+            "value": 0.1883
+          },
+          {
+            "wavelength": 1.45,
+            "value": 0.1972
+          },
+          {
+            "wavelength": 1.471,
+            "value": 0.2152
+          },
+          {
+            "wavelength": 1.492,
+            "value": 0.2351
+          },
+          {
+            "wavelength": 1.513,
+            "value": 0.2466
+          },
+          {
+            "wavelength": 1.534,
+            "value": 0.2623
+          },
+          {
+            "wavelength": 1.555,
+            "value": 0.2736
+          },
+          {
+            "wavelength": 1.576,
+            "value": 0.2908
+          },
+          {
+            "wavelength": 1.597,
+            "value": 0.2865
+          },
+          {
+            "wavelength": 1.618,
+            "value": 0.298
+          },
+          {
+            "wavelength": 1.639,
+            "value": 0.304
+          },
+          {
+            "wavelength": 1.66,
+            "value": 0.3116
+          },
+          {
+            "wavelength": 1.681,
+            "value": 0.3262
+          },
+          {
+            "wavelength": 1.702,
+            "value": 0.3141
+          },
+          {
+            "wavelength": 1.723,
+            "value": 0.3154
+          },
+          {
+            "wavelength": 1.744,
+            "value": 0.3116
+          },
+          {
+            "wavelength": 1.765,
+            "value": 0.3193
+          },
+          {
+            "wavelength": 1.786,
+            "value": 0.306
+          },
+          {
+            "wavelength": 1.807,
+            "value": 0.3022
+          },
+          {
+            "wavelength": 1.828,
+            "value": 0.3012
+          },
+          {
+            "wavelength": 1.849,
+            "value": 0.2903
+          },
+          {
+            "wavelength": 1.87,
+            "value": 0.2767
+          },
+          {
+            "wavelength": 1.891,
+            "value": 0.2593
+          },
+          {
+            "wavelength": 1.912,
+            "value": 0.2394
+          },
+          {
+            "wavelength": 1.933,
+            "value": 0.2343
+          },
+          {
+            "wavelength": 1.954,
+            "value": 0.2194
+          },
+          {
+            "wavelength": 1.975,
+            "value": 0.1987
+          },
+          {
+            "wavelength": 1.996,
+            "value": 0.1786
+          },
+          {
+            "wavelength": 2.017,
+            "value": 0.1675
+          },
+          {
+            "wavelength": 2.038,
+            "value": 0.1528
+          },
+          {
+            "wavelength": 2.059,
+            "value": 0.1391
+          },
+          {
+            "wavelength": 2.08,
+            "value": 0.1303
+          },
+          {
+            "wavelength": 2.101,
+            "value": 0.1243
+          },
+          {
+            "wavelength": 2.122,
+            "value": 0.1121
+          },
+          {
+            "wavelength": 2.143,
+            "value": 0.0932
+          },
+          {
+            "wavelength": 2.164,
+            "value": 0.0845
+          },
+          {
+            "wavelength": 2.185,
+            "value": 0.0927
+          },
+          {
+            "wavelength": 2.206,
+            "value": 0.0851
+          },
+          {
+            "wavelength": 2.227,
+            "value": 0.0826
+          },
+          {
+            "wavelength": 2.248,
+            "value": 0.0884
+          },
+          {
+            "wavelength": 2.269,
+            "value": 0.0746
+          },
+          {
+            "wavelength": 2.29,
+            "value": 0.0799
+          },
+          {
+            "wavelength": 2.311,
+            "value": 0.0915
+          },
+          {
+            "wavelength": 2.332,
+            "value": 0.0954
+          },
+          {
+            "wavelength": 2.353,
+            "value": 0.1134
+          },
+          {
+            "wavelength": 2.374,
+            "value": 0.1213
+          },
+          {
+            "wavelength": 2.395,
+            "value": 0.1382
+          },
+          {
+            "wavelength": 2.416,
+            "value": 0.1472
+          },
+          {
+            "wavelength": 2.437,
+            "value": 0.1554
+          },
+          {
+            "wavelength": 2.458,
+            "value": 0.1707
+          },
+          {
+            "wavelength": 2.479,
+            "value": 0.1865
+          }
+        ],
+        "brightnessTemperature": [
+          {
+            "channel": "VIS_01",
+            "wavelength": 0.55,
+            "value": 0.7880344185988833
+          },
+          {
+            "channel": "VIS_02",
+            "wavelength": 0.66,
+            "value": 0.8696199155275732
+          },
+          {
+            "channel": "NIR_01",
+            "wavelength": 0.86,
+            "value": 0.514513366961175
+          },
+          {
+            "channel": "NIR_02",
+            "wavelength": 1.24,
+            "value": 0.3769011655708434
+          },
+          {
+            "channel": "SWIR_01",
+            "wavelength": 1.64,
+            "value": 0.43986346162656886
+          },
+          {
+            "channel": "SWIR_02",
+            "wavelength": 2.25,
+            "value": 0.6064302050813818
+          },
+          {
+            "channel": "TIR_01",
+            "wavelength": 10.8,
+            "value": 254.45882463227494
+          },
+          {
+            "channel": "TIR_02",
+            "wavelength": 12,
+            "value": 287.29753384830144
+          }
+        ],
+        "radiationBalance": 0.00268,
+        "fittingResidual": 0.0184,
+        "accuracy": 0.9626
+      }
+    },
+    {
+      "id": "task_mqe81r0jdxalwz",
+      "name": "西北戈壁沙漠下垫面反射率测量",
+      "region": "西北戈壁",
+      "status": "synthesizing",
+      "progress": 85,
+      "createdAt": "2026-06-12T20:13:15.901Z",
+      "updatedAt": "2026-06-14T11:13:15.901Z",
+      "createdBy": "刘博士",
+      "parameters": {
+        "profileFile": "profile_5.dat",
+        "surfaceType": "冰雪",
+        "aerosolModel": "生物质燃烧型",
+        "wavelengthRange": [
+          0.4,
+          2.5
+        ],
+        "spectralResolution": 0.01,
+        "observationAngle": 34
+      },
+      "approvalStatus": "none",
+      "alertLevel": null,
+      "adjustmentLogs": []
+    },
+    {
+      "id": "task_mqe81r0j2heeji",
+      "name": "青藏高原大气垂直廓线分析",
+      "region": "青藏高原",
+      "status": "pending",
+      "progress": 0,
+      "createdAt": "2026-06-12T20:13:15.901Z",
+      "updatedAt": "2026-06-14T12:13:15.901Z",
+      "createdBy": "张科学家",
+      "parameters": {
+        "profileFile": "profile_6.dat",
+        "surfaceType": "农田",
+        "aerosolModel": "大陆型",
+        "wavelengthRange": [
+          0.4,
+          2.5
+        ],
+        "spectralResolution": 0.01,
+        "observationAngle": 18
+      },
+      "approvalStatus": "none",
+      "alertLevel": "level2",
+      "adjustmentLogs": []
+    },
+    {
+      "id": "task_mqe81r0jvmkdia",
+      "name": "东北地区冰雪覆盖地表辐射特性",
+      "region": "东北地区",
+      "status": "failed",
+      "progress": 40,
+      "createdAt": "2026-06-11T20:13:15.901Z",
+      "updatedAt": "2026-06-12T23:13:15.901Z",
+      "createdBy": "李研究员",
+      "parameters": {
+        "profileFile": "profile_7.dat",
+        "surfaceType": "植被",
+        "aerosolModel": "海洋型",
+        "wavelengthRange": [
+          0.4,
+          2.5
+        ],
+        "spectralResolution": 0.01,
+        "observationAngle": 0
+      },
+      "approvalStatus": "none",
+      "alertLevel": null,
+      "adjustmentLogs": [],
+      "results": {
+        "transmittance": [
+          {
+            "wavelength": 0.4,
+            "value": 0.5226
+          },
+          {
+            "wavelength": 0.421,
+            "value": 0.535
+          },
+          {
+            "wavelength": 0.442,
+            "value": 0.5544
+          },
+          {
+            "wavelength": 0.463,
+            "value": 0.6216
+          },
+          {
+            "wavelength": 0.484,
+            "value": 0.6301
+          },
+          {
+            "wavelength": 0.505,
+            "value": 0.6798
+          },
+          {
+            "wavelength": 0.526,
+            "value": 0.7191
+          },
+          {
+            "wavelength": 0.547,
+            "value": 0.7484
+          },
+          {
+            "wavelength": 0.568,
+            "value": 0.756
+          },
+          {
+            "wavelength": 0.589,
+            "value": 0.7883
+          },
+          {
+            "wavelength": 0.61,
+            "value": 0.7847
+          },
+          {
+            "wavelength": 0.631,
+            "value": 0.8063
+          },
+          {
+            "wavelength": 0.652,
+            "value": 0.794
+          },
+          {
+            "wavelength": 0.673,
+            "value": 0.7817
+          },
+          {
+            "wavelength": 0.694,
+            "value": 0.7751
+          },
+          {
+            "wavelength": 0.715,
+            "value": 0.7742
+          },
+          {
+            "wavelength": 0.736,
+            "value": 0.7631
+          },
+          {
+            "wavelength": 0.757,
+            "value": 0.7538
+          },
+          {
+            "wavelength": 0.778,
+            "value": 0.7319
+          },
+          {
+            "wavelength": 0.799,
+            "value": 0.7303
+          },
+          {
+            "wavelength": 0.82,
+            "value": 0.672
+          },
+          {
+            "wavelength": 0.841,
+            "value": 0.6242
+          },
+          {
+            "wavelength": 0.862,
+            "value": 0.6065
+          },
+          {
+            "wavelength": 0.883,
+            "value": 0.5638
+          },
+          {
+            "wavelength": 0.904,
+            "value": 0.5555
+          },
+          {
+            "wavelength": 0.925,
+            "value": 0.4814
+          },
+          {
+            "wavelength": 0.946,
+            "value": 0.4777
+          },
+          {
+            "wavelength": 0.967,
+            "value": 0.4048
+          },
+          {
+            "wavelength": 0.988,
+            "value": 0.3664
+          },
+          {
+            "wavelength": 1.009,
+            "value": 0.3415
+          },
+          {
+            "wavelength": 1.03,
+            "value": 0.3051
+          },
+          {
+            "wavelength": 1.051,
+            "value": 0.2789
+          },
+          {
+            "wavelength": 1.072,
+            "value": 0.2672
+          },
+          {
+            "wavelength": 1.093,
+            "value": 0.2471
+          },
+          {
+            "wavelength": 1.114,
+            "value": 0.2108
+          },
+          {
+            "wavelength": 1.135,
+            "value": 0.2075
+          },
+          {
+            "wavelength": 1.156,
+            "value": 0.205
+          },
+          {
+            "wavelength": 1.177,
+            "value": 0.2057
+          },
+          {
+            "wavelength": 1.198,
+            "value": 0.1801
+          },
+          {
+            "wavelength": 1.219,
+            "value": 0.207
+          },
+          {
+            "wavelength": 1.24,
+            "value": 0.2284
+          },
+          {
+            "wavelength": 1.261,
+            "value": 0.2242
+          },
+          {
+            "wavelength": 1.282,
+            "value": 0.2491
+          },
+          {
+            "wavelength": 1.303,
+            "value": 0.2872
+          },
+          {
+            "wavelength": 1.324,
+            "value": 0.2943
+          },
+          {
+            "wavelength": 1.345,
+            "value": 0.3238
+          },
+          {
+            "wavelength": 1.366,
+            "value": 0.3571
+          },
+          {
+            "wavelength": 1.387,
+            "value": 0.3717
+          },
+          {
+            "wavelength": 1.408,
+            "value": 0.429
+          },
+          {
+            "wavelength": 1.429,
+            "value": 0.4408
+          },
+          {
+            "wavelength": 1.45,
+            "value": 0.5076
+          },
+          {
+            "wavelength": 1.471,
+            "value": 0.5158
+          },
+          {
+            "wavelength": 1.492,
+            "value": 0.585
+          },
+          {
+            "wavelength": 1.513,
+            "value": 0.5865
+          },
+          {
+            "wavelength": 1.534,
+            "value": 0.6464
+          },
+          {
+            "wavelength": 1.555,
+            "value": 0.6891
+          },
+          {
+            "wavelength": 1.576,
+            "value": 0.7295
+          },
+          {
+            "wavelength": 1.597,
+            "value": 0.7201
+          },
+          {
+            "wavelength": 1.618,
+            "value": 0.7445
+          },
+          {
+            "wavelength": 1.639,
+            "value": 0.7541
+          },
+          {
+            "wavelength": 1.66,
+            "value": 0.7985
+          },
+          {
+            "wavelength": 1.681,
+            "value": 0.8168
+          },
+          {
+            "wavelength": 1.702,
+            "value": 0.7772
+          },
+          {
+            "wavelength": 1.723,
+            "value": 0.8186
+          },
+          {
+            "wavelength": 1.744,
+            "value": 0.8084
+          },
+          {
+            "wavelength": 1.765,
+            "value": 0.81
+          },
+          {
+            "wavelength": 1.786,
+            "value": 0.7937
+          },
+          {
+            "wavelength": 1.807,
+            "value": 0.7667
+          },
+          {
+            "wavelength": 1.828,
+            "value": 0.7483
+          },
+          {
+            "wavelength": 1.849,
+            "value": 0.697
+          },
+          {
+            "wavelength": 1.87,
+            "value": 0.6602
+          },
+          {
+            "wavelength": 1.891,
+            "value": 0.6285
+          },
+          {
+            "wavelength": 1.912,
+            "value": 0.6337
+          },
+          {
+            "wavelength": 1.933,
+            "value": 0.5724
+          },
+          {
+            "wavelength": 1.954,
+            "value": 0.5311
+          },
+          {
+            "wavelength": 1.975,
+            "value": 0.5124
+          },
+          {
+            "wavelength": 1.996,
+            "value": 0.4576
+          },
+          {
+            "wavelength": 2.017,
+            "value": 0.4357
+          },
+          {
+            "wavelength": 2.038,
+            "value": 0.3927
+          },
+          {
+            "wavelength": 2.059,
+            "value": 0.3625
+          },
+          {
+            "wavelength": 2.08,
+            "value": 0.3429
+          },
+          {
+            "wavelength": 2.101,
+            "value": 0.2948
+          },
+          {
+            "wavelength": 2.122,
+            "value": 0.2724
+          },
+          {
+            "wavelength": 2.143,
+            "value": 0.2588
+          },
+          {
+            "wavelength": 2.164,
+            "value": 0.2324
+          },
+          {
+            "wavelength": 2.185,
+            "value": 0.1972
+          },
+          {
+            "wavelength": 2.206,
+            "value": 0.1919
+          },
+          {
+            "wavelength": 2.227,
+            "value": 0.2237
+          },
+          {
+            "wavelength": 2.248,
+            "value": 0.194
+          },
+          {
+            "wavelength": 2.269,
+            "value": 0.1841
+          },
+          {
+            "wavelength": 2.29,
+            "value": 0.2328
+          },
+          {
+            "wavelength": 2.311,
+            "value": 0.2164
+          },
+          {
+            "wavelength": 2.332,
+            "value": 0.2323
+          },
+          {
+            "wavelength": 2.353,
+            "value": 0.291
+          },
+          {
+            "wavelength": 2.374,
+            "value": 0.3053
+          },
+          {
+            "wavelength": 2.395,
+            "value": 0.324
+          },
+          {
+            "wavelength": 2.416,
+            "value": 0.3772
+          },
+          {
+            "wavelength": 2.437,
+            "value": 0.3773
+          },
+          {
+            "wavelength": 2.458,
+            "value": 0.4144
+          },
+          {
+            "wavelength": 2.479,
+            "value": 0.4594
+          }
+        ],
+        "reflectance": [
+          {
+            "wavelength": 0.4,
+            "value": 0.1977
+          },
+          {
+            "wavelength": 0.421,
+            "value": 0.2119
+          },
+          {
+            "wavelength": 0.442,
+            "value": 0.2337
+          },
+          {
+            "wavelength": 0.463,
+            "value": 0.2372
+          },
+          {
+            "wavelength": 0.484,
+            "value": 0.2622
+          },
+          {
+            "wavelength": 0.505,
+            "value": 0.2684
+          },
+          {
+            "wavelength": 0.526,
+            "value": 0.2763
+          },
+          {
+            "wavelength": 0.547,
+            "value": 0.2982
+          },
+          {
+            "wavelength": 0.568,
+            "value": 0.31
+          },
+          {
+            "wavelength": 0.589,
+            "value": 0.3074
+          },
+          {
+            "wavelength": 0.61,
+            "value": 0.3194
+          },
+          {
+            "wavelength": 0.631,
+            "value": 0.3252
+          },
+          {
+            "wavelength": 0.652,
+            "value": 0.3169
+          },
+          {
+            "wavelength": 0.673,
+            "value": 0.3249
+          },
+          {
+            "wavelength": 0.694,
+            "value": 0.3163
+          },
+          {
+            "wavelength": 0.715,
+            "value": 0.307
+          },
+          {
+            "wavelength": 0.736,
+            "value": 0.3001
+          },
+          {
+            "wavelength": 0.757,
+            "value": 0.3059
+          },
+          {
+            "wavelength": 0.778,
+            "value": 0.2988
+          },
+          {
+            "wavelength": 0.799,
+            "value": 0.2802
+          },
+          {
+            "wavelength": 0.82,
+            "value": 0.2706
+          },
+          {
+            "wavelength": 0.841,
+            "value": 0.2592
+          },
+          {
+            "wavelength": 0.862,
+            "value": 0.2359
+          },
+          {
+            "wavelength": 0.883,
+            "value": 0.2244
+          },
+          {
+            "wavelength": 0.904,
+            "value": 0.2055
+          },
+          {
+            "wavelength": 0.925,
+            "value": 0.1986
+          },
+          {
+            "wavelength": 0.946,
+            "value": 0.1846
+          },
+          {
+            "wavelength": 0.967,
+            "value": 0.1776
+          },
+          {
+            "wavelength": 0.988,
+            "value": 0.1508
+          },
+          {
+            "wavelength": 1.009,
+            "value": 0.136
+          },
+          {
+            "wavelength": 1.03,
+            "value": 0.1388
+          },
+          {
+            "wavelength": 1.051,
+            "value": 0.1148
+          },
+          {
+            "wavelength": 1.072,
+            "value": 0.099
+          },
+          {
+            "wavelength": 1.093,
+            "value": 0.0923
+          },
+          {
+            "wavelength": 1.114,
+            "value": 0.0909
+          },
+          {
+            "wavelength": 1.135,
+            "value": 0.0866
+          },
+          {
+            "wavelength": 1.156,
+            "value": 0.0807
+          },
+          {
+            "wavelength": 1.177,
+            "value": 0.0888
+          },
+          {
+            "wavelength": 1.198,
+            "value": 0.0878
+          },
+          {
+            "wavelength": 1.219,
+            "value": 0.0734
+          },
+          {
+            "wavelength": 1.24,
+            "value": 0.0916
+          },
+          {
+            "wavelength": 1.261,
+            "value": 0.1014
+          },
+          {
+            "wavelength": 1.282,
+            "value": 0.0927
+          },
+          {
+            "wavelength": 1.303,
+            "value": 0.1105
+          },
+          {
+            "wavelength": 1.324,
+            "value": 0.1245
+          },
+          {
+            "wavelength": 1.345,
+            "value": 0.1266
+          },
+          {
+            "wavelength": 1.366,
+            "value": 0.1518
+          },
+          {
+            "wavelength": 1.387,
+            "value": 0.1605
+          },
+          {
+            "wavelength": 1.408,
+            "value": 0.1652
+          },
+          {
+            "wavelength": 1.429,
+            "value": 0.1821
+          },
+          {
+            "wavelength": 1.45,
+            "value": 0.2092
+          },
+          {
+            "wavelength": 1.471,
+            "value": 0.2158
+          },
+          {
+            "wavelength": 1.492,
+            "value": 0.2266
+          },
+          {
+            "wavelength": 1.513,
+            "value": 0.2368
+          },
+          {
+            "wavelength": 1.534,
+            "value": 0.2675
+          },
+          {
+            "wavelength": 1.555,
+            "value": 0.2743
+          },
+          {
+            "wavelength": 1.576,
+            "value": 0.2874
+          },
+          {
+            "wavelength": 1.597,
+            "value": 0.2963
+          },
+          {
+            "wavelength": 1.618,
+            "value": 0.2979
+          },
+          {
+            "wavelength": 1.639,
+            "value": 0.3171
+          },
+          {
+            "wavelength": 1.66,
+            "value": 0.3071
+          },
+          {
+            "wavelength": 1.681,
+            "value": 0.3254
+          },
+          {
+            "wavelength": 1.702,
+            "value": 0.32
+          },
+          {
+            "wavelength": 1.723,
+            "value": 0.3266
+          },
+          {
+            "wavelength": 1.744,
+            "value": 0.3105
+          },
+          {
+            "wavelength": 1.765,
+            "value": 0.3232
+          },
+          {
+            "wavelength": 1.786,
+            "value": 0.31
+          },
+          {
+            "wavelength": 1.807,
+            "value": 0.2919
+          },
+          {
+            "wavelength": 1.828,
+            "value": 0.2869
+          },
+          {
+            "wavelength": 1.849,
+            "value": 0.2877
+          },
+          {
+            "wavelength": 1.87,
+            "value": 0.2628
+          },
+          {
+            "wavelength": 1.891,
+            "value": 0.2487
+          },
+          {
+            "wavelength": 1.912,
+            "value": 0.2368
+          },
+          {
+            "wavelength": 1.933,
+            "value": 0.2347
+          },
+          {
+            "wavelength": 1.954,
+            "value": 0.216
+          },
+          {
+            "wavelength": 1.975,
+            "value": 0.1917
+          },
+          {
+            "wavelength": 1.996,
+            "value": 0.1823
+          },
+          {
+            "wavelength": 2.017,
+            "value": 0.1632
+          },
+          {
+            "wavelength": 2.038,
+            "value": 0.1566
+          },
+          {
+            "wavelength": 2.059,
+            "value": 0.1502
+          },
+          {
+            "wavelength": 2.08,
+            "value": 0.1308
+          },
+          {
+            "wavelength": 2.101,
+            "value": 0.1213
+          },
+          {
+            "wavelength": 2.122,
+            "value": 0.1149
+          },
+          {
+            "wavelength": 2.143,
+            "value": 0.1016
+          },
+          {
+            "wavelength": 2.164,
+            "value": 0.0836
+          },
+          {
+            "wavelength": 2.185,
+            "value": 0.0812
+          },
+          {
+            "wavelength": 2.206,
+            "value": 0.0786
+          },
+          {
+            "wavelength": 2.227,
+            "value": 0.0732
+          },
+          {
+            "wavelength": 2.248,
+            "value": 0.0834
+          },
+          {
+            "wavelength": 2.269,
+            "value": 0.089
+          },
+          {
+            "wavelength": 2.29,
+            "value": 0.0912
+          },
+          {
+            "wavelength": 2.311,
+            "value": 0.0833
+          },
+          {
+            "wavelength": 2.332,
+            "value": 0.0896
+          },
+          {
+            "wavelength": 2.353,
+            "value": 0.1069
+          },
+          {
+            "wavelength": 2.374,
+            "value": 0.1106
+          },
+          {
+            "wavelength": 2.395,
+            "value": 0.1349
+          },
+          {
+            "wavelength": 2.416,
+            "value": 0.1368
+          },
+          {
+            "wavelength": 2.437,
+            "value": 0.1481
+          },
+          {
+            "wavelength": 2.458,
+            "value": 0.1644
+          },
+          {
+            "wavelength": 2.479,
+            "value": 0.1871
+          }
+        ],
+        "brightnessTemperature": [
+          {
+            "channel": "VIS_01",
+            "wavelength": 0.55,
+            "value": 0.4216416150608867
+          },
+          {
+            "channel": "VIS_02",
+            "wavelength": 0.66,
+            "value": 0.5974544893704933
+          },
+          {
+            "channel": "NIR_01",
+            "wavelength": 0.86,
+            "value": 0.41407495635049063
+          },
+          {
+            "channel": "NIR_02",
+            "wavelength": 1.24,
+            "value": 0.6471363383278492
+          },
+          {
+            "channel": "SWIR_01",
+            "wavelength": 1.64,
+            "value": 0.22169122002811525
+          },
+          {
+            "channel": "SWIR_02",
+            "wavelength": 2.25,
+            "value": 0.7687462196138608
+          },
+          {
+            "channel": "TIR_01",
+            "wavelength": 10.8,
+            "value": 302.33147983302894
+          },
+          {
+            "channel": "TIR_02",
+            "wavelength": 12,
+            "value": 286.9433564456605
+          }
+        ],
+        "radiationBalance": -0.00272,
+        "fittingResidual": 0.0188,
+        "accuracy": 0.9706
+      }
+    },
+    {
+      "id": "task_mqe81r0jhau7we",
+      "name": "南海海域海洋气溶胶光学厚度反演",
+      "region": "南海海域",
+      "status": "completed",
+      "progress": 100,
+      "createdAt": "2026-06-11T20:13:15.901Z",
+      "updatedAt": "2026-06-13T09:13:15.901Z",
+      "createdBy": "王工程师",
+      "parameters": {
+        "profileFile": "profile_8.dat",
+        "surfaceType": "水体",
+        "aerosolModel": "城市型",
+        "wavelengthRange": [
+          0.4,
+          2.5
+        ],
+        "spectralResolution": 0.01,
+        "observationAngle": 5
+      },
+      "approvalStatus": "rejected",
+      "alertLevel": "level1",
+      "computeDuration": 500,
+      "resourceUsage": 3,
+      "adjustmentLogs": [],
+      "results": {
+        "transmittance": [
+          {
+            "wavelength": 0.4,
+            "value": 0.5221
+          },
+          {
+            "wavelength": 0.421,
+            "value": 0.5402
+          },
+          {
+            "wavelength": 0.442,
+            "value": 0.5879
+          },
+          {
+            "wavelength": 0.463,
+            "value": 0.6138
+          },
+          {
+            "wavelength": 0.484,
+            "value": 0.6511
+          },
+          {
+            "wavelength": 0.505,
+            "value": 0.697
+          },
+          {
+            "wavelength": 0.526,
+            "value": 0.6839
+          },
+          {
+            "wavelength": 0.547,
+            "value": 0.7258
+          },
+          {
+            "wavelength": 0.568,
+            "value": 0.7776
+          },
+          {
+            "wavelength": 0.589,
+            "value": 0.7653
+          },
+          {
+            "wavelength": 0.61,
+            "value": 0.8007
+          },
+          {
+            "wavelength": 0.631,
+            "value": 0.809
+          },
+          {
+            "wavelength": 0.652,
+            "value": 0.7934
+          },
+          {
+            "wavelength": 0.673,
+            "value": 0.8044
+          },
+          {
+            "wavelength": 0.694,
+            "value": 0.8178
+          },
+          {
+            "wavelength": 0.715,
+            "value": 0.7843
+          },
+          {
+            "wavelength": 0.736,
+            "value": 0.767
+          },
+          {
+            "wavelength": 0.757,
+            "value": 0.7307
+          },
+          {
+            "wavelength": 0.778,
+            "value": 0.7139
+          },
+          {
+            "wavelength": 0.799,
+            "value": 0.7234
+          },
+          {
+            "wavelength": 0.82,
+            "value": 0.6801
+          },
+          {
+            "wavelength": 0.841,
+            "value": 0.6344
+          },
+          {
+            "wavelength": 0.862,
+            "value": 0.6164
+          },
+          {
+            "wavelength": 0.883,
+            "value": 0.5791
+          },
+          {
+            "wavelength": 0.904,
+            "value": 0.514
+          },
+          {
+            "wavelength": 0.925,
+            "value": 0.5012
+          },
+          {
+            "wavelength": 0.946,
+            "value": 0.4506
+          },
+          {
+            "wavelength": 0.967,
+            "value": 0.4096
+          },
+          {
+            "wavelength": 0.988,
+            "value": 0.4091
+          },
+          {
+            "wavelength": 1.009,
+            "value": 0.3801
+          },
+          {
+            "wavelength": 1.03,
+            "value": 0.3446
+          },
+          {
+            "wavelength": 1.051,
+            "value": 0.3133
+          },
+          {
+            "wavelength": 1.072,
+            "value": 0.2887
+          },
+          {
+            "wavelength": 1.093,
+            "value": 0.2363
+          },
+          {
+            "wavelength": 1.114,
+            "value": 0.2507
+          },
+          {
+            "wavelength": 1.135,
+            "value": 0.1975
+          },
+          {
+            "wavelength": 1.156,
+            "value": 0.1952
+          },
+          {
+            "wavelength": 1.177,
+            "value": 0.2187
+          },
+          {
+            "wavelength": 1.198,
+            "value": 0.1887
+          },
+          {
+            "wavelength": 1.219,
+            "value": 0.2067
+          },
+          {
+            "wavelength": 1.24,
+            "value": 0.2044
+          },
+          {
+            "wavelength": 1.261,
+            "value": 0.2522
+          },
+          {
+            "wavelength": 1.282,
+            "value": 0.2491
+          },
+          {
+            "wavelength": 1.303,
+            "value": 0.2767
+          },
+          {
+            "wavelength": 1.324,
+            "value": 0.3118
+          },
+          {
+            "wavelength": 1.345,
+            "value": 0.3266
+          },
+          {
+            "wavelength": 1.366,
+            "value": 0.3527
+          },
+          {
+            "wavelength": 1.387,
+            "value": 0.3745
+          },
+          {
+            "wavelength": 1.408,
+            "value": 0.434
+          },
+          {
+            "wavelength": 1.429,
+            "value": 0.4783
+          },
+          {
+            "wavelength": 1.45,
+            "value": 0.5102
+          },
+          {
+            "wavelength": 1.471,
+            "value": 0.5174
+          },
+          {
+            "wavelength": 1.492,
+            "value": 0.581
+          },
+          {
+            "wavelength": 1.513,
+            "value": 0.5925
+          },
+          {
+            "wavelength": 1.534,
+            "value": 0.6306
+          },
+          {
+            "wavelength": 1.555,
+            "value": 0.6621
+          },
+          {
+            "wavelength": 1.576,
+            "value": 0.6814
+          },
+          {
+            "wavelength": 1.597,
+            "value": 0.7497
+          },
+          {
+            "wavelength": 1.618,
+            "value": 0.7538
+          },
+          {
+            "wavelength": 1.639,
+            "value": 0.7876
+          },
+          {
+            "wavelength": 1.66,
+            "value": 0.765
+          },
+          {
+            "wavelength": 1.681,
+            "value": 0.8058
+          },
+          {
+            "wavelength": 1.702,
+            "value": 0.7763
+          },
+          {
+            "wavelength": 1.723,
+            "value": 0.7763
+          },
+          {
+            "wavelength": 1.744,
+            "value": 0.8153
+          },
+          {
+            "wavelength": 1.765,
+            "value": 0.7721
+          },
+          {
+            "wavelength": 1.786,
+            "value": 0.7829
+          },
+          {
+            "wavelength": 1.807,
+            "value": 0.7324
+          },
+          {
+            "wavelength": 1.828,
+            "value": 0.7174
+          },
+          {
+            "wavelength": 1.849,
+            "value": 0.7245
+          },
+          {
+            "wavelength": 1.87,
+            "value": 0.6777
+          },
+          {
+            "wavelength": 1.891,
+            "value": 0.6221
+          },
+          {
+            "wavelength": 1.912,
+            "value": 0.6227
+          },
+          {
+            "wavelength": 1.933,
+            "value": 0.5733
+          },
+          {
+            "wavelength": 1.954,
+            "value": 0.5285
+          },
+          {
+            "wavelength": 1.975,
+            "value": 0.4869
+          },
+          {
+            "wavelength": 1.996,
+            "value": 0.4594
+          },
+          {
+            "wavelength": 2.017,
+            "value": 0.4025
+          },
+          {
+            "wavelength": 2.038,
+            "value": 0.3821
+          },
+          {
+            "wavelength": 2.059,
+            "value": 0.3787
+          },
+          {
+            "wavelength": 2.08,
+            "value": 0.3166
+          },
+          {
+            "wavelength": 2.101,
+            "value": 0.291
+          },
+          {
+            "wavelength": 2.122,
+            "value": 0.2787
+          },
+          {
+            "wavelength": 2.143,
+            "value": 0.266
+          },
+          {
+            "wavelength": 2.164,
+            "value": 0.2445
+          },
+          {
+            "wavelength": 2.185,
+            "value": 0.2241
+          },
+          {
+            "wavelength": 2.206,
+            "value": 0.1939
+          },
+          {
+            "wavelength": 2.227,
+            "value": 0.1812
+          },
+          {
+            "wavelength": 2.248,
+            "value": 0.2093
+          },
+          {
+            "wavelength": 2.269,
+            "value": 0.2031
+          },
+          {
+            "wavelength": 2.29,
+            "value": 0.2131
+          },
+          {
+            "wavelength": 2.311,
+            "value": 0.207
+          },
+          {
+            "wavelength": 2.332,
+            "value": 0.2656
+          },
+          {
+            "wavelength": 2.353,
+            "value": 0.2837
+          },
+          {
+            "wavelength": 2.374,
+            "value": 0.3148
+          },
+          {
+            "wavelength": 2.395,
+            "value": 0.2993
+          },
+          {
+            "wavelength": 2.416,
+            "value": 0.3545
+          },
+          {
+            "wavelength": 2.437,
+            "value": 0.3739
+          },
+          {
+            "wavelength": 2.458,
+            "value": 0.4186
+          },
+          {
+            "wavelength": 2.479,
+            "value": 0.4844
+          }
+        ],
+        "reflectance": [
+          {
+            "wavelength": 0.4,
+            "value": 0.2035
+          },
+          {
+            "wavelength": 0.421,
+            "value": 0.2146
+          },
+          {
+            "wavelength": 0.442,
+            "value": 0.2277
+          },
+          {
+            "wavelength": 0.463,
+            "value": 0.2437
+          },
+          {
+            "wavelength": 0.484,
+            "value": 0.2562
+          },
+          {
+            "wavelength": 0.505,
+            "value": 0.2684
+          },
+          {
+            "wavelength": 0.526,
+            "value": 0.2812
+          },
+          {
+            "wavelength": 0.547,
+            "value": 0.2898
+          },
+          {
+            "wavelength": 0.568,
+            "value": 0.3089
+          },
+          {
+            "wavelength": 0.589,
+            "value": 0.3075
+          },
+          {
+            "wavelength": 0.61,
+            "value": 0.3076
+          },
+          {
+            "wavelength": 0.631,
+            "value": 0.3086
+          },
+          {
+            "wavelength": 0.652,
+            "value": 0.3265
+          },
+          {
+            "wavelength": 0.673,
+            "value": 0.3198
+          },
+          {
+            "wavelength": 0.694,
+            "value": 0.3262
+          },
+          {
+            "wavelength": 0.715,
+            "value": 0.3074
+          },
+          {
+            "wavelength": 0.736,
+            "value": 0.3096
+          },
+          {
+            "wavelength": 0.757,
+            "value": 0.293
+          },
+          {
+            "wavelength": 0.778,
+            "value": 0.2976
+          },
+          {
+            "wavelength": 0.799,
+            "value": 0.2876
+          },
+          {
+            "wavelength": 0.82,
+            "value": 0.2649
+          },
+          {
+            "wavelength": 0.841,
+            "value": 0.2571
+          },
+          {
+            "wavelength": 0.862,
+            "value": 0.2374
+          },
+          {
+            "wavelength": 0.883,
+            "value": 0.238
+          },
+          {
+            "wavelength": 0.904,
+            "value": 0.2216
+          },
+          {
+            "wavelength": 0.925,
+            "value": 0.2008
+          },
+          {
+            "wavelength": 0.946,
+            "value": 0.1915
+          },
+          {
+            "wavelength": 0.967,
+            "value": 0.1654
+          },
+          {
+            "wavelength": 0.988,
+            "value": 0.1578
+          },
+          {
+            "wavelength": 1.009,
+            "value": 0.1448
+          },
+          {
+            "wavelength": 1.03,
+            "value": 0.1256
+          },
+          {
+            "wavelength": 1.051,
+            "value": 0.1178
+          },
+          {
+            "wavelength": 1.072,
+            "value": 0.0989
+          },
+          {
+            "wavelength": 1.093,
+            "value": 0.0899
+          },
+          {
+            "wavelength": 1.114,
+            "value": 0.1011
+          },
+          {
+            "wavelength": 1.135,
+            "value": 0.0897
+          },
+          {
+            "wavelength": 1.156,
+            "value": 0.0758
+          },
+          {
+            "wavelength": 1.177,
+            "value": 0.0726
+          },
+          {
+            "wavelength": 1.198,
+            "value": 0.0812
+          },
+          {
+            "wavelength": 1.219,
+            "value": 0.0784
+          },
+          {
+            "wavelength": 1.24,
+            "value": 0.0881
+          },
+          {
+            "wavelength": 1.261,
+            "value": 0.0891
+          },
+          {
+            "wavelength": 1.282,
+            "value": 0.0898
+          },
+          {
+            "wavelength": 1.303,
+            "value": 0.1086
+          },
+          {
+            "wavelength": 1.324,
+            "value": 0.1197
+          },
+          {
+            "wavelength": 1.345,
+            "value": 0.1216
+          },
+          {
+            "wavelength": 1.366,
+            "value": 0.138
+          },
+          {
+            "wavelength": 1.387,
+            "value": 0.1562
+          },
+          {
+            "wavelength": 1.408,
+            "value": 0.1615
+          },
+          {
+            "wavelength": 1.429,
+            "value": 0.1849
+          },
+          {
+            "wavelength": 1.45,
+            "value": 0.1937
+          },
+          {
+            "wavelength": 1.471,
+            "value": 0.2154
+          },
+          {
+            "wavelength": 1.492,
+            "value": 0.2322
+          },
+          {
+            "wavelength": 1.513,
+            "value": 0.2407
+          },
+          {
+            "wavelength": 1.534,
+            "value": 0.2596
+          },
+          {
+            "wavelength": 1.555,
+            "value": 0.2692
+          },
+          {
+            "wavelength": 1.576,
+            "value": 0.2909
+          },
+          {
+            "wavelength": 1.597,
+            "value": 0.2915
+          },
+          {
+            "wavelength": 1.618,
+            "value": 0.2993
+          },
+          {
+            "wavelength": 1.639,
+            "value": 0.31
+          },
+          {
+            "wavelength": 1.66,
+            "value": 0.3098
+          },
+          {
+            "wavelength": 1.681,
+            "value": 0.3216
+          },
+          {
+            "wavelength": 1.702,
+            "value": 0.3232
+          },
+          {
+            "wavelength": 1.723,
+            "value": 0.3169
+          },
+          {
+            "wavelength": 1.744,
+            "value": 0.3183
+          },
+          {
+            "wavelength": 1.765,
+            "value": 0.3166
+          },
+          {
+            "wavelength": 1.786,
+            "value": 0.3178
+          },
+          {
+            "wavelength": 1.807,
+            "value": 0.2974
+          },
+          {
+            "wavelength": 1.828,
+            "value": 0.3012
+          },
+          {
+            "wavelength": 1.849,
+            "value": 0.2735
+          },
+          {
+            "wavelength": 1.87,
+            "value": 0.266
+          },
+          {
+            "wavelength": 1.891,
+            "value": 0.2616
+          },
+          {
+            "wavelength": 1.912,
+            "value": 0.2388
+          },
+          {
+            "wavelength": 1.933,
+            "value": 0.2294
+          },
+          {
+            "wavelength": 1.954,
+            "value": 0.2222
+          },
+          {
+            "wavelength": 1.975,
+            "value": 0.2009
+          },
+          {
+            "wavelength": 1.996,
+            "value": 0.1861
+          },
+          {
+            "wavelength": 2.017,
+            "value": 0.1797
+          },
+          {
+            "wavelength": 2.038,
+            "value": 0.1638
+          },
+          {
+            "wavelength": 2.059,
+            "value": 0.142
+          },
+          {
+            "wavelength": 2.08,
+            "value": 0.1271
+          },
+          {
+            "wavelength": 2.101,
+            "value": 0.1242
+          },
+          {
+            "wavelength": 2.122,
+            "value": 0.115
+          },
+          {
+            "wavelength": 2.143,
+            "value": 0.092
+          },
+          {
+            "wavelength": 2.164,
+            "value": 0.0938
+          },
+          {
+            "wavelength": 2.185,
+            "value": 0.0878
+          },
+          {
+            "wavelength": 2.206,
+            "value": 0.0869
+          },
+          {
+            "wavelength": 2.227,
+            "value": 0.0796
+          },
+          {
+            "wavelength": 2.248,
+            "value": 0.0812
+          },
+          {
+            "wavelength": 2.269,
+            "value": 0.0808
+          },
+          {
+            "wavelength": 2.29,
+            "value": 0.0918
+          },
+          {
+            "wavelength": 2.311,
+            "value": 0.0921
+          },
+          {
+            "wavelength": 2.332,
+            "value": 0.0893
+          },
+          {
+            "wavelength": 2.353,
+            "value": 0.1002
+          },
+          {
+            "wavelength": 2.374,
+            "value": 0.1187
+          },
+          {
+            "wavelength": 2.395,
+            "value": 0.1354
+          },
+          {
+            "wavelength": 2.416,
+            "value": 0.1476
+          },
+          {
+            "wavelength": 2.437,
+            "value": 0.1548
+          },
+          {
+            "wavelength": 2.458,
+            "value": 0.1635
+          },
+          {
+            "wavelength": 2.479,
+            "value": 0.1903
+          }
+        ],
+        "brightnessTemperature": [
+          {
+            "channel": "VIS_01",
+            "wavelength": 0.55,
+            "value": 0.4646730043291446
+          },
+          {
+            "channel": "VIS_02",
+            "wavelength": 0.66,
+            "value": 0.6739544896118587
+          },
+          {
+            "channel": "NIR_01",
+            "wavelength": 0.86,
+            "value": 0.38349195483543586
+          },
+          {
+            "channel": "NIR_02",
+            "wavelength": 1.24,
+            "value": 0.8846956335121009
+          },
+          {
+            "channel": "SWIR_01",
+            "wavelength": 1.64,
+            "value": 0.8033092739564691
+          },
+          {
+            "channel": "SWIR_02",
+            "wavelength": 2.25,
+            "value": 0.7691033169767253
+          },
+          {
+            "channel": "TIR_01",
+            "wavelength": 10.8,
+            "value": 272.9300713941697
+          },
+          {
+            "channel": "TIR_02",
+            "wavelength": 12,
+            "value": 307.6154608121682
+          }
+        ],
+        "radiationBalance": -0.00067,
+        "fittingResidual": 0.0089,
+        "accuracy": 0.9264
+      }
+    },
+    {
+      "id": "task_mqe81r0jvqy0id",
+      "name": "东部沿海城市空气污染遥感监测",
+      "region": "华北平原",
+      "status": "rollback",
+      "progress": 44,
+      "createdAt": "2026-06-10T20:13:15.901Z",
+      "updatedAt": "2026-06-11T02:13:15.901Z",
+      "createdBy": "陈教授",
+      "parameters": {
+        "profileFile": "profile_9.dat",
+        "surfaceType": "沙漠",
+        "aerosolModel": "沙尘型",
+        "wavelengthRange": [
+          0.4,
+          2.5
+        ],
+        "spectralResolution": 0.01,
+        "observationAngle": 16
+      },
+      "approvalStatus": "none",
+      "alertLevel": null,
+      "adjustmentLogs": [],
+      "results": {
+        "transmittance": [
+          {
+            "wavelength": 0.4,
+            "value": 0.5196
+          },
+          {
+            "wavelength": 0.421,
+            "value": 0.5267
+          },
+          {
+            "wavelength": 0.442,
+            "value": 0.5938
+          },
+          {
+            "wavelength": 0.463,
+            "value": 0.609
+          },
+          {
+            "wavelength": 0.484,
+            "value": 0.659
+          },
+          {
+            "wavelength": 0.505,
+            "value": 0.7003
+          },
+          {
+            "wavelength": 0.526,
+            "value": 0.7276
+          },
+          {
+            "wavelength": 0.547,
+            "value": 0.7189
+          },
+          {
+            "wavelength": 0.568,
+            "value": 0.7462
+          },
+          {
+            "wavelength": 0.589,
+            "value": 0.7509
+          },
+          {
+            "wavelength": 0.61,
+            "value": 0.7826
+          },
+          {
+            "wavelength": 0.631,
+            "value": 0.8122
+          },
+          {
+            "wavelength": 0.652,
+            "value": 0.7777
+          },
+          {
+            "wavelength": 0.673,
+            "value": 0.7839
+          },
+          {
+            "wavelength": 0.694,
+            "value": 0.7786
+          },
+          {
+            "wavelength": 0.715,
+            "value": 0.7842
+          },
+          {
+            "wavelength": 0.736,
+            "value": 0.7599
+          },
+          {
+            "wavelength": 0.757,
+            "value": 0.7596
+          },
+          {
+            "wavelength": 0.778,
+            "value": 0.7166
+          },
+          {
+            "wavelength": 0.799,
+            "value": 0.6901
+          },
+          {
+            "wavelength": 0.82,
+            "value": 0.6824
+          },
+          {
+            "wavelength": 0.841,
+            "value": 0.6349
+          },
+          {
+            "wavelength": 0.862,
+            "value": 0.6267
+          },
+          {
+            "wavelength": 0.883,
+            "value": 0.5571
+          },
+          {
+            "wavelength": 0.904,
+            "value": 0.5354
+          },
+          {
+            "wavelength": 0.925,
+            "value": 0.4867
+          },
+          {
+            "wavelength": 0.946,
+            "value": 0.4794
+          },
+          {
+            "wavelength": 0.967,
+            "value": 0.4205
+          },
+          {
+            "wavelength": 0.988,
+            "value": 0.3773
+          },
+          {
+            "wavelength": 1.009,
+            "value": 0.3413
+          },
+          {
+            "wavelength": 1.03,
+            "value": 0.3008
+          },
+          {
+            "wavelength": 1.051,
+            "value": 0.2851
+          },
+          {
+            "wavelength": 1.072,
+            "value": 0.2827
+          },
+          {
+            "wavelength": 1.093,
+            "value": 0.2517
+          },
+          {
+            "wavelength": 1.114,
+            "value": 0.2101
+          },
+          {
+            "wavelength": 1.135,
+            "value": 0.2187
+          },
+          {
+            "wavelength": 1.156,
+            "value": 0.2056
+          },
+          {
+            "wavelength": 1.177,
+            "value": 0.2103
+          },
+          {
+            "wavelength": 1.198,
+            "value": 0.1876
+          },
+          {
+            "wavelength": 1.219,
+            "value": 0.2259
+          },
+          {
+            "wavelength": 1.24,
+            "value": 0.2072
+          },
+          {
+            "wavelength": 1.261,
+            "value": 0.2226
+          },
+          {
+            "wavelength": 1.282,
+            "value": 0.262
+          },
+          {
+            "wavelength": 1.303,
+            "value": 0.2508
+          },
+          {
+            "wavelength": 1.324,
+            "value": 0.3137
+          },
+          {
+            "wavelength": 1.345,
+            "value": 0.3354
+          },
+          {
+            "wavelength": 1.366,
+            "value": 0.3701
+          },
+          {
+            "wavelength": 1.387,
+            "value": 0.3797
+          },
+          {
+            "wavelength": 1.408,
+            "value": 0.4167
+          },
+          {
+            "wavelength": 1.429,
+            "value": 0.4676
+          },
+          {
+            "wavelength": 1.45,
+            "value": 0.4809
+          },
+          {
+            "wavelength": 1.471,
+            "value": 0.528
+          },
+          {
+            "wavelength": 1.492,
+            "value": 0.5953
+          },
+          {
+            "wavelength": 1.513,
+            "value": 0.6079
+          },
+          {
+            "wavelength": 1.534,
+            "value": 0.6323
+          },
+          {
+            "wavelength": 1.555,
+            "value": 0.674
+          },
+          {
+            "wavelength": 1.576,
+            "value": 0.6917
+          },
+          {
+            "wavelength": 1.597,
+            "value": 0.7064
+          },
+          {
+            "wavelength": 1.618,
+            "value": 0.7544
+          },
+          {
+            "wavelength": 1.639,
+            "value": 0.76
+          },
+          {
+            "wavelength": 1.66,
+            "value": 0.78
+          },
+          {
+            "wavelength": 1.681,
+            "value": 0.7779
+          },
+          {
+            "wavelength": 1.702,
+            "value": 0.8188
+          },
+          {
+            "wavelength": 1.723,
+            "value": 0.797
+          },
+          {
+            "wavelength": 1.744,
+            "value": 0.8025
+          },
+          {
+            "wavelength": 1.765,
+            "value": 0.7764
+          },
+          {
+            "wavelength": 1.786,
+            "value": 0.7891
+          },
+          {
+            "wavelength": 1.807,
+            "value": 0.7697
+          },
+          {
+            "wavelength": 1.828,
+            "value": 0.721
+          },
+          {
+            "wavelength": 1.849,
+            "value": 0.7282
+          },
+          {
+            "wavelength": 1.87,
+            "value": 0.6685
+          },
+          {
+            "wavelength": 1.891,
+            "value": 0.6421
+          },
+          {
+            "wavelength": 1.912,
+            "value": 0.6272
+          },
+          {
+            "wavelength": 1.933,
+            "value": 0.5851
+          },
+          {
+            "wavelength": 1.954,
+            "value": 0.5286
+          },
+          {
+            "wavelength": 1.975,
+            "value": 0.488
+          },
+          {
+            "wavelength": 1.996,
+            "value": 0.4613
+          },
+          {
+            "wavelength": 2.017,
+            "value": 0.4418
+          },
+          {
+            "wavelength": 2.038,
+            "value": 0.3889
+          },
+          {
+            "wavelength": 2.059,
+            "value": 0.3399
+          },
+          {
+            "wavelength": 2.08,
+            "value": 0.3362
+          },
+          {
+            "wavelength": 2.101,
+            "value": 0.3188
+          },
+          {
+            "wavelength": 2.122,
+            "value": 0.2614
+          },
+          {
+            "wavelength": 2.143,
+            "value": 0.2576
+          },
+          {
+            "wavelength": 2.164,
+            "value": 0.2065
+          },
+          {
+            "wavelength": 2.185,
+            "value": 0.1929
+          },
+          {
+            "wavelength": 2.206,
+            "value": 0.1909
+          },
+          {
+            "wavelength": 2.227,
+            "value": 0.1866
+          },
+          {
+            "wavelength": 2.248,
+            "value": 0.1978
+          },
+          {
+            "wavelength": 2.269,
+            "value": 0.2188
+          },
+          {
+            "wavelength": 2.29,
+            "value": 0.2268
+          },
+          {
+            "wavelength": 2.311,
+            "value": 0.214
+          },
+          {
+            "wavelength": 2.332,
+            "value": 0.2585
+          },
+          {
+            "wavelength": 2.353,
+            "value": 0.2701
+          },
+          {
+            "wavelength": 2.374,
+            "value": 0.2863
+          },
+          {
+            "wavelength": 2.395,
+            "value": 0.3413
+          },
+          {
+            "wavelength": 2.416,
+            "value": 0.3401
+          },
+          {
+            "wavelength": 2.437,
+            "value": 0.3844
+          },
+          {
+            "wavelength": 2.458,
+            "value": 0.4346
+          },
+          {
+            "wavelength": 2.479,
+            "value": 0.4688
+          }
+        ],
+        "reflectance": [
+          {
+            "wavelength": 0.4,
+            "value": 0.2089
+          },
+          {
+            "wavelength": 0.421,
+            "value": 0.2233
+          },
+          {
+            "wavelength": 0.442,
+            "value": 0.2238
+          },
+          {
+            "wavelength": 0.463,
+            "value": 0.2469
+          },
+          {
+            "wavelength": 0.484,
+            "value": 0.2656
+          },
+          {
+            "wavelength": 0.505,
+            "value": 0.2652
+          },
+          {
+            "wavelength": 0.526,
+            "value": 0.2888
+          },
+          {
+            "wavelength": 0.547,
+            "value": 0.2848
+          },
+          {
+            "wavelength": 0.568,
+            "value": 0.3017
+          },
+          {
+            "wavelength": 0.589,
+            "value": 0.3051
+          },
+          {
+            "wavelength": 0.61,
+            "value": 0.3171
+          },
+          {
+            "wavelength": 0.631,
+            "value": 0.3236
+          },
+          {
+            "wavelength": 0.652,
+            "value": 0.3129
+          },
+          {
+            "wavelength": 0.673,
+            "value": 0.3131
+          },
+          {
+            "wavelength": 0.694,
+            "value": 0.3154
+          },
+          {
+            "wavelength": 0.715,
+            "value": 0.307
+          },
+          {
+            "wavelength": 0.736,
+            "value": 0.3095
+          },
+          {
+            "wavelength": 0.757,
+            "value": 0.2965
+          },
+          {
+            "wavelength": 0.778,
+            "value": 0.2986
+          },
+          {
+            "wavelength": 0.799,
+            "value": 0.2915
+          },
+          {
+            "wavelength": 0.82,
+            "value": 0.268
+          },
+          {
+            "wavelength": 0.841,
+            "value": 0.2616
+          },
+          {
+            "wavelength": 0.862,
+            "value": 0.2522
+          },
+          {
+            "wavelength": 0.883,
+            "value": 0.2225
+          },
+          {
+            "wavelength": 0.904,
+            "value": 0.2243
+          },
+          {
+            "wavelength": 0.925,
+            "value": 0.1949
+          },
+          {
+            "wavelength": 0.946,
+            "value": 0.1805
+          },
+          {
+            "wavelength": 0.967,
+            "value": 0.1724
+          },
+          {
+            "wavelength": 0.988,
+            "value": 0.1618
+          },
+          {
+            "wavelength": 1.009,
+            "value": 0.139
+          },
+          {
+            "wavelength": 1.03,
+            "value": 0.1215
+          },
+          {
+            "wavelength": 1.051,
+            "value": 0.1244
+          },
+          {
+            "wavelength": 1.072,
+            "value": 0.1006
+          },
+          {
+            "wavelength": 1.093,
+            "value": 0.0928
+          },
+          {
+            "wavelength": 1.114,
+            "value": 0.0915
+          },
+          {
+            "wavelength": 1.135,
+            "value": 0.08
+          },
+          {
+            "wavelength": 1.156,
+            "value": 0.0846
+          },
+          {
+            "wavelength": 1.177,
+            "value": 0.0754
+          },
+          {
+            "wavelength": 1.198,
+            "value": 0.0729
+          },
+          {
+            "wavelength": 1.219,
+            "value": 0.0808
+          },
+          {
+            "wavelength": 1.24,
+            "value": 0.0808
+          },
+          {
+            "wavelength": 1.261,
+            "value": 0.0999
+          },
+          {
+            "wavelength": 1.282,
+            "value": 0.0899
+          },
+          {
+            "wavelength": 1.303,
+            "value": 0.0992
+          },
+          {
+            "wavelength": 1.324,
+            "value": 0.1082
+          },
+          {
+            "wavelength": 1.345,
+            "value": 0.126
+          },
+          {
+            "wavelength": 1.366,
+            "value": 0.1506
+          },
+          {
+            "wavelength": 1.387,
+            "value": 0.1541
+          },
+          {
+            "wavelength": 1.408,
+            "value": 0.1616
+          },
+          {
+            "wavelength": 1.429,
+            "value": 0.1854
+          },
+          {
+            "wavelength": 1.45,
+            "value": 0.2058
+          },
+          {
+            "wavelength": 1.471,
+            "value": 0.2205
+          },
+          {
+            "wavelength": 1.492,
+            "value": 0.2278
+          },
+          {
+            "wavelength": 1.513,
+            "value": 0.2386
+          },
+          {
+            "wavelength": 1.534,
+            "value": 0.26
+          },
+          {
+            "wavelength": 1.555,
+            "value": 0.2766
+          },
+          {
+            "wavelength": 1.576,
+            "value": 0.2722
+          },
+          {
+            "wavelength": 1.597,
+            "value": 0.2949
+          },
+          {
+            "wavelength": 1.618,
+            "value": 0.3055
+          },
+          {
+            "wavelength": 1.639,
+            "value": 0.3022
+          },
+          {
+            "wavelength": 1.66,
+            "value": 0.3171
+          },
+          {
+            "wavelength": 1.681,
+            "value": 0.3154
+          },
+          {
+            "wavelength": 1.702,
+            "value": 0.3275
+          },
+          {
+            "wavelength": 1.723,
+            "value": 0.3143
+          },
+          {
+            "wavelength": 1.744,
+            "value": 0.3149
+          },
+          {
+            "wavelength": 1.765,
+            "value": 0.3205
+          },
+          {
+            "wavelength": 1.786,
+            "value": 0.3153
+          },
+          {
+            "wavelength": 1.807,
+            "value": 0.3061
+          },
+          {
+            "wavelength": 1.828,
+            "value": 0.2896
+          },
+          {
+            "wavelength": 1.849,
+            "value": 0.2816
+          },
+          {
+            "wavelength": 1.87,
+            "value": 0.2721
+          },
+          {
+            "wavelength": 1.891,
+            "value": 0.2608
+          },
+          {
+            "wavelength": 1.912,
+            "value": 0.2462
+          },
+          {
+            "wavelength": 1.933,
+            "value": 0.2379
+          },
+          {
+            "wavelength": 1.954,
+            "value": 0.222
+          },
+          {
+            "wavelength": 1.975,
+            "value": 0.2048
+          },
+          {
+            "wavelength": 1.996,
+            "value": 0.1787
+          },
+          {
+            "wavelength": 2.017,
+            "value": 0.166
+          },
+          {
+            "wavelength": 2.038,
+            "value": 0.1594
+          },
+          {
+            "wavelength": 2.059,
+            "value": 0.1455
+          },
+          {
+            "wavelength": 2.08,
+            "value": 0.1196
+          },
+          {
+            "wavelength": 2.101,
+            "value": 0.1184
+          },
+          {
+            "wavelength": 2.122,
+            "value": 0.0986
+          },
+          {
+            "wavelength": 2.143,
+            "value": 0.0962
+          },
+          {
+            "wavelength": 2.164,
+            "value": 0.0896
+          },
+          {
+            "wavelength": 2.185,
+            "value": 0.0922
+          },
+          {
+            "wavelength": 2.206,
+            "value": 0.0867
+          },
+          {
+            "wavelength": 2.227,
+            "value": 0.0704
+          },
+          {
+            "wavelength": 2.248,
+            "value": 0.0845
+          },
+          {
+            "wavelength": 2.269,
+            "value": 0.0848
+          },
+          {
+            "wavelength": 2.29,
+            "value": 0.0897
+          },
+          {
+            "wavelength": 2.311,
+            "value": 0.096
+          },
+          {
+            "wavelength": 2.332,
+            "value": 0.1077
+          },
+          {
+            "wavelength": 2.353,
+            "value": 0.1156
+          },
+          {
+            "wavelength": 2.374,
+            "value": 0.1097
+          },
+          {
+            "wavelength": 2.395,
+            "value": 0.1309
+          },
+          {
+            "wavelength": 2.416,
+            "value": 0.1387
+          },
+          {
+            "wavelength": 2.437,
+            "value": 0.1629
+          },
+          {
+            "wavelength": 2.458,
+            "value": 0.1652
+          },
+          {
+            "wavelength": 2.479,
+            "value": 0.1938
+          }
+        ],
+        "brightnessTemperature": [
+          {
+            "channel": "VIS_01",
+            "wavelength": 0.55,
+            "value": 0.8491771097237419
+          },
+          {
+            "channel": "VIS_02",
+            "wavelength": 0.66,
+            "value": 0.49062084047962895
+          },
+          {
+            "channel": "NIR_01",
+            "wavelength": 0.86,
+            "value": 0.3650439052188761
+          },
+          {
+            "channel": "NIR_02",
+            "wavelength": 1.24,
+            "value": 0.28231545182726125
+          },
+          {
+            "channel": "SWIR_01",
+            "wavelength": 1.64,
+            "value": 0.7646702506445966
+          },
+          {
+            "channel": "SWIR_02",
+            "wavelength": 2.25,
+            "value": 0.2606094720186196
+          },
+          {
+            "channel": "TIR_01",
+            "wavelength": 10.8,
+            "value": 260.14496808034085
+          },
+          {
+            "channel": "TIR_02",
+            "wavelength": 12,
+            "value": 278.5041454908122
+          }
+        ],
+        "radiationBalance": -0.00008,
+        "fittingResidual": 0.0191,
+        "accuracy": 0.9236
+      }
+    },
+    {
+      "id": "task_mqe81r0jclln4d",
+      "name": "黄土高原植被覆盖区光谱响应模拟",
+      "region": "长江三角洲",
+      "status": "completed",
+      "progress": 100,
+      "createdAt": "2026-06-10T20:13:15.901Z",
+      "updatedAt": "2026-06-11T06:13:15.901Z",
+      "createdBy": "刘博士",
+      "parameters": {
+        "profileFile": "profile_10.dat",
+        "surfaceType": "城市",
+        "aerosolModel": "生物质燃烧型",
+        "wavelengthRange": [
+          0.4,
+          2.5
+        ],
+        "spectralResolution": 0.01,
+        "observationAngle": 7
+      },
+      "approvalStatus": "pending_first",
+      "alertLevel": null,
+      "computeDuration": 387,
+      "resourceUsage": 6.6,
+      "adjustmentLogs": [],
+      "results": {
+        "transmittance": [
+          {
+            "wavelength": 0.4,
+            "value": 0.4785
+          },
+          {
+            "wavelength": 0.421,
+            "value": 0.5284
+          },
+          {
+            "wavelength": 0.442,
+            "value": 0.594
+          },
+          {
+            "wavelength": 0.463,
+            "value": 0.6295
+          },
+          {
+            "wavelength": 0.484,
+            "value": 0.6438
+          },
+          {
+            "wavelength": 0.505,
+            "value": 0.6938
+          },
+          {
+            "wavelength": 0.526,
+            "value": 0.6969
+          },
+          {
+            "wavelength": 0.547,
+            "value": 0.7174
+          },
+          {
+            "wavelength": 0.568,
+            "value": 0.7642
+          },
+          {
+            "wavelength": 0.589,
+            "value": 0.7477
+          },
+          {
+            "wavelength": 0.61,
+            "value": 0.8063
+          },
+          {
+            "wavelength": 0.631,
+            "value": 0.7945
+          },
+          {
+            "wavelength": 0.652,
+            "value": 0.7867
+          },
+          {
+            "wavelength": 0.673,
+            "value": 0.8088
+          },
+          {
+            "wavelength": 0.694,
+            "value": 0.7888
+          },
+          {
+            "wavelength": 0.715,
+            "value": 0.8098
+          },
+          {
+            "wavelength": 0.736,
+            "value": 0.769
+          },
+          {
+            "wavelength": 0.757,
+            "value": 0.7388
+          },
+          {
+            "wavelength": 0.778,
+            "value": 0.7168
+          },
+          {
+            "wavelength": 0.799,
+            "value": 0.7001
+          },
+          {
+            "wavelength": 0.82,
+            "value": 0.6551
+          },
+          {
+            "wavelength": 0.841,
+            "value": 0.6218
+          },
+          {
+            "wavelength": 0.862,
+            "value": 0.6161
+          },
+          {
+            "wavelength": 0.883,
+            "value": 0.5705
+          },
+          {
+            "wavelength": 0.904,
+            "value": 0.5367
+          },
+          {
+            "wavelength": 0.925,
+            "value": 0.5184
+          },
+          {
+            "wavelength": 0.946,
+            "value": 0.4571
+          },
+          {
+            "wavelength": 0.967,
+            "value": 0.4117
+          },
+          {
+            "wavelength": 0.988,
+            "value": 0.4133
+          },
+          {
+            "wavelength": 1.009,
+            "value": 0.379
+          },
+          {
+            "wavelength": 1.03,
+            "value": 0.347
+          },
+          {
+            "wavelength": 1.051,
+            "value": 0.3142
+          },
+          {
+            "wavelength": 1.072,
+            "value": 0.2501
+          },
+          {
+            "wavelength": 1.093,
+            "value": 0.2665
+          },
+          {
+            "wavelength": 1.114,
+            "value": 0.25
+          },
+          {
+            "wavelength": 1.135,
+            "value": 0.2074
+          },
+          {
+            "wavelength": 1.156,
+            "value": 0.1979
+          },
+          {
+            "wavelength": 1.177,
+            "value": 0.2122
+          },
+          {
+            "wavelength": 1.198,
+            "value": 0.2086
+          },
+          {
+            "wavelength": 1.219,
+            "value": 0.2099
+          },
+          {
+            "wavelength": 1.24,
+            "value": 0.1914
+          },
+          {
+            "wavelength": 1.261,
+            "value": 0.2297
+          },
+          {
+            "wavelength": 1.282,
+            "value": 0.2433
+          },
+          {
+            "wavelength": 1.303,
+            "value": 0.2542
+          },
+          {
+            "wavelength": 1.324,
+            "value": 0.27
+          },
+          {
+            "wavelength": 1.345,
+            "value": 0.3036
+          },
+          {
+            "wavelength": 1.366,
+            "value": 0.3321
+          },
+          {
+            "wavelength": 1.387,
+            "value": 0.3682
+          },
+          {
+            "wavelength": 1.408,
+            "value": 0.4308
+          },
+          {
+            "wavelength": 1.429,
+            "value": 0.442
+          },
+          {
+            "wavelength": 1.45,
+            "value": 0.5124
+          },
+          {
+            "wavelength": 1.471,
+            "value": 0.5502
+          },
+          {
+            "wavelength": 1.492,
+            "value": 0.5931
+          },
+          {
+            "wavelength": 1.513,
+            "value": 0.6056
+          },
+          {
+            "wavelength": 1.534,
+            "value": 0.6221
+          },
+          {
+            "wavelength": 1.555,
+            "value": 0.6672
+          },
+          {
+            "wavelength": 1.576,
+            "value": 0.7231
+          },
+          {
+            "wavelength": 1.597,
+            "value": 0.748
+          },
+          {
+            "wavelength": 1.618,
+            "value": 0.7488
+          },
+          {
+            "wavelength": 1.639,
+            "value": 0.7564
+          },
+          {
+            "wavelength": 1.66,
+            "value": 0.8008
+          },
+          {
+            "wavelength": 1.681,
+            "value": 0.7699
+          },
+          {
+            "wavelength": 1.702,
+            "value": 0.8191
+          },
+          {
+            "wavelength": 1.723,
+            "value": 0.8079
+          },
+          {
+            "wavelength": 1.744,
+            "value": 0.7719
+          },
+          {
+            "wavelength": 1.765,
+            "value": 0.8096
+          },
+          {
+            "wavelength": 1.786,
+            "value": 0.778
+          },
+          {
+            "wavelength": 1.807,
+            "value": 0.7725
+          },
+          {
+            "wavelength": 1.828,
+            "value": 0.7372
+          },
+          {
+            "wavelength": 1.849,
+            "value": 0.7165
+          },
+          {
+            "wavelength": 1.87,
+            "value": 0.6785
+          },
+          {
+            "wavelength": 1.891,
+            "value": 0.6348
+          },
+          {
+            "wavelength": 1.912,
+            "value": 0.6104
+          },
+          {
+            "wavelength": 1.933,
+            "value": 0.5912
+          },
+          {
+            "wavelength": 1.954,
+            "value": 0.5226
+          },
+          {
+            "wavelength": 1.975,
+            "value": 0.5019
+          },
+          {
+            "wavelength": 1.996,
+            "value": 0.4384
+          },
+          {
+            "wavelength": 2.017,
+            "value": 0.4311
+          },
+          {
+            "wavelength": 2.038,
+            "value": 0.3855
+          },
+          {
+            "wavelength": 2.059,
+            "value": 0.3524
+          },
+          {
+            "wavelength": 2.08,
+            "value": 0.339
+          },
+          {
+            "wavelength": 2.101,
+            "value": 0.2834
+          },
+          {
+            "wavelength": 2.122,
+            "value": 0.2683
+          },
+          {
+            "wavelength": 2.143,
+            "value": 0.2602
+          },
+          {
+            "wavelength": 2.164,
+            "value": 0.2212
+          },
+          {
+            "wavelength": 2.185,
+            "value": 0.2137
+          },
+          {
+            "wavelength": 2.206,
+            "value": 0.2066
+          },
+          {
+            "wavelength": 2.227,
+            "value": 0.2053
+          },
+          {
+            "wavelength": 2.248,
+            "value": 0.1841
+          },
+          {
+            "wavelength": 2.269,
+            "value": 0.2005
+          },
+          {
+            "wavelength": 2.29,
+            "value": 0.2175
+          },
+          {
+            "wavelength": 2.311,
+            "value": 0.2443
+          },
+          {
+            "wavelength": 2.332,
+            "value": 0.2658
+          },
+          {
+            "wavelength": 2.353,
+            "value": 0.2807
+          },
+          {
+            "wavelength": 2.374,
+            "value": 0.2984
+          },
+          {
+            "wavelength": 2.395,
+            "value": 0.3475
+          },
+          {
+            "wavelength": 2.416,
+            "value": 0.3455
+          },
+          {
+            "wavelength": 2.437,
+            "value": 0.3937
+          },
+          {
+            "wavelength": 2.458,
+            "value": 0.4235
+          },
+          {
+            "wavelength": 2.479,
+            "value": 0.4537
+          }
+        ],
+        "reflectance": [
+          {
+            "wavelength": 0.4,
+            "value": 0.1993
+          },
+          {
+            "wavelength": 0.421,
+            "value": 0.2129
+          },
+          {
+            "wavelength": 0.442,
+            "value": 0.2298
+          },
+          {
+            "wavelength": 0.463,
+            "value": 0.2458
+          },
+          {
+            "wavelength": 0.484,
+            "value": 0.2582
+          },
+          {
+            "wavelength": 0.505,
+            "value": 0.2712
+          },
+          {
+            "wavelength": 0.526,
+            "value": 0.2821
+          },
+          {
+            "wavelength": 0.547,
+            "value": 0.2924
+          },
+          {
+            "wavelength": 0.568,
+            "value": 0.2979
+          },
+          {
+            "wavelength": 0.589,
+            "value": 0.3121
+          },
+          {
+            "wavelength": 0.61,
+            "value": 0.3188
+          },
+          {
+            "wavelength": 0.631,
+            "value": 0.3216
+          },
+          {
+            "wavelength": 0.652,
+            "value": 0.3239
+          },
+          {
+            "wavelength": 0.673,
+            "value": 0.3138
+          },
+          {
+            "wavelength": 0.694,
+            "value": 0.3197
+          },
+          {
+            "wavelength": 0.715,
+            "value": 0.3064
+          },
+          {
+            "wavelength": 0.736,
+            "value": 0.3048
+          },
+          {
+            "wavelength": 0.757,
+            "value": 0.3101
+          },
+          {
+            "wavelength": 0.778,
+            "value": 0.2884
+          },
+          {
+            "wavelength": 0.799,
+            "value": 0.2746
+          },
+          {
+            "wavelength": 0.82,
+            "value": 0.2778
+          },
+          {
+            "wavelength": 0.841,
+            "value": 0.264
+          },
+          {
+            "wavelength": 0.862,
+            "value": 0.2444
+          },
+          {
+            "wavelength": 0.883,
+            "value": 0.221
+          },
+          {
+            "wavelength": 0.904,
+            "value": 0.2239
+          },
+          {
+            "wavelength": 0.925,
+            "value": 0.2005
+          },
+          {
+            "wavelength": 0.946,
+            "value": 0.192
+          },
+          {
+            "wavelength": 0.967,
+            "value": 0.169
+          },
+          {
+            "wavelength": 0.988,
+            "value": 0.1646
+          },
+          {
+            "wavelength": 1.009,
+            "value": 0.1342
+          },
+          {
+            "wavelength": 1.03,
+            "value": 0.1378
+          },
+          {
+            "wavelength": 1.051,
+            "value": 0.1098
+          },
+          {
+            "wavelength": 1.072,
+            "value": 0.113
+          },
+          {
+            "wavelength": 1.093,
+            "value": 0.1032
+          },
+          {
+            "wavelength": 1.114,
+            "value": 0.0956
+          },
+          {
+            "wavelength": 1.135,
+            "value": 0.092
+          },
+          {
+            "wavelength": 1.156,
+            "value": 0.0824
+          },
+          {
+            "wavelength": 1.177,
+            "value": 0.0712
+          },
+          {
+            "wavelength": 1.198,
+            "value": 0.0899
+          },
+          {
+            "wavelength": 1.219,
+            "value": 0.0882
+          },
+          {
+            "wavelength": 1.24,
+            "value": 0.0884
+          },
+          {
+            "wavelength": 1.261,
+            "value": 0.0991
+          },
+          {
+            "wavelength": 1.282,
+            "value": 0.1009
+          },
+          {
+            "wavelength": 1.303,
+            "value": 0.1019
+          },
+          {
+            "wavelength": 1.324,
+            "value": 0.1244
+          },
+          {
+            "wavelength": 1.345,
+            "value": 0.1334
+          },
+          {
+            "wavelength": 1.366,
+            "value": 0.1512
+          },
+          {
+            "wavelength": 1.387,
+            "value": 0.1482
+          },
+          {
+            "wavelength": 1.408,
+            "value": 0.1622
+          },
+          {
+            "wavelength": 1.429,
+            "value": 0.1832
+          },
+          {
+            "wavelength": 1.45,
+            "value": 0.2006
+          },
+          {
+            "wavelength": 1.471,
+            "value": 0.2247
+          },
+          {
+            "wavelength": 1.492,
+            "value": 0.2383
+          },
+          {
+            "wavelength": 1.513,
+            "value": 0.2342
+          },
+          {
+            "wavelength": 1.534,
+            "value": 0.2637
+          },
+          {
+            "wavelength": 1.555,
+            "value": 0.2729
+          },
+          {
+            "wavelength": 1.576,
+            "value": 0.291
+          },
+          {
+            "wavelength": 1.597,
+            "value": 0.2963
+          },
+          {
+            "wavelength": 1.618,
+            "value": 0.3049
+          },
+          {
+            "wavelength": 1.639,
+            "value": 0.3045
+          },
+          {
+            "wavelength": 1.66,
+            "value": 0.3066
+          },
+          {
+            "wavelength": 1.681,
+            "value": 0.3156
+          },
+          {
+            "wavelength": 1.702,
+            "value": 0.3124
+          },
+          {
+            "wavelength": 1.723,
+            "value": 0.3158
+          },
+          {
+            "wavelength": 1.744,
+            "value": 0.309
+          },
+          {
+            "wavelength": 1.765,
+            "value": 0.3192
+          },
+          {
+            "wavelength": 1.786,
+            "value": 0.3018
+          },
+          {
+            "wavelength": 1.807,
+            "value": 0.292
+          },
+          {
+            "wavelength": 1.828,
+            "value": 0.2884
+          },
+          {
+            "wavelength": 1.849,
+            "value": 0.2902
+          },
+          {
+            "wavelength": 1.87,
+            "value": 0.2747
+          },
+          {
+            "wavelength": 1.891,
+            "value": 0.2592
+          },
+          {
+            "wavelength": 1.912,
+            "value": 0.254
+          },
+          {
+            "wavelength": 1.933,
+            "value": 0.2288
+          },
+          {
+            "wavelength": 1.954,
+            "value": 0.2072
+          },
+          {
+            "wavelength": 1.975,
+            "value": 0.2011
+          },
+          {
+            "wavelength": 1.996,
+            "value": 0.1898
+          },
+          {
+            "wavelength": 2.017,
+            "value": 0.1738
+          },
+          {
+            "wavelength": 2.038,
+            "value": 0.1605
+          },
+          {
+            "wavelength": 2.059,
+            "value": 0.1475
+          },
+          {
+            "wavelength": 2.08,
+            "value": 0.1277
+          },
+          {
+            "wavelength": 2.101,
+            "value": 0.1244
+          },
+          {
+            "wavelength": 2.122,
+            "value": 0.1142
+          },
+          {
+            "wavelength": 2.143,
+            "value": 0.1038
+          },
+          {
+            "wavelength": 2.164,
+            "value": 0.0936
+          },
+          {
+            "wavelength": 2.185,
+            "value": 0.0872
+          },
+          {
+            "wavelength": 2.206,
+            "value": 0.0777
+          },
+          {
+            "wavelength": 2.227,
+            "value": 0.076
+          },
+          {
+            "wavelength": 2.248,
+            "value": 0.0804
+          },
+          {
+            "wavelength": 2.269,
+            "value": 0.0891
+          },
+          {
+            "wavelength": 2.29,
+            "value": 0.0939
+          },
+          {
+            "wavelength": 2.311,
+            "value": 0.0927
+          },
+          {
+            "wavelength": 2.332,
+            "value": 0.0933
+          },
+          {
+            "wavelength": 2.353,
+            "value": 0.1021
+          },
+          {
+            "wavelength": 2.374,
+            "value": 0.1243
+          },
+          {
+            "wavelength": 2.395,
+            "value": 0.1335
+          },
+          {
+            "wavelength": 2.416,
+            "value": 0.1462
+          },
+          {
+            "wavelength": 2.437,
+            "value": 0.15
+          },
+          {
+            "wavelength": 2.458,
+            "value": 0.1664
+          },
+          {
+            "wavelength": 2.479,
+            "value": 0.1882
+          }
+        ],
+        "brightnessTemperature": [
+          {
+            "channel": "VIS_01",
+            "wavelength": 0.55,
+            "value": 0.7128360974608428
+          },
+          {
+            "channel": "VIS_02",
+            "wavelength": 0.66,
+            "value": 0.22247984854156552
+          },
+          {
+            "channel": "NIR_01",
+            "wavelength": 0.86,
+            "value": 0.3507780742217169
+          },
+          {
+            "channel": "NIR_02",
+            "wavelength": 1.24,
+            "value": 0.351188769726151
+          },
+          {
+            "channel": "SWIR_01",
+            "wavelength": 1.64,
+            "value": 0.7045085672980836
+          },
+          {
+            "channel": "SWIR_02",
+            "wavelength": 2.25,
+            "value": 0.5554707530192414
+          },
+          {
+            "channel": "TIR_01",
+            "wavelength": 10.8,
+            "value": 256.0641690744047
+          },
+          {
+            "channel": "TIR_02",
+            "wavelength": 12,
+            "value": 286.714463813056
+          }
+        ],
+        "radiationBalance": 0.00021,
+        "fittingResidual": 0.0153,
+        "accuracy": 0.9475
+      }
+    },
+    {
+      "id": "task_mqe81r0ki8omf1",
+      "name": "云贵高原喀斯特地貌辐射传输",
+      "region": "珠江三角洲",
+      "status": "computing",
+      "progress": 76,
+      "createdAt": "2026-06-09T20:13:15.901Z",
+      "updatedAt": "2026-06-11T19:13:15.901Z",
+      "createdBy": "张科学家",
+      "parameters": {
+        "profileFile": "profile_11.dat",
+        "surfaceType": "冰雪",
+        "aerosolModel": "大陆型",
+        "wavelengthRange": [
+          0.4,
+          2.5
+        ],
+        "spectralResolution": 0.01,
+        "observationAngle": 0
+      },
+      "approvalStatus": "none",
+      "alertLevel": "level2",
+      "adjustmentLogs": []
+    },
+    {
+      "id": "task_mqe81r0kg53pql",
+      "name": "塔里木盆地沙尘天气模拟",
+      "region": "四川盆地",
+      "status": "pending",
+      "progress": 0,
+      "createdAt": "2026-06-09T20:13:15.901Z",
+      "updatedAt": "2026-06-11T17:13:15.901Z",
+      "createdBy": "李研究员",
+      "parameters": {
+        "profileFile": "profile_12.dat",
+        "surfaceType": "农田",
+        "aerosolModel": "海洋型",
+        "wavelengthRange": [
+          0.4,
+          2.5
+        ],
+        "spectralResolution": 0.01,
+        "observationAngle": 9
+      },
+      "approvalStatus": "none",
+      "alertLevel": null,
+      "adjustmentLogs": []
+    }
+  ],
+  "alerts": [
+    {
+      "id": "alert_mqe81r0lomwj2t",
+      "taskId": "task_mqe81r0l2rjakx",
+      "taskName": "华北平原夏季气溶胶辐射传输模拟",
+      "level": "level1",
+      "type": "radiation_balance",
+      "message": "辐射平衡偏差超过阈值，需检查大气廓线输入数据",
+      "deviation": 0.00922,
+      "threshold": 0.005,
+      "createdAt": "2026-06-14T20:13:15.909Z",
+      "status": "pending"
+    },
+    {
+      "id": "alert_mqe81r0lvspo65",
+      "taskId": "task_mqe81r0lmluivf",
+      "taskName": "长江三角洲地表反射率反演",
+      "level": "level2",
+      "type": "fitting_residual",
+      "message": "拟合残差超过阈值，需调整气溶胶粒子谱分布",
+      "deviation": 0.02322,
+      "threshold": 0.015,
+      "createdAt": "2026-06-13T20:13:15.909Z",
+      "status": "pending"
+    },
+    {
+      "id": "alert_mqe81r0ls6ws7z",
+      "taskId": "task_mqe81r0lhpn7l6",
+      "taskName": "珠江三角洲热红外亮温模拟",
+      "level": "level3",
+      "type": "region_deviation",
+      "message": "该区域连续三次模拟反射率偏差超过5%，已触发区域预警",
+      "deviation": 0.05881,
+      "threshold": 0.05,
+      "createdAt": "2026-06-12T20:13:15.909Z",
+      "status": "reviewed",
+      "reviewedBy": "王工程师",
+      "reviewComment": "已复核，调整参数后重新计算"
+    },
+    {
+      "id": "alert_mqe81r0lpc9r87",
+      "taskId": "task_mqe81r0l81xez8",
+      "taskName": "四川盆地大雾天气辐射模拟",
+      "level": "level1",
+      "type": "radiation_balance",
+      "message": "辐射平衡偏差超过阈值，需检查大气廓线输入数据",
+      "deviation": 0.00728,
+      "threshold": 0.005,
+      "createdAt": "2026-06-11T20:13:15.909Z",
+      "status": "resolved",
+      "reviewedBy": "陈教授",
+      "reviewComment": "已复核，调整参数后重新计算",
+      "adjustment": {
+        "id": "adj_mqe81r0lroie33",
+        "alertId": "alert_mqe81r0ln0spy8",
+        "taskId": "task_mqe81r0lifonaz",
+        "parameter": "aerosol_optical_depth",
+        "oldValue": 0.301,
+        "newValue": 0.488,
+        "reason": "降低系统偏差",
+        "operator": "陈教授",
+        "createdAt": "2026-06-11T20:13:15.909Z"
+      }
+    },
+    {
+      "id": "alert_mqe81r0letbr6b",
+      "taskId": "task_mqe81r0l7u7n5v",
+      "taskName": "西北戈壁沙漠下垫面反射率测量",
+      "level": "level2",
+      "type": "fitting_residual",
+      "message": "拟合残差超过阈值，需调整气溶胶粒子谱分布",
+      "deviation": 0.0218,
+      "threshold": 0.015,
+      "createdAt": "2026-06-10T20:13:15.909Z",
+      "status": "pending"
+    },
+    {
+      "id": "alert_mqe81r0ll6ig53",
+      "taskId": "task_mqe81r0lw03ta3",
+      "taskName": "青藏高原大气垂直廓线分析",
+      "level": "level3",
+      "type": "region_deviation",
+      "message": "区域模拟结果波动较大，建议核查下垫面类型数据",
+      "deviation": 0.07325,
+      "threshold": 0.05,
+      "createdAt": "2026-06-09T20:13:15.909Z",
+      "status": "pending"
+    },
+    {
+      "id": "alert_mqe81r0lco6ajt",
+      "taskId": "task_mqe81r0l9cuisw",
+      "taskName": "东北地区冰雪覆盖地表辐射特性",
+      "level": "level1",
+      "type": "radiation_balance",
+      "message": "辐射平衡偏差超过阈值，需检查大气廓线输入数据",
+      "deviation": 0.0056,
+      "threshold": 0.005,
+      "createdAt": "2026-06-08T20:13:15.909Z",
+      "status": "reviewed",
+      "reviewedBy": "李研究员",
+      "reviewComment": "已复核，调整参数后重新计算"
+    },
+    {
+      "id": "alert_mqe81r0lhq6bay",
+      "taskId": "task_mqe81r0luhhzu2",
+      "taskName": "南海海域海洋气溶胶光学厚度反演",
+      "level": "level2",
+      "type": "fitting_residual",
+      "message": "拟合残差超过阈值，需调整气溶胶粒子谱分布",
+      "deviation": 0.02352,
+      "threshold": 0.015,
+      "createdAt": "2026-06-07T20:13:15.909Z",
+      "status": "resolved",
+      "reviewedBy": "王工程师",
+      "reviewComment": "已复核，调整参数后重新计算",
+      "adjustment": {
+        "id": "adj_mqe81r0lnv3f6b",
+        "alertId": "alert_mqe81r0lerscy5",
+        "taskId": "task_mqe81r0l22u0jq",
+        "parameter": "surface_emissivity",
+        "oldValue": 0.255,
+        "newValue": 0.252,
+        "reason": "降低系统偏差",
+        "operator": "王工程师",
+        "createdAt": "2026-06-07T20:13:15.909Z"
+      }
+    }
+  ],
+  "approvals": [
+    {
+      "id": "appr_mqe81r0ltqddym",
+      "taskId": "task_mqe81r0hfaixuc",
+      "taskName": "华北平原夏季气溶胶辐射传输模拟",
+      "level": 1,
+      "approver": "",
+      "status": "pending",
+      "comment": "",
+      "createdAt": "2026-06-12T20:13:15.909Z",
+      "applicant": "张科学家",
+      "submittedAt": "2026-06-12T20:13:15.909Z"
+    },
+    {
+      "id": "appr_mqe81r0laz5ljw",
+      "taskId": "task_mqe81r0iduyiij",
+      "taskName": "长江三角洲地表反射率反演",
+      "level": 1,
+      "approver": "数据处理员王工",
+      "status": "approved",
+      "comment": "数据完整，同意执行",
+      "createdAt": "2026-06-11T20:13:15.909Z",
+      "applicant": "李研究员",
+      "submittedAt": "2026-06-11T20:13:15.909Z",
+      "approvedAt": "2026-06-11T21:13:15.909Z"
+    },
+    {
+      "id": "appr_mqe81r0lkorkuu",
+      "taskId": "task_mqe81r0il7pdxi",
+      "taskName": "珠江三角洲热红外亮温模拟",
+      "level": 1,
+      "approver": "",
+      "status": "pending",
+      "comment": "",
+      "createdAt": "2026-06-10T20:13:15.909Z",
+      "applicant": "王工程师",
+      "submittedAt": "2026-06-10T20:13:15.909Z"
+    },
+    {
+      "id": "appr_mqe81r0lwtfikl",
+      "taskId": "task_mqe81r0imhfldm",
+      "taskName": "四川盆地大雾天气辐射模拟",
+      "level": 1,
+      "approver": "数据处理员王工",
+      "status": "approved",
+      "comment": "数据完整，同意执行",
+      "createdAt": "2026-06-09T20:13:15.909Z",
+      "applicant": "陈教授",
+      "submittedAt": "2026-06-09T20:13:15.909Z",
+      "approvedAt": "2026-06-09T21:13:15.909Z"
+    },
+    {
+      "id": "appr_mqe81r0l3jzi5p",
+      "taskId": "task_mqe81r0jdxalwz",
+      "taskName": "西北戈壁沙漠下垫面反射率测量",
+      "level": 2,
+      "approver": "项目负责人李总",
+      "status": "rejected",
+      "comment": "参数设置不合理，请重新提交",
+      "createdAt": "2026-06-08T20:13:15.909Z",
+      "applicant": "刘博士",
+      "submittedAt": "2026-06-08T20:13:15.909Z",
+      "approvedAt": "2026-06-08T21:13:15.909Z"
+    },
+    {
+      "id": "appr_mqe81r0ls0xmmp",
+      "taskId": "task_mqe81r0j2heeji",
+      "taskName": "青藏高原大气垂直廓线分析",
+      "level": 2,
+      "approver": "",
+      "status": "pending",
+      "comment": "",
+      "createdAt": "2026-06-07T20:13:15.909Z",
+      "applicant": "张科学家",
+      "submittedAt": "2026-06-07T20:13:15.909Z"
+    },
+    {
+      "id": "appr_mqe81r0lo0mur3",
+      "taskId": "task_mqe81r0jvmkdia",
+      "taskName": "东北地区冰雪覆盖地表辐射特性",
+      "level": 2,
+      "approver": "项目负责人李总",
+      "status": "approved",
+      "comment": "数据完整，同意执行",
+      "createdAt": "2026-06-06T20:13:15.909Z",
+      "applicant": "李研究员",
+      "submittedAt": "2026-06-06T20:13:15.909Z",
+      "approvedAt": "2026-06-06T21:13:15.909Z"
+    },
+    {
+      "id": "appr_mqe81r0lfbviox",
+      "taskId": "task_mqe81r0jhau7we",
+      "taskName": "南海海域海洋气溶胶光学厚度反演",
+      "level": 2,
+      "approver": "",
+      "status": "pending",
+      "comment": "",
+      "createdAt": "2026-06-05T20:13:15.909Z",
+      "applicant": "王工程师",
+      "submittedAt": "2026-06-05T20:13:15.909Z"
+    }
+  ],
+  "reports": [
+    {
+      "id": "report_mqe81r0l4pi9r5",
+      "taskId": "task_mqe81r0hfaixuc",
+      "taskName": "华北平原夏季气溶胶辐射传输模拟",
+      "reportType": "full_report",
+      "generatedAt": "2026-06-14T20:13:15.909Z",
+      "generatedBy": "张科学家",
+      "status": "generated"
+    },
+    {
+      "id": "report_mqe81r0lute4qy",
+      "taskId": "task_mqe81r0iduyiij",
+      "taskName": "长江三角洲地表反射率反演",
+      "reportType": "full_report",
+      "generatedAt": "2026-06-13T20:13:15.909Z",
+      "generatedBy": "张科学家",
+      "status": "generated"
+    },
+    {
+      "id": "report_mqe81r0lc6vqv0",
+      "taskId": "task_mqe81r0il7pdxi",
+      "taskName": "珠江三角洲热红外亮温模拟",
+      "reportType": "full_report",
+      "generatedAt": "2026-06-12T20:13:15.909Z",
+      "generatedBy": "张科学家",
+      "status": "generating"
+    },
+    {
+      "id": "report_mqe81r0lrnaube",
+      "taskId": "task_mqe81r0imhfldm",
+      "taskName": "四川盆地大雾天气辐射模拟",
+      "reportType": "full_report",
+      "generatedAt": "2026-06-11T20:13:15.909Z",
+      "generatedBy": "张科学家",
+      "status": "generated"
+    },
+    {
+      "id": "report_mqe81r0lwvysxn",
+      "taskId": "task_mqe81r0jdxalwz",
+      "taskName": "西北戈壁沙漠下垫面反射率测量",
+      "reportType": "full_report",
+      "generatedAt": "2026-06-10T20:13:15.909Z",
+      "generatedBy": "张科学家",
+      "status": "failed"
+    }
+  ],
+  "adjustmentLogs": [],
+  "recommendBands": [
+    {
+      "id": "rec_mqe81r0lkpmmgd",
+      "type": "bands",
+      "title": "建议增加近红外波段观测",
+      "description": "基于历史数据分析，建议增加近红外波段观测可提升反演精度约5%",
+      "confidence": 0.85,
+      "details": {
+        "bands": [
+          "NIR_03",
+          "SWIR_03"
+        ],
+        "improvement": "5%"
+      }
+    },
+    {
+      "id": "rec_mqe81r0l7g6lcx",
+      "type": "bands",
+      "title": "热红外波段分辨率优化建议",
+      "description": "基于历史数据分析，热红外波段分辨率优化建议可提升反演精度约7%",
+      "confidence": 0.9,
+      "details": {
+        "bands": [
+          "NIR_03",
+          "SWIR_03"
+        ],
+        "improvement": "7%"
+      }
+    },
+    {
+      "id": "rec_mqe81r0l1tzu1x",
+      "type": "bands",
+      "title": "可见光波段选择推荐",
+      "description": "基于历史数据分析，可见光波段选择推荐可提升反演精度约9%",
+      "confidence": 0.95,
+      "details": {
+        "bands": [
+          "NIR_03",
+          "SWIR_03"
+        ],
+        "improvement": "9%"
+      }
+    }
+  ],
+  "recommendParameters": [
+    {
+      "id": "rec_mqe81r0lkmjxsk",
+      "type": "parameters",
+      "title": "气溶胶模型参数优化建议",
+      "description": "气溶胶模型参数优化建议",
+      "confidence": 0.78,
+      "details": {
+        "parameter": "气溶胶模型参数优化建议",
+        "recommendedValue": 0.5
+      }
+    },
+    {
+      "id": "rec_mqe81r0l5cnrmi",
+      "type": "parameters",
+      "title": "地表反射率参数调整方案",
+      "description": "地表反射率参数调整方案",
+      "confidence": 0.84,
+      "details": {
+        "parameter": "地表反射率参数调整方案",
+        "recommendedValue": 0.6
+      }
+    },
+    {
+      "id": "rec_mqe81r0lx8eznx",
+      "type": "parameters",
+      "title": "大气廓线参数推荐配置",
+      "description": "大气廓线参数推荐配置",
+      "confidence": 0.9,
+      "details": {
+        "parameter": "大气廓线参数推荐配置",
+        "recommendedValue": 0.7
+      }
+    }
+  ],
+  "recommendHistory": [
+    {
+      "id": "rec_mqe81r0l3fo66z",
+      "type": "bands",
+      "title": "历史推荐 1",
+      "description": "已采纳的历史推荐方案",
+      "confidence": 0.8,
+      "details": {
+        "adopted": true,
+        "effect": "positive"
+      }
+    },
+    {
+      "id": "rec_mqe81r0lrrxyew",
+      "type": "parameters",
+      "title": "历史推荐 2",
+      "description": "已采纳的历史推荐方案",
+      "confidence": 0.85,
+      "details": {
+        "adopted": true,
+        "effect": "positive"
+      }
+    },
+    {
+      "id": "rec_mqe81r0lyrxum3",
+      "type": "bands",
+      "title": "历史推荐 3",
+      "description": "已采纳的历史推荐方案",
+      "confidence": 0.9,
+      "details": {
+        "adopted": true,
+        "effect": "positive"
+      }
+    }
+  ],
+  "statisticsOverview": {
+    "totalTasks": 12,
+    "completedTasks": 4,
+    "runningTasks": 4,
+    "pendingTasks": 2,
+    "successRate": 33.3,
+    "avgAccuracy": 94.5,
+    "totalResourceUsage": 1256.8,
+    "alertCount": 4
+  },
+  "completionRateTrend": [
+    {
+      "date": "2026-06-08",
+      "value": 80.7
+    },
+    {
+      "date": "2026-06-09",
+      "value": 88
+    },
+    {
+      "date": "2026-06-10",
+      "value": 87.2
+    },
+    {
+      "date": "2026-06-11",
+      "value": 75.5
+    },
+    {
+      "date": "2026-06-12",
+      "value": 82.8
+    },
+    {
+      "date": "2026-06-13",
+      "value": 82.4
+    },
+    {
+      "date": "2026-06-14",
+      "value": 84.5
+    }
+  ],
+  "accuracyTrend": [
+    {
+      "date": "2026-06-08",
+      "value": 97.68
+    },
+    {
+      "date": "2026-06-09",
+      "value": 92.55
+    },
+    {
+      "date": "2026-06-10",
+      "value": 90.81
+    },
+    {
+      "date": "2026-06-11",
+      "value": 92.99
+    },
+    {
+      "date": "2026-06-12",
+      "value": 92.21
+    },
+    {
+      "date": "2026-06-13",
+      "value": 96.24
+    },
+    {
+      "date": "2026-06-14",
+      "value": 92.11
+    }
+  ],
+  "resourceTrend": [
+    {
+      "date": "2026-06-08",
+      "value": 111.9
+    },
+    {
+      "date": "2026-06-09",
+      "value": 96.3
+    },
+    {
+      "date": "2026-06-10",
+      "value": 95.8
+    },
+    {
+      "date": "2026-06-11",
+      "value": 147.2
+    },
+    {
+      "date": "2026-06-12",
+      "value": 135.5
+    },
+    {
+      "date": "2026-06-13",
+      "value": 127.7
+    },
+    {
+      "date": "2026-06-14",
+      "value": 144.9
+    }
+  ],
+  "regionStats": [
+    {
+      "region": "华北平原",
+      "taskCount": 11,
+      "avgDeviation": 0.061,
+      "isPaused": false,
+      "lastSimulationAt": "2026-06-14T20:13:15.909Z"
+    },
+    {
+      "region": "长江三角洲",
+      "taskCount": 29,
+      "avgDeviation": 0.029,
+      "isPaused": false,
+      "lastSimulationAt": "2026-06-13T20:13:15.909Z"
+    },
+    {
+      "region": "珠江三角洲",
+      "taskCount": 39,
+      "avgDeviation": 0.026,
+      "isPaused": false,
+      "lastSimulationAt": "2026-06-12T20:13:15.909Z"
+    },
+    {
+      "region": "四川盆地",
+      "taskCount": 39,
+      "avgDeviation": 0.05,
+      "isPaused": true,
+      "lastSimulationAt": "2026-06-11T20:13:15.909Z"
+    },
+    {
+      "region": "西北戈壁",
+      "taskCount": 11,
+      "avgDeviation": 0.038,
+      "isPaused": false,
+      "lastSimulationAt": "2026-06-10T20:13:15.909Z"
+    }
+  ],
+  "uploadedFiles": []
+}

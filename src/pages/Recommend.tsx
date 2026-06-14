@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import {
   Sparkles,
   Target,
@@ -11,8 +11,9 @@ import {
   MapPin,
   TrendingUp,
   Settings,
+  History,
 } from 'lucide-react';
-import useAppStore from '@/store/useAppStore';
+import { recommendApi } from '@/api';
 import { cn } from '@/lib/utils';
 import type { Recommendation } from '@/types';
 
@@ -27,22 +28,45 @@ const historySimulationData = [
   { name: '方案F', accuracy: 93.8, usage: 88 },
 ];
 
-type TabType = 'bands' | 'parameters';
+type TabType = 'bands' | 'parameters' | 'history';
 
 export default function Recommend() {
-  const { recommendations, regions, initializeMockData } = useAppStore();
+  const [bandRecs, setBandRecs] = useState<Recommendation[]>([]);
+  const [paramRecs, setParamRecs] = useState<Recommendation[]>([]);
+  const [historyRecs, setHistoryRecs] = useState<Recommendation[]>([]);
   const [activeTab, setActiveTab] = useState<TabType>('bands');
   const [selectedRegion, setSelectedRegion] = useState('全部区域');
-  const [expandedCards, setExpandedCards] = useState<string[]>(['rec-1']);
+  const [expandedCards, setExpandedCards] = useState<string[]>([]);
   const [applyingId, setApplyingId] = useState<string | null>(null);
 
-  useState(() => {
-    initializeMockData();
-  });
+  const fetchRecommendations = useCallback(async () => {
+    const region = selectedRegion === '全部区域' ? undefined : selectedRegion;
+    const [bandsRes, paramsRes, historyRes] = await Promise.all([
+      recommendApi.getBands(region),
+      recommendApi.getParameters(),
+      recommendApi.getHistory(),
+    ]);
 
-  const filteredRecommendations = recommendations.filter(
-    (rec) => rec.type === activeTab
-  );
+    if (bandsRes.success && bandsRes.data) {
+      setBandRecs(bandsRes.data);
+    }
+    if (paramsRes.success && paramsRes.data) {
+      setParamRecs(paramsRes.data);
+    }
+    if (historyRes.success && historyRes.data) {
+      setHistoryRecs(historyRes.data);
+    }
+  }, [selectedRegion]);
+
+  useEffect(() => {
+    fetchRecommendations();
+  }, [fetchRecommendations]);
+
+  const filteredRecommendations = activeTab === 'bands'
+    ? bandRecs
+    : activeTab === 'parameters'
+    ? paramRecs
+    : historyRecs;
 
   const toggleCard = (id: string) => {
     setExpandedCards((prev) =>
@@ -50,8 +74,13 @@ export default function Recommend() {
     );
   };
 
-  const handleApply = (id: string) => {
+  const handleApply = async (id: string) => {
     setApplyingId(id);
+    try {
+      await recommendApi.applyRecommendation(id);
+    } catch (error) {
+      console.error('应用推荐失败:', error);
+    }
     setTimeout(() => setApplyingId(null), 1500);
   };
 
@@ -160,6 +189,18 @@ export default function Recommend() {
               <Sliders className="w-4 h-4" />
               参数推荐
             </button>
+            <button
+              onClick={() => setActiveTab('history')}
+              className={cn(
+                'flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all duration-200',
+                activeTab === 'history'
+                  ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg shadow-emerald-500/25'
+                  : 'text-slate-400 hover:text-white hover:bg-slate-700/50'
+              )}
+            >
+              <History className="w-4 h-4" />
+              推荐历史
+            </button>
           </div>
 
           <div className="flex items-center gap-2">
@@ -196,12 +237,12 @@ export default function Recommend() {
                       <div
                         className={cn(
                           'p-1.5 rounded-lg',
-                          activeTab === 'bands'
+                          rec.type === 'bands'
                             ? 'bg-blue-500/20 text-blue-400'
                             : 'bg-purple-500/20 text-purple-400'
                         )}
                       >
-                        {activeTab === 'bands' ? (
+                        {rec.type === 'bands' ? (
                           <BarChart2 className="w-4 h-4" />
                         ) : (
                           <Settings className="w-4 h-4" />
@@ -254,7 +295,7 @@ export default function Recommend() {
 
                 {expandedCards.includes(rec.id) && (
                   <div className="mt-5 pt-5 border-t border-slate-700/50">
-                    {activeTab === 'bands'
+                    {rec.type === 'bands'
                       ? renderBandDetails(rec)
                       : renderParameterDetails(rec)}
 

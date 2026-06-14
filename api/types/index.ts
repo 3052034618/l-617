@@ -24,6 +24,7 @@ export type UserRole = 'scientist' | 'processor' | 'manager' | 'chief'
 
 export interface TaskParameters {
   profileFile: string
+  surfaceFile?: string
   surfaceType: string
   aerosolModel: string
   wavelengthRange: [number, number]

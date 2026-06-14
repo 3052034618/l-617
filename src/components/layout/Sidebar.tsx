@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import {
   LayoutDashboard,
   ListTodo,
@@ -13,6 +14,7 @@ import {
   Satellite,
 } from 'lucide-react';
 import useAppStore from '@/store/useAppStore';
+import { alertApi } from '@/api';
 
 const menuItems = [
   { path: '/dashboard', label: '工作台', icon: LayoutDashboard },
@@ -26,8 +28,25 @@ const menuItems = [
 ];
 
 export default function Sidebar() {
-  const { sidebarCollapsed, setSidebarCollapsed, alerts } = useAppStore();
-  const pendingAlerts = alerts.filter((a) => a.status === 'pending').length;
+  const { sidebarCollapsed, setSidebarCollapsed } = useAppStore();
+  const [pendingAlerts, setPendingAlerts] = useState(0);
+
+  const fetchPendingAlerts = async () => {
+    try {
+      const res = await alertApi.getList({ status: 'pending', pageSize: 100 });
+      if (res.success && res.data) {
+        setPendingAlerts(res.data.total);
+      }
+    } catch (error) {
+      console.error('获取预警数量失败:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchPendingAlerts();
+    const interval = setInterval(fetchPendingAlerts, 10000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <aside

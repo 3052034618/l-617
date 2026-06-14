@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import {
   FileBarChart,
   Search,
@@ -24,8 +24,10 @@ import {
   BarChart3,
   Activity,
   Zap,
+  RefreshCw,
 } from 'lucide-react';
-import useAppStore from '@/store/useAppStore';
+import { reportApi } from '@/api';
+import type { Report as ApiReport } from '@/api/reportApi';
 import { cn } from '@/lib/utils';
 
 type ReportType = 'comprehensive' | 'spectrum' | 'brightness_temp';
@@ -36,12 +38,8 @@ interface ReportSection {
   icon: typeof FileBarChart;
 }
 
-interface Report {
-  id: string;
-  title: string;
-  taskName: string;
+interface Report extends ApiReport {
   type: ReportType;
-  createdAt: string;
   gradient: string;
   pattern: 'grid' | 'dots' | 'waves' | 'circuits';
 }
@@ -79,38 +77,11 @@ const gradients = [
 
 const patterns: Report['pattern'][] = ['grid', 'dots', 'waves', 'circuits'];
 
-function generateMockReports(): Report[] {
-  const taskNames = [
-    '华北平原夏季气溶胶辐射传输模拟',
-    '长江三角洲地表反射率反演',
-    '珠江三角洲热红外亮温模拟',
-    '四川盆地大雾天气辐射模拟',
-    '西北戈壁沙漠下垫面反射率测量',
-    '青藏高原大气垂直廓线分析',
-    '东北地区冰雪覆盖地表辐射特性',
-    '南海海域海洋气溶胶光学厚度反演',
-    '东部沿海城市空气污染遥感监测',
-  ];
-  const types: ReportType[] = ['comprehensive', 'spectrum', 'brightness_temp'];
-  const reports: Report[] = [];
-
-  for (let i = 0; i < 9; i++) {
-    const date = new Date();
-    date.setDate(date.getDate() - Math.floor(i / 2));
-    date.setHours(Math.floor(Math.random() * 24), Math.floor(Math.random() * 60));
-
-    reports.push({
-      id: `report-${i + 1}`,
-      title: `${taskNames[i % taskNames.length]}分析报告`,
-      taskName: taskNames[i % taskNames.length],
-      type: types[i % 3],
-      createdAt: date.toISOString(),
-      gradient: gradients[i % gradients.length],
-      pattern: patterns[i % patterns.length],
-    });
-  }
-  return reports;
-}
+const mapReportType = (apiType: string): ReportType => {
+  if (apiType === 'spectrum') return 'spectrum';
+  if (apiType === 'brightness_temp' || apiType.includes('brightness')) return 'brightness_temp';
+  return 'comprehensive';
+};
 
 const PatternOverlay = ({ pattern }: { pattern: Report['pattern'] }) => {
   if (pattern === 'grid') {
@@ -159,7 +130,7 @@ const PatternOverlay = ({ pattern }: { pattern: Report['pattern'] }) => {
   );
 };
 
-const ReportCard = ({ report, onPreview, onExport }: { report: Report; onPreview: (r: Report) => void; onExport: (r: Report) => void }) => {
+const ReportCard = ({ report, onPreview, onExport, onDownloadPdf }: { report: Report; onPreview: (r: Report) => void; onExport: (r: Report) => void; onDownloadPdf: (r: Report) => void }) => {
   const typeCfg = reportTypeConfig[report.type];
   const TypeIcon = typeCfg.icon;
 
@@ -172,7 +143,7 @@ const ReportCard = ({ report, onPreview, onExport }: { report: Report; onPreview
         <PatternOverlay pattern={report.pattern} />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 p-4">
-          <h3 className="text-white font-semibold text-sm line-clamp-2 drop-shadow-lg">{report.title}</h3>
+          <h3 className="text-white font-semibold text-sm line-clamp-2 drop-shadow-lg">{report.taskName}分析报告</h3>
         </div>
         <div className="absolute top-3 right-3">
           <span className={cn('inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium border backdrop-blur-sm', typeCfg.bg, typeCfg.color, typeCfg.border)}>
@@ -185,6 +156,14 @@ const ReportCard = ({ report, onPreview, onExport }: { report: Report; onPreview
             <FileBarChart className="w-4 h-4 text-white" />
           </div>
         </div>
+        {report.status === 'generating' && (
+          <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+            <div className="flex items-center gap-2 text-white text-sm">
+              <RefreshCw className="w-4 h-4 animate-spin" />
+              生成中...
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="p-4 space-y-3">
@@ -195,7 +174,7 @@ const ReportCard = ({ report, onPreview, onExport }: { report: Report; onPreview
 
         <div className="flex items-center gap-2 text-xs text-slate-500">
           <Clock className="w-3.5 h-3.5" />
-          <span>{formatDate(report.createdAt)}</span>
+          <span>{formatDate(report.generatedAt)}</span>
         </div>
 
         <div className="flex items-center gap-2 pt-2 border-t border-slate-700/50">
@@ -207,6 +186,7 @@ const ReportCard = ({ report, onPreview, onExport }: { report: Report; onPreview
             预览
           </button>
           <button
+            onClick={() => onDownloadPdf(report)}
             className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-medium text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20 transition-colors"
           >
             <Download className="w-3.5 h-3.5" />
@@ -244,12 +224,12 @@ const PreviewModal = ({ report, onClose }: { report: Report; onClose: () => void
           <div className={cn('w-24 h-24 rounded-2xl bg-gradient-to-br flex items-center justify-center mb-8 shadow-2xl', report.gradient)}>
             <FileBarChart className="w-12 h-12 text-white" />
           </div>
-          <h2 className="text-3xl font-bold text-white mb-4">{report.title}</h2>
+          <h2 className="text-3xl font-bold text-white mb-4">{report.taskName}分析报告</h2>
           <p className="text-slate-400 mb-8">{report.taskName}</p>
           <div className="flex items-center gap-8 text-sm text-slate-500">
             <div className="flex items-center gap-2">
               <Calendar className="w-4 h-4" />
-              <span>{new Date(report.createdAt).toLocaleDateString('zh-CN')}</span>
+              <span>{new Date(report.generatedAt).toLocaleDateString('zh-CN')}</span>
             </div>
             <div className="flex items-center gap-2">
               <BarChart3 className="w-4 h-4" />
@@ -615,6 +595,8 @@ const ExportPanel = ({ report, onClose }: { report: Report; onClose: () => void 
   const [endDate, setEndDate] = useState('2026-06-15');
   const [format, setFormat] = useState<'csv' | 'json' | 'netcdf'>('csv');
   const [includeSrf, setIncludeSrf] = useState(false);
+  const [exporting, setExporting] = useState(false);
+  const [exportResult, setExportResult] = useState<{ downloadUrl: string; filename: string; size: number; count: number } | null>(null);
 
   const sensorOptions = [
     { value: 'all', label: '全部传感器' },
@@ -633,6 +615,43 @@ const ExportPanel = ({ report, onClose }: { report: Report; onClose: () => void 
     { value: 'high', label: '大角度 (60°-90°)' },
   ];
 
+  const handleExport = async () => {
+    setExporting(true);
+    try {
+      const params = {
+        taskIds: [report.taskId],
+        sensorType: sensorType !== 'all' ? sensorType : undefined,
+        observationGeometry: geometry !== 'all' ? geometry : undefined,
+        timeWindow: {
+          start: startDate,
+          end: endDate,
+        },
+        format,
+        includeSrf,
+      };
+
+      const result = await reportApi.exportData(params);
+      if (result.success && result.data) {
+        setExportResult({
+          downloadUrl: result.data.downloadUrl,
+          filename: result.data.filename || `export_${Date.now()}.${format}`,
+          size: result.data.size || 0,
+          count: result.data.count || 0,
+        });
+      }
+    } catch (error) {
+      console.error('导出失败:', error);
+    } finally {
+      setExporting(false);
+    }
+  };
+
+  const formatFileSize = (bytes: number) => {
+    if (bytes < 1024) return `${bytes} B`;
+    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+    return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+  };
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-8 bg-black/60 backdrop-blur-sm animate-fade-in">
       <div className="relative w-full max-w-lg glass rounded-2xl overflow-hidden shadow-2xl">
@@ -643,7 +662,7 @@ const ExportPanel = ({ report, onClose }: { report: Report; onClose: () => void 
             </div>
             <div>
               <h3 className="text-lg font-semibold text-white">数据导出</h3>
-              <p className="text-xs text-slate-500">{report.title}</p>
+              <p className="text-xs text-slate-500">{report.taskName}</p>
             </div>
           </div>
           <button
@@ -755,6 +774,30 @@ const ExportPanel = ({ report, onClose }: { report: Report; onClose: () => void 
               </div>
             </label>
           </div>
+
+          {exportResult && (
+            <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-4">
+              <div className="flex items-center gap-2 mb-2">
+                <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+                <span className="text-sm font-medium text-emerald-300">导出成功</span>
+              </div>
+              <div className="space-y-1 text-xs text-slate-400 mb-3">
+                <p>文件名：{exportResult.filename}</p>
+                <p>数据量：{exportResult.count} 条记录</p>
+                <p>文件大小：{formatFileSize(exportResult.size)}</p>
+              </div>
+              <a
+                href={exportResult.downloadUrl}
+                download
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 w-full py-2 rounded-lg bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/30 transition-colors text-sm font-medium"
+              >
+                <Download className="w-4 h-4" />
+                点击下载
+              </a>
+            </div>
+          )}
         </div>
 
         <div className="flex items-center justify-end gap-3 p-5 border-t border-slate-700/50 bg-deep-900/50">
@@ -764,9 +807,12 @@ const ExportPanel = ({ report, onClose }: { report: Report; onClose: () => void 
           >
             取消
           </button>
-          <button className="btn btn-primary">
-            <Download className="w-4 h-4" />
-            开始导出
+          <button onClick={handleExport} disabled={exporting} className="btn btn-primary disabled:opacity-50">
+            {exporting ? (
+              <><RefreshCw className="w-4 h-4 animate-spin" />导出中...</>
+            ) : (
+              <><Download className="w-4 h-4" />开始导出</>
+            )}
           </button>
         </div>
       </div>
@@ -775,19 +821,42 @@ const ExportPanel = ({ report, onClose }: { report: Report; onClose: () => void 
 };
 
 export default function Reports() {
-  const { tasks } = useAppStore();
-  const [reports] = useState<Report[]>(generateMockReports);
+  const [reports, setReports] = useState<Report[]>([]);
+  const [loading, setLoading] = useState(false);
   const [typeFilter, setTypeFilter] = useState<ReportType | 'all'>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [showFilterDropdown, setShowFilterDropdown] = useState(false);
   const [previewReport, setPreviewReport] = useState<Report | null>(null);
   const [exportReport, setExportReport] = useState<Report | null>(null);
 
+  const fetchReports = async () => {
+    setLoading(true);
+    try {
+      const result = await reportApi.getList();
+      if (result.success && result.data) {
+        const mappedReports: Report[] = result.data.map((r, i) => ({
+          ...r,
+          type: mapReportType(r.reportType),
+          gradient: gradients[i % gradients.length],
+          pattern: patterns[i % patterns.length],
+        }));
+        setReports(mappedReports);
+      }
+    } catch (error) {
+      console.error('获取报告列表失败:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchReports();
+  }, []);
+
   const filteredReports = useMemo(() => {
     return reports.filter((report) => {
       const matchesType = typeFilter === 'all' || report.type === typeFilter;
       const matchesSearch =
-        report.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         report.taskName.toLowerCase().includes(searchQuery.toLowerCase());
       return matchesType && matchesSearch;
     });
@@ -796,6 +865,17 @@ export default function Reports() {
   const handleFilterClick = (type: ReportType | 'all') => {
     setTypeFilter(type);
     setShowFilterDropdown(false);
+  };
+
+  const handleDownloadPdf = async (report: Report) => {
+    try {
+      const result = await reportApi.getPdfInfo(report.taskId);
+      if (result.success && result.data) {
+        window.open(result.data.url, '_blank');
+      }
+    } catch (error) {
+      console.error('获取PDF下载信息失败:', error);
+    }
   };
 
   return (
@@ -858,25 +938,35 @@ export default function Reports() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {filteredReports.map((report, index) => (
-          <div key={report.id} style={{ animationDelay: `${0.1 + index * 0.05}s` }}>
-            <ReportCard
-              report={report}
-              onPreview={(r) => setPreviewReport(r)}
-              onExport={(r) => setExportReport(r)}
-            />
-          </div>
-        ))}
-      </div>
-
-      {filteredReports.length === 0 && (
+      {loading ? (
         <div className="glass rounded-xl py-16 text-center">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-slate-800/50 mb-4">
-            <FileBarChart className="w-8 h-8 text-slate-500" />
-          </div>
-          <p className="text-slate-400">暂无匹配的报告</p>
+          <div className="w-8 h-8 border-2 border-cyan-500 border-t-transparent rounded-full animate-spin mx-auto mb-3" />
+          <p className="text-slate-400">加载中...</p>
         </div>
+      ) : (
+        <>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {filteredReports.map((report, index) => (
+              <div key={report.id} style={{ animationDelay: `${0.1 + index * 0.05}s` }}>
+                <ReportCard
+                  report={report}
+                  onPreview={(r) => setPreviewReport(r)}
+                  onExport={(r) => setExportReport(r)}
+                  onDownloadPdf={handleDownloadPdf}
+                />
+              </div>
+            ))}
+          </div>
+
+          {filteredReports.length === 0 && (
+            <div className="glass rounded-xl py-16 text-center">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-slate-800/50 mb-4">
+                <FileBarChart className="w-8 h-8 text-slate-500" />
+              </div>
+              <p className="text-slate-400">暂无匹配的报告</p>
+            </div>
+          )}
+        </>
       )}
 
       {previewReport && (

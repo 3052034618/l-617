@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect, useCallback } from 'react';
 import {
   BarChart3,
   Target,
@@ -9,10 +9,11 @@ import {
   Pause,
   MapPin,
   Calendar,
+  X,
 } from 'lucide-react';
-import useAppStore from '@/store/useAppStore';
+import { statisticsApi } from '@/api';
 import { cn } from '@/lib/utils';
-import type { RegionStatus } from '@/types';
+import type { RegionStatus, StatisticsOverview, TrendData } from '@/types';
 
 type TimeRange = 'day' | 'week' | 'month';
 
@@ -59,16 +60,67 @@ const statCards = [
   { key: 'alert', label: '预警发生率', icon: AlertTriangle, color: 'red', trend: '1.3%' },
 ];
 
+interface RegionDetail {
+  region: RegionStatus;
+  recentDeviations: Array<{ date: string; deviation: number; taskId: string }>;
+  pauseReason?: string;
+  pausedAt?: string;
+}
+
 export default function Statistics() {
-  const { statistics, regions, initializeMockData } = useAppStore();
+  const [statistics, setStatistics] = useState<StatisticsOverview | null>(null);
+  const [regions, setRegions] = useState<RegionStatus[]>([]);
+  const [completionTrend, setCompletionTrend] = useState<TrendData[]>([]);
+  const [accuracyTrend, setAccuracyTrend] = useState<TrendData[]>([]);
+  const [resourceTrend, setResourceTrend] = useState<TrendData[]>([]);
+  const [selectedRegion, setSelectedRegion] = useState<RegionDetail | null>(null);
+  const [showRegionModal, setShowRegionModal] = useState(false);
   const [timeRange, setTimeRange] = useState<TimeRange>('month');
 
-  useState(() => {
-    initializeMockData();
-  });
+  const fetchData = useCallback(async () => {
+    const days = timeRange === 'day' ? 1 : timeRange === 'week' ? 7 : 30;
+    const [overviewRes, completionRes, accuracyRes, resourcesRes, regionsRes] = await Promise.all([
+      statisticsApi.getOverview(),
+      statisticsApi.getCompletionRate(days),
+      statisticsApi.getAccuracy(days),
+      statisticsApi.getResources(days),
+      statisticsApi.getRegions(),
+    ]);
 
-  const trendData = trendDataMap[timeRange];
-  const maxAccuracyCount = Math.max(...accuracyDistribution.map((d) => d.count));
+    if (overviewRes.success && overviewRes.data) {
+      setStatistics(overviewRes.data);
+    }
+    if (completionRes.success && completionRes.data) {
+      setCompletionTrend(completionRes.data);
+    }
+    if (accuracyRes.success && accuracyRes.data) {
+      setAccuracyTrend(accuracyRes.data);
+    }
+    if (resourcesRes.success && resourcesRes.data) {
+      setResourceTrend(resourcesRes.data);
+    }
+    if (regionsRes.success && regionsRes.data) {
+      setRegions(regionsRes.data);
+    }
+  }, [timeRange]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  const handleRegionClick = async (regionName: string) => {
+    const res = await statisticsApi.getRegionDetail(regionName);
+    if (res.success && res.data) {
+      setSelectedRegion(res.data);
+      setShowRegionModal(true);
+    }
+  };
+
+  const trendData = completionTrend.map((item) => ({ label: item.date, value: item.value }));
+  const accuracyDistribution = accuracyTrend.length > 0
+    ? accuracyTrend.map((item) => ({ range: item.date, count: item.value }))
+    : [{ range: '暂无数据', count: 0 }];
+  const maxAccuracyCount = Math.max(...accuracyDistribution.map((d) => d.count), 1);
 
   const avgCompletion = useMemo(() => {
     const sum = trendData.reduce((acc, item) => acc + item.value, 0);
@@ -270,9 +322,9 @@ export default function Statistics() {
             ))}
           </div>
           <div className="mt-4 pt-4 border-t border-slate-700/50 grid grid-cols-3 gap-3 text-center">
-            <div><div className="text-lg font-bold text-purple-400">135</div><div className="text-xs text-slate-500">总任务数</div></div>
-            <div><div className="text-lg font-bold text-cyan-400">92.5%</div><div className="text-xs text-slate-500">平均精度</div></div>
-            <div><div className="text-lg font-bold text-emerald-400">37%</div><div className="text-xs text-slate-500">优秀率</div></div>
+            <div><div className="text-lg font-bold text-purple-400">{statistics?.totalTasks ?? 0}</div><div className="text-xs text-slate-500">总任务数</div></div>
+            <div><div className="text-lg font-bold text-cyan-400">{statistics ? `${(statistics.avgAccuracy * 100).toFixed(1)}%` : '0%'}</div><div className="text-xs text-slate-500">平均精度</div></div>
+            <div><div className="text-lg font-bold text-emerald-400">{statistics ? `${statistics.successRate * 100}%` : '0%'}</div><div className="text-xs text-slate-500">优秀率</div></div>
           </div>
         </div>
       </div>
@@ -310,49 +362,33 @@ export default function Statistics() {
         <div className="glass rounded-xl p-5">
           <h2 className="text-lg font-semibold text-white flex items-center gap-2 mb-5">
             <span className="w-1 h-5 bg-gradient-to-b from-amber-500 to-orange-400 rounded-full" />
-            资源消耗统计
+            资源消耗趋势
           </h2>
-          <div className="flex items-center justify-around">
-            <div className="relative" style={{ width: donutSize, height: donutSize }}>
-              <svg width={donutSize} height={donutSize}>
-                <circle cx={donutSize / 2} cy={donutSize / 2} r={donutRadius} fill="none" stroke="#334155" strokeWidth={donutStroke} />
-                {resourceData.map((item, idx) => {
-                  const dashArray = (item.value / 100) * donutCirc;
-                  const offset = donutOffset;
-                  donutOffset -= dashArray;
-                  return (
-                    <circle
-                      key={item.name}
-                      cx={donutSize / 2}
-                      cy={donutSize / 2}
-                      r={donutRadius}
-                      fill="none"
-                      stroke={resourceColors[idx]}
-                      strokeWidth={donutStroke}
-                      strokeDasharray={`${dashArray} ${donutCirc}`}
-                      strokeDashoffset={offset}
-                      className="transition-all duration-500"
-                      style={{ transform: 'rotate(-90deg)', transformOrigin: 'center' }}
-                    />
-                  );
-                })}
-              </svg>
-              <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <span className="text-2xl font-bold text-white">100%</span>
-                <span className="text-xs text-slate-400">总资源</span>
-              </div>
-            </div>
-            <div className="space-y-3">
-              {resourceData.map((item, idx) => (
-                <div key={item.name} className="flex items-center gap-3">
-                  <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: resourceColors[idx] }} />
-                  <div>
-                    <div className="text-sm text-slate-300">{item.name}</div>
-                    <div className="text-xs text-slate-500">{item.value}%</div>
+          <div className="h-48 flex items-end justify-between gap-1 px-2">
+            {resourceTrend.map((item, index) => (
+              <div key={item.date} className="flex-1 flex flex-col items-center gap-2">
+                <div className="w-full relative group">
+                  <div
+                    className="w-full bg-gradient-to-t from-amber-600 to-orange-400 rounded-t-md transition-all duration-500 hover:from-orange-400 hover:to-amber-400"
+                    style={{
+                      height: `${Math.max(item.value * 1.5, 4)}px`,
+                      animationDelay: `${0.3 + index * 0.03}s`,
+                    }}
+                  />
+                  <div className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 text-xs bg-slate-800 text-orange-400 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap border border-orange-500/30 z-10">
+                    {item.value}%
                   </div>
                 </div>
-              ))}
-            </div>
+                {index % Math.ceil(resourceTrend.length / 6) === 0 && (
+                  <span className="text-xs text-slate-500">{item.date}</span>
+                )}
+              </div>
+            ))}
+          </div>
+          <div className="mt-4 pt-4 border-t border-slate-700/50 grid grid-cols-3 gap-3 text-center">
+            <div><div className="text-lg font-bold text-orange-400">{statistics ? statistics.totalResourceUsage.toFixed(0) : 0}h</div><div className="text-xs text-slate-500">总消耗</div></div>
+            <div><div className="text-lg font-bold text-cyan-400">{resourceTrend.length > 0 ? (resourceTrend.reduce((s, i) => s + i.value, 0) / resourceTrend.length).toFixed(1) : 0}%</div><div className="text-xs text-slate-500">平均利用率</div></div>
+            <div><div className="text-lg font-bold text-emerald-400">{resourceTrend.length > 0 ? Math.min(...resourceTrend.map(i => i.value)).toFixed(1) : 0}%</div><div className="text-xs text-slate-500">最低值</div></div>
           </div>
         </div>
       </div>
@@ -379,7 +415,12 @@ export default function Statistics() {
             </thead>
             <tbody className="divide-y divide-slate-700/30">
               {regions.map((region: RegionStatus, idx: number) => (
-                <tr key={region.region} className="hover:bg-slate-700/20 transition-colors" style={{ animationDelay: `${0.1 + idx * 0.05}s` }}>
+                <tr
+                  key={region.region}
+                  className="hover:bg-slate-700/20 transition-colors cursor-pointer"
+                  style={{ animationDelay: `${0.1 + idx * 0.05}s` }}
+                  onClick={() => handleRegionClick(region.region)}
+                >
                   <td className="py-3 px-4">
                     <div className="flex items-center gap-2">
                       <MapPin className={cn('w-4 h-4', region.isPaused ? 'text-slate-500' : 'text-cyan-400')} />
@@ -412,10 +453,15 @@ export default function Statistics() {
                     </span>
                   </td>
                   <td className="py-3 px-4 text-center">
-                    <button className={cn(
-                      'p-1.5 rounded-lg transition-colors',
-                      region.isPaused ? 'bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30' : 'bg-amber-500/20 text-amber-400 hover:bg-amber-500/30'
-                    )}>
+                    <button
+                      className={cn(
+                        'p-1.5 rounded-lg transition-colors',
+                        region.isPaused ? 'bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30' : 'bg-amber-500/20 text-amber-400 hover:bg-amber-500/30'
+                      )}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                      }}
+                    >
                       {region.isPaused ? <Play className="w-4 h-4" /> : <Pause className="w-4 h-4" />}
                     </button>
                   </td>
@@ -425,6 +471,119 @@ export default function Statistics() {
           </table>
         </div>
       </div>
+
+      {showRegionModal && selectedRegion && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="glass rounded-2xl w-full max-w-lg max-h-[80vh] overflow-hidden animate-scale-in">
+            <div className="p-5 border-b border-slate-700/50 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-gradient-to-br from-blue-500/20 to-cyan-400/20">
+                  <MapPin className="w-5 h-5 text-cyan-400" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-white">{selectedRegion.region.region}</h3>
+                  <p className="text-sm text-slate-400">区域详情</p>
+                </div>
+              </div>
+              <button
+                onClick={() => setShowRegionModal(false)}
+                className="p-2 rounded-lg hover:bg-slate-700/50 text-slate-400 hover:text-white transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="p-5 space-y-5 overflow-y-auto max-h-[60vh]">
+              {selectedRegion.region.isPaused && selectedRegion.pauseReason && (
+                <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/30">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Pause className="w-4 h-4 text-amber-400" />
+                    <span className="font-medium text-amber-400">区域已暂停</span>
+                  </div>
+                  <p className="text-sm text-slate-300">{selectedRegion.pauseReason}</p>
+                  {selectedRegion.pausedAt && (
+                    <p className="text-xs text-slate-500 mt-2">
+                      暂停时间：{new Date(selectedRegion.pausedAt).toLocaleString('zh-CN')}
+                    </p>
+                  )}
+                </div>
+              )}
+
+              <div className="grid grid-cols-3 gap-4">
+                <div className="text-center p-3 rounded-lg bg-slate-800/30">
+                  <div className="text-xl font-bold text-white">{selectedRegion.region.taskCount}</div>
+                  <div className="text-xs text-slate-500">任务数</div>
+                </div>
+                <div className="text-center p-3 rounded-lg bg-slate-800/30">
+                  <div className={cn(
+                    'text-xl font-bold',
+                    selectedRegion.region.avgDeviation > 5 ? 'text-red-400' :
+                    selectedRegion.region.avgDeviation > 3 ? 'text-amber-400' : 'text-emerald-400'
+                  )}>
+                    {selectedRegion.region.avgDeviation}%
+                  </div>
+                  <div className="text-xs text-slate-500">平均偏差</div>
+                </div>
+                <div className="text-center p-3 rounded-lg bg-slate-800/30">
+                  <div className={cn(
+                    'text-xl font-bold',
+                    selectedRegion.region.isPaused ? 'text-amber-400' : 'text-emerald-400'
+                  )}>
+                    {selectedRegion.region.isPaused ? '已暂停' : '运行中'}
+                  </div>
+                  <div className="text-xs text-slate-500">状态</div>
+                </div>
+              </div>
+
+              <div>
+                <h4 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+                  <AlertTriangle className="w-4 h-4 text-amber-400" />
+                  最近超标记录
+                </h4>
+                <div className="space-y-2">
+                  {selectedRegion.recentDeviations.length > 0 ? (
+                    selectedRegion.recentDeviations.map((item, idx) => (
+                      <div
+                        key={idx}
+                        className="flex items-center justify-between p-3 rounded-lg bg-slate-800/30 border border-slate-700/50"
+                      >
+                        <div>
+                          <div className="text-sm text-slate-300">任务 {item.taskId}</div>
+                          <div className="text-xs text-slate-500">
+                            {new Date(item.date).toLocaleString('zh-CN')}
+                          </div>
+                        </div>
+                        <span className={cn(
+                          'text-sm font-semibold',
+                          item.deviation > 5 ? 'text-red-400' : 'text-amber-400'
+                        )}>
+                          {item.deviation}%
+                        </span>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="text-center py-6 text-slate-500 text-sm">
+                      暂无超标记录
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div className="p-5 border-t border-slate-700/50 flex justify-end gap-3">
+              <button
+                onClick={() => setShowRegionModal(false)}
+                className="px-4 py-2 rounded-lg text-sm text-slate-400 hover:text-white hover:bg-slate-700/50 transition-colors"
+              >
+                关闭
+              </button>
+              <button className="px-4 py-2 rounded-lg text-sm bg-gradient-to-r from-cyan-500 to-blue-500 text-white hover:shadow-lg hover:shadow-cyan-500/25 transition-all">
+                查看完整报告
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

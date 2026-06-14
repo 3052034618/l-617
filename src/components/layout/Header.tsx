@@ -1,11 +1,29 @@
 import { Bell, Search, User, Settings, Moon } from 'lucide-react';
 import useAppStore from '@/store/useAppStore';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { alertApi } from '@/api';
 
 export default function Header() {
-  const { alerts, userRole } = useAppStore();
-  const pendingAlerts = alerts.filter((a) => a.status === 'pending').length;
+  const { userRole } = useAppStore();
+  const [pendingAlerts, setPendingAlerts] = useState(0);
   const [showUserMenu, setShowUserMenu] = useState(false);
+
+  const fetchPendingAlerts = async () => {
+    try {
+      const res = await alertApi.getList({ status: 'pending', pageSize: 100 });
+      if (res.success && res.data) {
+        setPendingAlerts(res.data.total);
+      }
+    } catch (error) {
+      console.error('获取预警数量失败:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchPendingAlerts();
+    const interval = setInterval(fetchPendingAlerts, 10000);
+    return () => clearInterval(interval);
+  }, []);
 
   const roleLabels: Record<string, string> = {
     scientist: '遥感科学家',

@@ -11,9 +11,8 @@ import {
   TrendingDown,
   Zap,
 } from 'lucide-react';
-import useAppStore from '@/store/useAppStore';
-import { generateSpectrumData, generateBrightnessTemp } from '@/mock/data';
-import type { SpectrumData, ChannelData } from '@/types';
+import { monitorApi, taskApi } from '@/api';
+import type { SpectrumData, ChannelData, MonitorData, SimulationTask } from '@/types';
 
 const CW = 600, CH = 220;
 const PAD = { t: 20, r: 20, b: 30, l: 45 };
@@ -162,59 +161,106 @@ function HeatmapCell({ label, value, intensity, wavelength }: { label: string; v
 }
 
 export default function Monitor() {
-  const { tasks, selectedTaskId, setSelectedTaskId, initializeMockData } = useAppStore();
-  const [transData, setTransData] = useState<SpectrumData[]>([]);
-  const [reflDatasets, setReflDatasets] = useState<{ name: string; data: SpectrumData[]; color: string }[]>([]);
-  const [brightTemp, setBrightTemp] = useState<ChannelData[]>([]);
+  const [tasks, setTasks] = useState<SimulationTask[]>([]);
+  const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null);
+  const [monitorData, setMonitorData] = useState<MonitorData | null>(null);
+  const [taskStatus, setTaskStatus] = useState<{ status: string; progress: number } | null>(null);
   const [logs, setLogs] = useState<LogEntry[]>([]);
   const [isLive, setIsLive] = useState(true);
   const logIdRef = useRef(0);
 
-  useEffect(() => { if (tasks.length === 0) initializeMockData(); }, [tasks.length, initializeMockData]);
+  useEffect(() => {
+    const fetchTasks = async () => {
+      const res = await taskApi.getList({ pageSize: 20 });
+      if (res.success && res.data) {
+        const taskList = res.data.list;
+        setTasks(taskList);
+        const runningTask = taskList.find((t) => t.status === 'computing' || t.status === 'modeling' || t.status === 'synthesizing');
+        if (runningTask) {
+          setSelectedTaskId(runningTask.id);
+        } else if (taskList.length > 0) {
+          setSelectedTaskId(taskList[0].id);
+        }
+      }
+    };
+    fetchTasks();
+  }, []);
+
   const selectedTask = tasks.find((t) => t.id === selectedTaskId);
 
   useEffect(() => {
-    setTransData(generateSpectrumData(80, 0.4, 2.5, 0.72, 0.18));
-    const surfaces = [
-      { name: '植被', color: '#10b981', base: 0.28 },
-      { name: '水体', color: '#3b82f6', base: 0.12 },
-      { name: '沙漠', color: '#f59e0b', base: 0.45 },
-      { name: '城市', color: '#6b7280', base: 0.32 },
-    ];
-    setReflDatasets(surfaces.map((s) => ({ name: s.name, data: generateSpectrumData(60, 0.4, 2.5, s.base, 0.12), color: s.color })));
-    setBrightTemp(generateBrightnessTemp());
+    if (!selectedTaskId || !isLive) return;
 
-    const initLogs: LogEntry[] = [];
-    const types = ['透过率', '反射率', '亮温', '辐射平衡'];
-    const msgs = ['数据采集完成', '模拟计算更新', '通道校准完成', '偏差值正常'];
-    for (let i = 0; i < 6; i++) {
-      initLogs.push({
-        id: ++logIdRef.current,
-        time: new Date(Date.now() - i * 30000).toLocaleTimeString('zh-CN'),
-        type: types[i % 4], message: msgs[i % 4],
-        value: (Math.random() * 0.1 + 0.85).toFixed(3),
-      });
-    }
-    setLogs(initLogs.reverse());
-  }, []);
+    const fetchMonitorData = async () => {
+      const res = await monitorApi.getRealtime(selectedTaskId);
+      if (res.success && res.data) {
+        setMonitorData(res.data);
+
+        const types = ['透过率', '反射率', '亮温', '辐射平衡'];
+        const msgs = ['数据采集完成', '模拟计算更新', '通道校准完成', '实时监控正常'];
+        const idx = Math.floor(Math.random() * 4);
+        setLogs((prev) => [...prev.slice(-9), {
+          id: ++logIdRef.current, time: new Date().toLocaleTimeString('zh-CN'),
+          type: types[idx], message: msgs[idx], value: (Math.random() * 0.15 + 0.82).toFixed(3),
+        }]);
+      }
+    };
+
+    const fetchTaskStatus = async () => {
+      const res = await taskApi.getStatus(selectedTaskId);
+      if (res.success && res.data) {
+        setTaskStatus(res.data);
+      }
+    };
+
+    fetchMonitorData();
+    fetchTaskStatus();
+
+    const iv = setInterval(() => {
+      fetchMonitorData();
+      fetchTaskStatus();
+    }, 2000);
+
+    return () => clearInterval(iv);
+  }, [selectedTaskId, isLive]);
 
   useEffect(() => {
-    if (!isLive) return;
-    const iv = setInterval(() => {
-      setTransData(generateSpectrumData(80, 0.4, 2.5, 0.72, 0.18));
-      setReflDatasets((prev) => prev.map((ds) => ({ ...ds, data: generateSpectrumData(60, 0.4, 2.5, 0.28 + Math.random() * 0.1, 0.12) })));
-      setBrightTemp(generateBrightnessTemp());
-
+    if (monitorData) {
+      const initLogs: LogEntry[] = [];
       const types = ['透过率', '反射率', '亮温', '辐射平衡'];
-      const msgs = ['数据采集完成', '模拟计算更新', '通道校准完成', '实时监控正常'];
-      const idx = Math.floor(Math.random() * 4);
-      setLogs((prev) => [...prev.slice(-9), {
-        id: ++logIdRef.current, time: new Date().toLocaleTimeString('zh-CN'),
-        type: types[idx], message: msgs[idx], value: (Math.random() * 0.15 + 0.82).toFixed(3),
-      }]);
-    }, 2000);
-    return () => clearInterval(iv);
-  }, [isLive]);
+      const msgs = ['数据采集完成', '模拟计算更新', '通道校准完成', '偏差值正常'];
+      for (let i = 0; i < 6; i++) {
+        initLogs.push({
+          id: ++logIdRef.current,
+          time: new Date(Date.now() - i * 30000).toLocaleTimeString('zh-CN'),
+          type: types[i % 4], message: msgs[i % 4],
+          value: (Math.random() * 0.1 + 0.85).toFixed(3),
+        });
+      }
+      setLogs(initLogs.reverse());
+    }
+  }, [monitorData ? monitorData.taskId : '']);
+
+  const transData = monitorData?.transmittance || [];
+  const brightTemp = monitorData?.brightnessTemp || [];
+
+  const reflDatasets = useMemo(() => {
+    if (!monitorData?.reflectance?.length) return [];
+    const surfaces = [
+      { name: '植被', color: '#10b981' },
+      { name: '水体', color: '#3b82f6' },
+      { name: '沙漠', color: '#f59e0b' },
+      { name: '城市', color: '#6b7280' },
+    ];
+    return surfaces.map((s, i) => ({
+      name: s.name,
+      color: s.color,
+      data: monitorData.reflectance.map((d) => ({
+        wavelength: d.wavelength,
+        value: Math.max(0, Math.min(1, d.value * (0.6 + i * 0.15))),
+      })),
+    }));
+  }, [monitorData?.reflectance]);
 
   const avgTrans = useMemo(() => !transData.length ? '0.000' : (transData.reduce((s, d) => s + d.value, 0) / transData.length).toFixed(3), [transData]);
   const avgRefl = useMemo(() => {
@@ -223,7 +269,7 @@ export default function Monitor() {
     return (d.reduce((s, v) => s + v.value, 0) / d.length).toFixed(3);
   }, [reflDatasets]);
 
-  const radBalance = useMemo(() => (Math.random() * 0.006 - 0.003).toFixed(5), [transData]);
+  const radBalance = useMemo(() => monitorData?.radiationBalance?.toFixed(5) || '0.00000', [monitorData?.radiationBalance]);
   const mainChs = brightTemp.filter((c) => ['VIS_01', 'NIR_01', 'TIR_01'].includes(c.channel));
   const tirTemps = brightTemp.filter((c) => c.wavelength > 3).map((c) => c.value);
   const maxT = Math.max(...tirTemps, 300), minT = Math.min(...tirTemps, 250);
@@ -345,7 +391,7 @@ export default function Monitor() {
               <span className="text-xs text-slate-500">|</span>
               <span className="text-sm text-slate-400">区域：{selectedTask.region}</span>
               <span className="text-xs text-slate-500">|</span>
-              <span className="text-sm text-slate-400">进度：{selectedTask.progress}%</span>
+              <span className="text-sm text-slate-400">进度：{taskStatus?.progress ?? selectedTask.progress}%</span>
             </div>
           </div>
         )}

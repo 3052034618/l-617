@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
   ArrowLeft,
@@ -24,9 +24,11 @@ import {
   Shield,
   History,
   ChevronRight,
+  Pause,
+  Play,
 } from 'lucide-react';
-import useAppStore from '@/store/useAppStore';
-import type { TaskStatus, SimulationTask, SpectrumData } from '@/types';
+import { taskApi, approvalApi } from '@/api';
+import type { TaskStatus, SimulationTask, SpectrumData, ApprovalRecord, AdjustmentLog } from '@/types';
 import { cn } from '@/lib/utils';
 
 const statusConfig: Record<TaskStatus, { label: string; color: string; bg: string; border: string; icon: typeof Clock; gradient: string }> = {
@@ -52,10 +54,71 @@ const statusOrder: TaskStatus[] = ['pending', 'modeling', 'computing', 'synthesi
 export default function TaskDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { tasks, approvals } = useAppStore();
+  const [task, setTask] = useState<SimulationTask | null>(null);
+  const [taskApprovals, setTaskApprovals] = useState<ApprovalRecord[]>([]);
+  const [adjustmentLogs, setAdjustmentLogs] = useState<AdjustmentLog[]>([]);
+  const [loading, setLoading] = useState(true);
+  const intervalRef = useRef<number | null>(null);
 
-  const task = useMemo(() => tasks.find((t) => t.id === id), [tasks, id]);
-  const taskApprovals = useMemo(() => approvals.filter((a) => a.taskId === id), [approvals, id]);
+  const fetchTaskDetail = async () => {
+    if (!id) return;
+    const res = await taskApi.getById(id);
+    if (res.success && res.data) {
+      setTask(res.data);
+    }
+  };
+
+  const fetchApprovals = async () => {
+    if (!id) return;
+    const res = await approvalApi.getChain(id);
+    if (res.success && res.data) {
+      setTaskApprovals(res.data.records || []);
+    }
+  };
+
+  useEffect(() => {
+    if (!id) return;
+    setLoading(true);
+    Promise.all([fetchTaskDetail(), fetchApprovals()]).finally(() => setLoading(false));
+    intervalRef.current = window.setInterval(fetchTaskDetail, 2000);
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, [id]);
+
+  const handleRestart = async () => {
+    if (!id) return;
+    const res = await taskApi.restart(id);
+    if (res.success && res.data) {
+      setTask(res.data);
+    }
+  };
+
+  const handlePause = async () => {
+    if (!id) return;
+    const res = await taskApi.pause(id);
+    if (res.success && res.data) {
+      setTask(res.data);
+    }
+  };
+
+  const handleResume = async () => {
+    if (!id) return;
+    const res = await taskApi.resume(id);
+    if (res.success && res.data) {
+      setTask(res.data);
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!id || !confirm('确定要删除这个任务吗？')) return;
+    const res = await taskApi.remove(id);
+    if (res.success) {
+      navigate('/tasks');
+    }
+  };
 
   const formatDate = (iso: string) =>
     new Date(iso).toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
@@ -130,6 +193,15 @@ export default function TaskDetail() {
     );
   };
 
+  if (loading) {
+    return (
+      <div className="flex flex-col items-center justify-center py-20">
+        <div className="w-12 h-12 border-4 border-blue-500/30 border-t-cyan-400 rounded-full animate-spin mb-4" />
+        <p className="text-slate-400">加载中...</p>
+      </div>
+    );
+  }
+
   if (!task) {
     return (
       <div className="flex flex-col items-center justify-center py-20">
@@ -190,13 +262,22 @@ export default function TaskDetail() {
           )}
         </div>
         <div className="flex items-center gap-2">
-          <button className="btn btn-secondary">
+          <button onClick={handleRestart} className="btn btn-secondary">
             <RotateCcw className="w-4 h-4" />重启
           </button>
+          {task?.status === 'computing' || task?.status === 'modeling' || task?.status === 'synthesizing' ? (
+            <button onClick={handlePause} className="btn btn-secondary">
+              <Pause className="w-4 h-4" />暂停
+            </button>
+          ) : task?.status === 'pending' ? null : (
+            <button onClick={handleResume} className="btn btn-secondary">
+              <Play className="w-4 h-4" />恢复
+            </button>
+          )}
           <button className="btn btn-secondary">
             <Download className="w-4 h-4" />导出
           </button>
-          <button className="btn btn-danger">
+          <button onClick={handleDelete} className="btn btn-danger">
             <Trash2 className="w-4 h-4" />删除
           </button>
         </div>

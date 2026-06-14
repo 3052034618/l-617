@@ -462,8 +462,35 @@ class DataStore {
     }
   }
 
-  addTask(task: Partial<SimulationTask>): SimulationTask {
+  addTask(
+    task: Partial<SimulationTask> & { profileFileId?: string; surfaceFileId?: string },
+  ): SimulationTask {
     const now = formatDate()
+
+    const parameters = {
+      profileFile: 'default.dat',
+      surfaceType: '植被',
+      aerosolModel: '大陆型',
+      wavelengthRange: [0.4, 2.5],
+      spectralResolution: 0.01,
+      observationAngle: 0,
+      ...task.parameters,
+    }
+
+    if (task.profileFileId) {
+      const profileFile = this.getUploadedFileById(task.profileFileId)
+      if (profileFile) {
+        parameters.profileFile = profileFile.filename
+      }
+    }
+
+    if (task.surfaceFileId) {
+      const surfaceFile = this.getUploadedFileById(task.surfaceFileId)
+      if (surfaceFile) {
+        parameters.surfaceFile = surfaceFile.filename
+      }
+    }
+
     const newTask: SimulationTask = {
       id: generateId('task'),
       name: task.name || '新建模拟任务',
@@ -475,14 +502,7 @@ class DataStore {
       createdBy: task.createdBy || '当前用户',
       userId: task.userId,
       userName: task.userName,
-      parameters: task.parameters || {
-        profileFile: 'default.dat',
-        surfaceType: '植被',
-        aerosolModel: '大陆型',
-        wavelengthRange: [0.4, 2.5],
-        spectralResolution: 0.01,
-        observationAngle: 0,
-      },
+      parameters,
       approvalStatus: 'none',
       adjustmentLogs: [],
     }
@@ -794,6 +814,41 @@ class DataStore {
 
   getRegionStats(): RegionStatus[] {
     return [...this.regionStats]
+  }
+
+  checkRegionPaused(region: string): {
+    paused: boolean
+    reason?: string
+    recentDeviations?: Array<{ date: string; deviation: number; taskId: string }>
+  } {
+    const regionStat = this.regionStats.find((r) => r.region === region)
+
+    if (!regionStat) {
+      return { paused: false }
+    }
+
+    if (!regionStat.isPaused) {
+      return { paused: false }
+    }
+
+    const recentDeviations: Array<{ date: string; deviation: number; taskId: string }> = []
+    const now = new Date()
+
+    for (let i = 0; i < 3; i++) {
+      const date = new Date(now)
+      date.setDate(date.getDate() - i - 1)
+      recentDeviations.push({
+        date: formatDate(date),
+        deviation: Number(randomInRange(0.05, 0.12).toFixed(4)),
+        taskId: generateId('task'),
+      })
+    }
+
+    return {
+      paused: true,
+      reason: '该区域连续多次模拟结果偏差超过阈值，已自动暂停新任务提交',
+      recentDeviations,
+    }
   }
 
   getRecommendBands(): Recommendation[] {
